@@ -12,7 +12,7 @@ public class OBJ_Axe extends Entity {
         type = TYPE.Axe;
         name = "Woodcutter's Axe";
         down1 = setup("/objects/axe", gamePanel.getTileSize(), gamePanel.getTileSize());
-        attackValue = 2;
+        attackValue = 1;
         attackArea.width = 30;
         attackArea.height = 30;
         description = "[" + name + "]\nA bit rusty but can\nstill cut some trees.";
