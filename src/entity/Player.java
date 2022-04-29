@@ -126,12 +126,11 @@ public class Player extends Entity {
 
     // Public methods
     public int getAttack() {
-        return attack = strength * currentWeapon.attackValue;
+        return strength * currentWeapon.attackValue;
     }
 
     public int getDefense() {
-        attackArea = currentWeapon.attackArea;
-        return defense = dexterity * currentShield.defenseValue;
+        return dexterity * currentShield.defenseValue;
     }
 
     public void selectItem() {
@@ -343,18 +342,6 @@ public class Player extends Entity {
 
         // Reset alpha
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
-
-        // ============ DEBUG ONLY ============ //
-        // Hit box
-        // g2d.setColor(Color.RED);
-        // g2d.drawRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width,
-        // solidArea.height);
-
-        // Invincibility frame
-        // g2d.setFont(new Font("Arial", Font.PLAIN, 26));
-        // g2d.setColor(Color.WHITE);
-        // g2d.drawString("Invincible: " + invincibleCounter, 10, 400);
-        // ============ DEBUG ONLY ============ //
     }
 
     // Restricted method (Used for Player and Projectile only)
@@ -501,5 +488,9 @@ public class Player extends Entity {
     // Getter
     public ArrayList<Entity> getInventory() {
         return inventory;
+    }
+
+    public int getInvincibleCounter() {
+        return invincibleCounter;
     }
 }

@@ -637,8 +637,8 @@ public class UI {
             textY += 40;
         }
 
-        // Yes
-        String text = "Yes";
+        // No
+        String text = "No";
         textX = getXForCenteredText(text);
         textY += gamePanel.getTileSize() * 3;
         g2d.drawString(text, textX, textY);
@@ -646,13 +646,12 @@ public class UI {
             g2d.drawString(">", textX - 25, textY);
             if (gamePanel.getKeyHandler().isInteractPressed() == true) {
                 subState = 0;
-                gamePanel.stopMusic();
-                gamePanel.gameState = GAME_STATE.Title;
+                commandNum = 4;
             }
         }
 
-        // No
-        text = "No";
+        // Yes
+        text = "Yes";
         textX = getXForCenteredText(text);
         textY += gamePanel.getTileSize();
         g2d.drawString(text, textX, textY);
@@ -660,7 +659,8 @@ public class UI {
             g2d.drawString(">", textX - 25, textY);
             if (gamePanel.getKeyHandler().isInteractPressed() == true) {
                 subState = 0;
-                commandNum = 4;
+                gamePanel.stopMusic();
+                gamePanel.gameState = GAME_STATE.Title;
             }
         }
     }

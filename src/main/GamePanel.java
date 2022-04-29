@@ -308,6 +308,7 @@ public class GamePanel extends JPanel implements Runnable {
             int y = 400;
             int lineHeight = 20;
 
+            // Show World's Coordinates
             g2d.drawString("getWorldX() : " + player.getWorldX(), x, y);
             y += lineHeight;
             g2d.drawString("getWorldY() : " + player.getWorldY(), x, y);
@@ -317,6 +318,16 @@ public class GamePanel extends JPanel implements Runnable {
             g2d.drawString("row : " + (player.getWorldY() + player.getSolidArea().y) / TILE_SIZE, x, y);
             y += lineHeight;
             g2d.drawString("Draw Time: " + passed, x, y);
+            y += lineHeight;
+
+            // Show Player's hit box
+            g2d.setColor(Color.RED);
+            g2d.drawRect(player.SCREEN_X + player.getSolidArea().x, player.SCREEN_Y + player.getSolidArea().y,
+                    player.getSolidArea().width, player.getSolidArea().height);
+
+            // Show Player's Invincibility Frame
+            g2d.setColor(Color.WHITE);
+            g2d.drawString("Invincible: " + player.getInvincibleCounter(), x, y);
         }
         // ============ DEBUG ONLY ============ //
     }
