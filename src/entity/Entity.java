@@ -162,7 +162,7 @@ public class Entity {
         gamePanel.getParticleList().add(p4);
     }
 
-    // For Projectiles
+    // For Monsters & Projectiles that hit the Player
     public void damagePlayer(int attack) {
         if (gamePanel.getPlayer().invincible == false) {
             gamePanel.playSoundEffect(6);
