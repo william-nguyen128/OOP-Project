@@ -126,11 +126,12 @@ public class Player extends Entity {
 
     // Public methods
     public int getAttack() {
-        return strength * currentWeapon.attackValue;
+        attackArea = currentWeapon.attackArea;
+        return attack = strength * currentWeapon.attackValue;
     }
 
     public int getDefense() {
-        return dexterity * currentShield.defenseValue;
+        return defense = dexterity * currentShield.defenseValue;
     }
 
     public void selectItem() {
