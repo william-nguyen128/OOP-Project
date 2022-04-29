@@ -116,7 +116,7 @@ public class UI {
 
         // Title Name
         g2d.setFont(g2d.getFont().deriveFont(Font.BOLD, 96F));
-        String text = "Blue Boy Adventure";
+        String text = "Princess Rescue";
         int x = getXForCenteredText(text);
         int y = gamePanel.getTileSize() * 3;
         int length = (int) g2d.getFontMetrics().getStringBounds(text, g2d).getWidth();
