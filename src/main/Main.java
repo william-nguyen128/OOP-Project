@@ -9,7 +9,7 @@ public class Main {
         window = new JFrame();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
-        window.setTitle("Treasuring Hunting Game");
+        window.setTitle("This Is Not A Game");
 
         GamePanel gamePanel = new GamePanel();
         window.add(gamePanel);

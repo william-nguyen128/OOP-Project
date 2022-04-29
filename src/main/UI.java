@@ -36,6 +36,7 @@ public class UI {
     // private double playTime;
     // private DecimalFormat dFormat = new DecimalFormat("#0.00");
 
+    // Constructor
     public UI(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
 
@@ -64,29 +65,7 @@ public class UI {
         messageCounter.add(0);
     }
 
-    public void drawMessage() {
-        int messageX = gamePanel.getTileSize() / 2;
-        int messageY = gamePanel.getTileSize() * 4;
-        g2d.setFont(g2d.getFont().deriveFont(Font.BOLD, 20F));
-
-        for (int i = 0; i < message.size(); i++)
-            if (message.get(i) != null) {
-                g2d.setColor(Color.BLACK);
-                g2d.drawString(message.get(i), messageX + 2, messageY + 2);
-                g2d.setColor(Color.WHITE);
-                g2d.drawString(message.get(i), messageX, messageY);
-
-                int counter = messageCounter.get(i) + 1;
-                messageCounter.set(i, counter);
-                messageY += 50;
-
-                if (messageCounter.get(i) > 180) {
-                    message.remove(i);
-                    messageCounter.remove(i);
-                }
-            }
-    }
-
+    // Draw all screens
     public void draw(Graphics2D g2d) {
         this.g2d = g2d;
 
@@ -130,7 +109,8 @@ public class UI {
             drawOptionsScreen();
     }
 
-    public void drawTitleScreen() {
+    // Methods to draw each screen
+    private void drawTitleScreen() {
         g2d.setColor(new Color(0, 0, 0));
         g2d.fillRect(0, 0, gamePanel.getScreenWidth(), gamePanel.getScreenHeight());
 
@@ -188,7 +168,7 @@ public class UI {
         }
     }
 
-    public void drawPlayerLife() {
+    private void drawPlayerLife() {
         int x = gamePanel.getTileSize() / 2;
         int y = gamePanel.getTileSize() / 2;
         int i = 0;
@@ -216,7 +196,7 @@ public class UI {
         }
     }
 
-    public void drawPlayerMana() {
+    private void drawPlayerMana() {
         int x = gamePanel.getTileSize() / 2 - 5;
         int y = (int) (gamePanel.getTileSize() * 1.5);
         int i = 0;
@@ -241,7 +221,7 @@ public class UI {
         }
     }
 
-    public void drawPauseScreen() {
+    private void drawPauseScreen() {
         g2d.setFont(g2d.getFont().deriveFont(Font.PLAIN, 80F));
         String text = "PAUSED";
         int x = getXForCenteredText(text);
@@ -250,7 +230,7 @@ public class UI {
         g2d.drawString(text, x, y);
     }
 
-    public void drawDialogueScreen() {
+    private void drawDialogueScreen() {
         // Window
         int x = gamePanel.getTileSize() * 2;
         int y = gamePanel.getTileSize() / 2;
@@ -268,7 +248,7 @@ public class UI {
         }
     }
 
-    public void drawCharacterScreen() {
+    private void drawCharacterScreen() {
         final int frameX = gamePanel.getTileSize() * 2;
         final int frameY = gamePanel.getTileSize();
         final int frameWidth = gamePanel.getTileSize() * 5;
@@ -372,7 +352,7 @@ public class UI {
                 null);
     }
 
-    public void drawInventoryScreen() {
+    private void drawInventoryScreen() {
         final int frameX = gamePanel.getTileSize() * 12;
         final int frameY = gamePanel.getTileSize();
         final int frameWidth = gamePanel.getTileSize() * 6;
@@ -439,7 +419,7 @@ public class UI {
         }
     }
 
-    public void drawOptionsScreen() {
+    private void drawOptionsScreen() {
         g2d.setColor(Color.WHITE);
         g2d.setFont(g2d.getFont().deriveFont(32F));
 
@@ -468,7 +448,7 @@ public class UI {
         gamePanel.getKeyHandler().setInteractPressed(false);
     }
 
-    public void options_top(int frameX, int frameY) {
+    private void options_top(int frameX, int frameY) {
         int textX;
         int textY;
 
@@ -568,7 +548,7 @@ public class UI {
         gamePanel.getConfig().saveConfig();
     }
 
-    public void options_fullScreenNotification(int frameX, int frameY) {
+    private void options_fullScreenNotification(int frameX, int frameY) {
         int textX = frameX + gamePanel.getTileSize() - 15;
         int textY = frameY + gamePanel.getTileSize() * 3;
 
@@ -589,7 +569,7 @@ public class UI {
         }
     }
 
-    public void options_control(int frameX, int frameY) {
+    private void options_control(int frameX, int frameY) {
         int textX;
         int textY;
 
@@ -646,7 +626,7 @@ public class UI {
         }
     }
 
-    public void options_endGameConfirmation(int frameX, int frameY) {
+    private void options_endGameConfirmation(int frameX, int frameY) {
         int textX = frameX + gamePanel.getTileSize();
         int textY = frameY + gamePanel.getTileSize() * 3;
 
@@ -690,7 +670,31 @@ public class UI {
         return itemIndex;
     }
 
-    public void drawSubWindow(int x, int y, int width, int height) {
+    // Private (Internal) methods
+    private void drawMessage() {
+        int messageX = gamePanel.getTileSize() / 2;
+        int messageY = gamePanel.getTileSize() * 4;
+        g2d.setFont(g2d.getFont().deriveFont(Font.BOLD, 20F));
+
+        for (int i = 0; i < message.size(); i++)
+            if (message.get(i) != null) {
+                g2d.setColor(Color.BLACK);
+                g2d.drawString(message.get(i), messageX + 2, messageY + 2);
+                g2d.setColor(Color.WHITE);
+                g2d.drawString(message.get(i), messageX, messageY);
+
+                int counter = messageCounter.get(i) + 1;
+                messageCounter.set(i, counter);
+                messageY += 50;
+
+                if (messageCounter.get(i) > 180) {
+                    message.remove(i);
+                    messageCounter.remove(i);
+                }
+            }
+    }
+
+    private void drawSubWindow(int x, int y, int width, int height) {
         Color c = new Color(0, 0, 0, 200);
         g2d.setColor(c);
         g2d.fillRoundRect(x, y, width, height, 35, 35);
@@ -701,13 +705,13 @@ public class UI {
         g2d.drawRoundRect(x + 5, y + 5, width - 10, height - 10, 25, 25);
     }
 
-    public int getXForCenteredText(String text) {
+    private int getXForCenteredText(String text) {
         int length = (int) g2d.getFontMetrics().getStringBounds(text, g2d).getWidth();
         int x = gamePanel.getScreenWidth() / 2 - length / 2;
         return x;
     }
 
-    public int getXForRightAlignedText(String text, int tailX) {
+    private int getXForRightAlignedText(String text, int tailX) {
         int length = (int) g2d.getFontMetrics().getStringBounds(text, g2d).getWidth();
         int x = tailX - length;
         return x;
