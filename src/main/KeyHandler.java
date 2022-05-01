@@ -229,20 +229,9 @@ public class KeyHandler implements KeyListener {
     }
 
     public void gameOverState(int code) {
-        if (code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
-            gamePanel.getUserInterface().setCommandNum(gamePanel.getUserInterface().getCommandNum() - 1);
-            if (gamePanel.getUserInterface().getCommandNum() < 0)
-                gamePanel.getUserInterface().setCommandNum(1);
-            gamePanel.playSoundEffect(9);
-        }
-        if (code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN) {
-            gamePanel.getUserInterface().setCommandNum(gamePanel.getUserInterface().getCommandNum() + 1);
-            if (gamePanel.getUserInterface().getCommandNum() > 1)
-                gamePanel.getUserInterface().setCommandNum(0);
-            gamePanel.playSoundEffect(9);
-        }
         if (code == KeyEvent.VK_E || code == KeyEvent.VK_J || code == KeyEvent.VK_SPACE || code == KeyEvent.VK_ENTER)
             if (gamePanel.getUserInterface().getCommandNum() == 0) {
+                gamePanel.playSoundEffect(9);
                 gamePanel.gameState = GAME_STATE.Title;
                 gamePanel.restart();
             }
