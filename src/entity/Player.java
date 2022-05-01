@@ -99,6 +99,7 @@ public class Player extends Entity {
             attackRight1 = setup("/player/boy_attack_right_1", width, height);
             attackRight2 = setup("/player/boy_attack_right_2", width, height);
         }
+
         if (currentWeapon.type == TYPE.Axe) {
             int width = gamePanel.getTileSize();
             int height = gamePanel.getTileSize() * 2;
