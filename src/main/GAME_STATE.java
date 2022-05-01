@@ -6,5 +6,6 @@ public enum GAME_STATE {
     Pause,
     Dialogue,
     Character,
-    Options;
+    Options,
+    GameOver;
 }

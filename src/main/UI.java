@@ -107,6 +107,10 @@ public class UI {
         // Options State
         if (gamePanel.gameState == GAME_STATE.Options)
             drawOptionsScreen();
+
+        // Game Over State
+        if (gamePanel.gameState == GAME_STATE.GameOver)
+            drawGameOverScreen();
     }
 
     // Methods to draw each screen
@@ -446,6 +450,38 @@ public class UI {
         }
 
         gamePanel.getKeyHandler().setInteractPressed(false);
+    }
+
+    private void drawGameOverScreen() {
+        g2d.setColor(new Color(0, 0, 0, 150));
+        g2d.fillRect(0, 0, gamePanel.getScreenWidth(), gamePanel.getScreenHeight());
+
+        int x;
+        int y;
+        String text;
+        g2d.setFont(g2d.getFont().deriveFont(Font.BOLD, 110F));
+
+        text = "GAME OVER";
+        // Shadow
+        g2d.setColor(Color.BLACK);
+        x = getXForCenteredText(text);
+        y = gamePanel.getTileSize() * 4;
+        g2d.drawString(text, x, y);
+        // Main text
+        g2d.setColor(Color.WHITE);
+        g2d.drawString(text, x - 4, y - 4);
+
+        // "Quit" button
+        g2d.setFont(g2d.getFont().deriveFont(50F));
+        text = "Quit";
+        int length = (int) g2d.getFontMetrics().getStringBounds(text, g2d).getWidth();
+        x = getXForCenteredText(text);
+        y += gamePanel.getTileSize() * 4;
+        g2d.drawString(text, x, y);
+        if (commandNum == 0) {
+            g2d.drawString(">", x - 40, y);
+            g2d.drawString("<", x + length + gamePanel.getTileSize() / 2, y);
+        }
     }
 
     private void options_top(int frameX, int frameY) {

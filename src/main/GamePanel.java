@@ -110,6 +110,15 @@ public class GamePanel extends JPanel implements Runnable {
             setFullScreen();
     }
 
+    protected void restart() {
+        player.setDefaultValues();
+        player.setItems();
+
+        assetSetter.setObject();
+        assetSetter.setNPC();
+        assetSetter.setMonster();
+    }
+
     private void setFullScreen() {
         // Get local screen device
         GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();

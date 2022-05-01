@@ -45,11 +45,12 @@ public class Player extends Entity {
     }
 
     // Set initial (default) character's attributes
-    private void setDefaultValues() {
+    public void setDefaultValues() {
         worldX = gamePanel.getTileSize() * 23;
         worldY = gamePanel.getTileSize() * 21;
         speed = 4;
         direction = "down";
+        invincible = false;
 
         // Player's Status
         level = 1;
@@ -67,6 +68,15 @@ public class Player extends Entity {
         projectile = new OBJ_Fireball(gamePanel);
         attack = getAttack(); // Determined by strength & current weapon
         defense = getDefense(); // Determined by dexterity & current shield
+    }
+
+    // Set player's initial items
+    public void setItems() {
+        inventory.clear(); // Restart the game
+        inventory.add(currentWeapon);
+        inventory.add(currentShield);
+        inventory.add(new OBJ_Key(gamePanel));
+        inventory.add(new OBJ_Key(gamePanel));
     }
 
     // Get images
@@ -143,14 +153,6 @@ public class Player extends Entity {
             attackUpRight1 = setup("/player/boy_axe_right_1", width, height);
             attackUpRight2 = setup("/player/boy_axe_right_2", width, height);
         }
-    }
-
-    // Set player's initial items
-    private void setItems() {
-        inventory.add(currentWeapon);
-        inventory.add(currentShield);
-        inventory.add(new OBJ_Key(gamePanel));
-        inventory.add(new OBJ_Key(gamePanel));
     }
 
     // Public methods
@@ -307,6 +309,13 @@ public class Player extends Entity {
 
         if (mana > maxMana)
             mana = maxMana;
+
+        // Player got rekt
+        if (life <= 0) {
+            gamePanel.gameState = GAME_STATE.GameOver;
+            gamePanel.stopMusic();
+            gamePanel.playSoundEffect(11);
+        }
     }
 
     @Override
