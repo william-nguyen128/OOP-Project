@@ -36,6 +36,15 @@ public class OBJ_Fireball extends Projectile {
         down2 = setup("/projectile/fireball_down_2", gamePanel.getTileSize(), gamePanel.getTileSize());
         right1 = setup("/projectile/fireball_right_1", gamePanel.getTileSize(), gamePanel.getTileSize());
         right2 = setup("/projectile/fireball_right_2", gamePanel.getTileSize(), gamePanel.getTileSize());
+
+        up_left1 = setup("/projectile/fireball_up_1", gamePanel.getTileSize(), gamePanel.getTileSize());
+        up_left2 = setup("/projectile/fireball_up_2", gamePanel.getTileSize(), gamePanel.getTileSize());
+        down_left1 = setup("/projectile/fireball_down_1", gamePanel.getTileSize(), gamePanel.getTileSize());
+        down_left2 = setup("/projectile/fireball_down_2", gamePanel.getTileSize(), gamePanel.getTileSize());
+        down_right1 = setup("/projectile/fireball_down_1", gamePanel.getTileSize(), gamePanel.getTileSize());
+        down_right2 = setup("/projectile/fireball_down_2", gamePanel.getTileSize(), gamePanel.getTileSize());
+        up_right1 = setup("/projectile/fireball_up_1", gamePanel.getTileSize(), gamePanel.getTileSize());
+        up_right2 = setup("/projectile/fireball_up_2", gamePanel.getTileSize(), gamePanel.getTileSize());
     }
 
     // Overridden methods

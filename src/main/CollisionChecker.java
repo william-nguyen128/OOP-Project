@@ -24,42 +24,20 @@ public class CollisionChecker {
         int entityTopRow = entityTopWorldY / gamePanel.getTileSize();
         int entityBottomRow = entityBottomWorldY / gamePanel.getTileSize();
 
-        int tileNum1, tileNum2;
+        int tileNum1, tileNum2, tileNum3, tileNum4;
 
-        switch (entity.getDirection()) {
-            case "up":
-                entityTopRow = (entityTopWorldY - entity.getSpeed()) / gamePanel.getTileSize();
-                tileNum1 = gamePanel.getTileManager().getMapTileNum()[entityLeftCol][entityTopRow];
-                tileNum2 = gamePanel.getTileManager().getMapTileNum()[entityRightCol][entityTopRow];
-                if (gamePanel.getTileManager().getTiles()[tileNum1].isCollision() == true
-                        || gamePanel.getTileManager().getTiles()[tileNum2].isCollision() == true)
-                    entity.setCollisionOn(true);
-                break;
-            case "left":
-                entityLeftCol = (entityLeftWorldX - entity.getSpeed()) / gamePanel.getTileSize();
-                tileNum1 = gamePanel.getTileManager().getMapTileNum()[entityLeftCol][entityTopRow];
-                tileNum2 = gamePanel.getTileManager().getMapTileNum()[entityLeftCol][entityBottomRow];
-                if (gamePanel.getTileManager().getTiles()[tileNum1].isCollision() == true
-                        || gamePanel.getTileManager().getTiles()[tileNum2].isCollision() == true)
-                    entity.setCollisionOn(true);
-                break;
-            case "down":
-                entityBottomRow = (entityBottomWorldY + entity.getSpeed()) / gamePanel.getTileSize();
-                tileNum1 = gamePanel.getTileManager().getMapTileNum()[entityLeftCol][entityBottomRow];
-                tileNum2 = gamePanel.getTileManager().getMapTileNum()[entityRightCol][entityBottomRow];
-                if (gamePanel.getTileManager().getTiles()[tileNum1].isCollision() == true
-                        || gamePanel.getTileManager().getTiles()[tileNum2].isCollision() == true)
-                    entity.setCollisionOn(true);
-                break;
-            case "right":
-                entityRightCol = (entityRightWorldX + entity.getSpeed()) / gamePanel.getTileSize();
-                tileNum1 = gamePanel.getTileManager().getMapTileNum()[entityRightCol][entityTopRow];
-                tileNum2 = gamePanel.getTileManager().getMapTileNum()[entityRightCol][entityBottomRow];
-                if (gamePanel.getTileManager().getTiles()[tileNum1].isCollision() == true
-                        || gamePanel.getTileManager().getTiles()[tileNum2].isCollision() == true)
-                    entity.setCollisionOn(true);
-                break;
-        }
+        // Solid area that 4 corners of the entity's solid area is/are hitting
+        tileNum1 = gamePanel.getTileManager().getMapTileNum()[entityLeftCol][entityTopRow];
+        tileNum2 = gamePanel.getTileManager().getMapTileNum()[entityRightCol][entityTopRow];
+        tileNum3 = gamePanel.getTileManager().getMapTileNum()[entityLeftCol][entityBottomRow];
+        tileNum4 = gamePanel.getTileManager().getMapTileNum()[entityRightCol][entityBottomRow];
+
+        // Check if any of them are solid tiles
+        if (gamePanel.getTileManager().getTiles()[tileNum1].isCollision() == true ||
+                gamePanel.getTileManager().getTiles()[tileNum2].isCollision() == true ||
+                gamePanel.getTileManager().getTiles()[tileNum3].isCollision() == true ||
+                gamePanel.getTileManager().getTiles()[tileNum4].isCollision() == true)
+            entity.setCollisionOn(true);
     }
 
     // Object collision
@@ -90,6 +68,22 @@ public class CollisionChecker {
                         break;
                     case "right":
                         entity.getSolidArea().x += entity.getSpeed();
+                        break;
+                    case "up-left":
+                        entity.getSolidArea().x -= entity.getSpeed();
+                        entity.getSolidArea().y -= entity.getSpeed();
+                        break;
+                    case "down-left":
+                        entity.getSolidArea().x -= entity.getSpeed();
+                        entity.getSolidArea().y += entity.getSpeed();
+                        break;
+                    case "down-right":
+                        entity.getSolidArea().x += entity.getSpeed();
+                        entity.getSolidArea().y += entity.getSpeed();
+                        break;
+                    case "up-right":
+                        entity.getSolidArea().x += entity.getSpeed();
+                        entity.getSolidArea().y -= entity.getSpeed();
                         break;
                 }
 
@@ -136,6 +130,22 @@ public class CollisionChecker {
                     case "right":
                         entity.getSolidArea().x += entity.getSpeed();
                         break;
+                    case "up-left":
+                        entity.getSolidArea().x -= entity.getSpeed();
+                        entity.getSolidArea().y -= entity.getSpeed();
+                        break;
+                    case "down-left":
+                        entity.getSolidArea().x -= entity.getSpeed();
+                        entity.getSolidArea().y += entity.getSpeed();
+                        break;
+                    case "down-right":
+                        entity.getSolidArea().x += entity.getSpeed();
+                        entity.getSolidArea().y += entity.getSpeed();
+                        break;
+                    case "up-right":
+                        entity.getSolidArea().x += entity.getSpeed();
+                        entity.getSolidArea().y -= entity.getSpeed();
+                        break;
                 }
 
                 if (entity.getSolidArea().intersects(target[i].getSolidArea()))
@@ -178,6 +188,22 @@ public class CollisionChecker {
                 break;
             case "right":
                 entity.getSolidArea().x += entity.getSpeed();
+                break;
+            case "up-left":
+                entity.getSolidArea().x -= entity.getSpeed();
+                entity.getSolidArea().y -= entity.getSpeed();
+                break;
+            case "down-left":
+                entity.getSolidArea().x -= entity.getSpeed();
+                entity.getSolidArea().y += entity.getSpeed();
+                break;
+            case "down-right":
+                entity.getSolidArea().x += entity.getSpeed();
+                entity.getSolidArea().y += entity.getSpeed();
+                break;
+            case "up-right":
+                entity.getSolidArea().x += entity.getSpeed();
+                entity.getSolidArea().y -= entity.getSpeed();
                 break;
         }
 

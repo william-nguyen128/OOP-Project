@@ -52,24 +52,41 @@ public class MON_GreenSlime extends Entity {
         down2 = setup("/monster/greenslime_down_2", width, height);
         right1 = setup("/monster/greenslime_down_1", width, height);
         right2 = setup("/monster/greenslime_down_2", width, height);
+
+        up_left1 = setup("/monster/greenslime_down_1", width, height);
+        up_left2 = setup("/monster/greenslime_down_2", width, height);
+        down_left1 = setup("/monster/greenslime_down_1", width, height);
+        down_left2 = setup("/monster/greenslime_down_2", width, height);
+        down_right1 = setup("/monster/greenslime_down_1", width, height);
+        down_right2 = setup("/monster/greenslime_down_2", width, height);
+        up_right1 = setup("/monster/greenslime_down_1", width, height);
+        up_right2 = setup("/monster/greenslime_down_2", width, height);
     }
 
     // Overridden methods
     @Override
     public void setAction() {
         actionLockCounter++;
-        if (actionLockCounter == 120) {
+        if (actionLockCounter == 60) {
             Random random = new Random();
             int i = random.nextInt(100) + 1; // Random from 1 to 100
 
-            if (i > 0 && i <= 25)
+            if (i > 0 && i <= 12.5)
                 direction = "up";
-            if (i > 25 && i <= 50)
+            if (i > 12.5 && i <= 25)
                 direction = "left";
-            if (i > 50 && i <= 75)
+            if (i > 25 && i <= 37.5)
                 direction = "down";
-            if (i > 75 && i <= 100)
+            if (i > 37.5 && i <= 50)
                 direction = "right";
+            if (i > 50 && i <= 62.5)
+                direction = "up-left";
+            if (i > 62.5 && i <= 75)
+                direction = "down-left";
+            if (i > 75 && i <= 87.5)
+                direction = "down-right";
+            if (i > 87.5 && i <= 100)
+                direction = "up-right";
 
             actionLockCounter = 0;
         }

@@ -300,7 +300,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         // ============ DEBUG ONLY ============ //
         // Press 'T' to show Debug Texts
-        if (keyHandler.isShowDebugTexts() == true) {
+        if (gameState == GAME_STATE.Play && keyHandler.isShowDebugTexts() == true) {
             long drawEnd = System.nanoTime();
             long passed = drawEnd - drawStart;
 
@@ -324,6 +324,10 @@ public class GamePanel extends JPanel implements Runnable {
             g2d.drawString("row : " + (player.getWorldY() + player.getSolidArea().y) / TILE_SIZE, x, y);
             y += lineHeight;
             g2d.drawString("Draw Time : " + passed, x, y);
+            y += lineHeight;
+
+            // Show Player's moving direction
+            g2d.drawString("Moving Direction : " + player.getDirection(), x, y);
             y += lineHeight;
 
             // Show Player's hit box

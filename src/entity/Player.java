@@ -5,6 +5,7 @@ import java.awt.Rectangle;
 import java.awt.Graphics2D;
 // import java.awt.Font;
 import java.awt.AlphaComposite;
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -81,6 +82,15 @@ public class Player extends Entity {
         down2 = setup("/player/boy_down_2", width, height);
         right1 = setup("/player/boy_right_1", width, height);
         right2 = setup("/player/boy_right_2", width, height);
+
+        up_left1 = setup("/player/boy_left_1", width, height);
+        up_left2 = setup("/player/boy_left_2", width, height);
+        down_left1 = setup("/player/boy_left_1", width, height);
+        down_left2 = setup("/player/boy_left_2", width, height);
+        down_right1 = setup("/player/boy_right_1", width, height);
+        down_right2 = setup("/player/boy_right_2", width, height);
+        up_right1 = setup("/player/boy_right_1", width, height);
+        up_right2 = setup("/player/boy_right_2", width, height);
     }
 
     private void getPlayerAttackImage() {
@@ -98,6 +108,15 @@ public class Player extends Entity {
             attackLeft2 = setup("/player/boy_attack_left_2", width, height);
             attackRight1 = setup("/player/boy_attack_right_1", width, height);
             attackRight2 = setup("/player/boy_attack_right_2", width, height);
+
+            attackUpLeft1 = setup("/player/boy_attack_left_1", width, height);
+            attackUpLeft2 = setup("/player/boy_attack_left_2", width, height);
+            attackDownLeft1 = setup("/player/boy_attack_left_1", width, height);
+            attackDownLeft2 = setup("/player/boy_attack_left_2", width, height);
+            attackDownRight1 = setup("/player/boy_attack_right_1", width, height);
+            attackDownRight2 = setup("/player/boy_attack_right_2", width, height);
+            attackUpRight1 = setup("/player/boy_attack_right_1", width, height);
+            attackUpRight2 = setup("/player/boy_attack_right_2", width, height);
         }
 
         if (currentWeapon.type == TYPE.Axe) {
@@ -114,6 +133,15 @@ public class Player extends Entity {
             attackLeft2 = setup("/player/boy_axe_left_2", width, height);
             attackRight1 = setup("/player/boy_axe_right_1", width, height);
             attackRight2 = setup("/player/boy_axe_right_2", width, height);
+
+            attackUpLeft1 = setup("/player/boy_axe_left_1", width, height);
+            attackUpLeft2 = setup("/player/boy_axe_left_2", width, height);
+            attackDownLeft1 = setup("/player/boy_axe_left_1", width, height);
+            attackDownLeft2 = setup("/player/boy_axe_left_2", width, height);
+            attackDownRight1 = setup("/player/boy_axe_right_1", width, height);
+            attackDownRight2 = setup("/player/boy_axe_right_2", width, height);
+            attackUpRight1 = setup("/player/boy_axe_right_1", width, height);
+            attackUpRight2 = setup("/player/boy_axe_right_2", width, height);
         }
     }
 
@@ -160,20 +188,52 @@ public class Player extends Entity {
     // Overridden methods
     @Override
     public void update() {
+        int tempWorldX = worldX;
+        int tempWorldY = worldY;
+        int diagonalSpeed = speed / gamePanel.getTileSize() - 1;
+
         if (attacking == true)
             attacking();
         else if (keyHandler.isUpPressed() == true || keyHandler.isLeftPressed() == true ||
                 keyHandler.isDownPressed() == true || keyHandler.isRightPressed() == true ||
                 keyHandler.isInteractPressed() == true || keyHandler.isAttackPressed() == true) {
             // Set direction
-            if (keyHandler.isUpPressed() == true)
+            if (keyHandler.isUpPressed() == true) {
                 direction = "up";
-            else if (keyHandler.isLeftPressed() == true)
+                worldY -= speed;
+            }
+            if (keyHandler.isLeftPressed() == true) {
                 direction = "left";
-            else if (keyHandler.isDownPressed() == true)
+                worldX -= speed;
+            }
+            if (keyHandler.isDownPressed() == true) {
                 direction = "down";
-            else if (keyHandler.isRightPressed() == true)
+                worldY += speed;
+            }
+            if (keyHandler.isRightPressed() == true) {
                 direction = "right";
+                worldX += speed;
+            }
+            if (keyHandler.isUpPressed() == true && keyHandler.isLeftPressed() == true) {
+                direction = "up-left";
+                worldX -= diagonalSpeed;
+                worldY -= diagonalSpeed;
+            }
+            if (keyHandler.isDownPressed() == true && keyHandler.isLeftPressed() == true) {
+                direction = "down-left";
+                worldX -= diagonalSpeed;
+                worldY += diagonalSpeed;
+            }
+            if (keyHandler.isDownPressed() == true && keyHandler.isRightPressed() == true) {
+                direction = "down-right";
+                worldX += diagonalSpeed;
+                worldY += diagonalSpeed;
+            }
+            if (keyHandler.isUpPressed() == true && keyHandler.isRightPressed() == true) {
+                direction = "up-right";
+                worldX += diagonalSpeed;
+                worldY -= diagonalSpeed;
+            }
 
             // Check tile collision
             collisionOn = false;
@@ -195,22 +255,10 @@ public class Player extends Entity {
             gamePanel.getEventHandler().checkEvent();
 
             // If collision = false => Player can move
-            if (collisionOn == false && keyHandler.isInteractPressed() == false
-                    && gamePanel.getKeyHandler().isAttackPressed() == false)
-                switch (direction) {
-                    case "up":
-                        worldY -= speed;
-                        break;
-                    case "left":
-                        worldX -= speed;
-                        break;
-                    case "down":
-                        worldY += speed;
-                        break;
-                    case "right":
-                        worldX += speed;
-                        break;
-                }
+            if (collisionOn == true) {
+                worldX = tempWorldX;
+                worldY = tempWorldY;
+            }
 
             gamePanel.getKeyHandler().setInteractPressed(false);
             gamePanel.getKeyHandler().setAttackPressed(false);
@@ -232,6 +280,7 @@ public class Player extends Entity {
             }
         }
 
+        // Casting projectiles (spells)
         if (gamePanel.getKeyHandler().isCastPressed() == true && projectile.alive == false &&
                 shotAvailableCounter == 30 && projectile.haveResource(this) == true) {
             projectile.set(worldX, worldY, direction, true, this);
@@ -241,6 +290,7 @@ public class Player extends Entity {
             gamePanel.playSoundEffect(10);
         }
 
+        // Invincibility frame
         if (invincible == true) {
             invincibleCounter++;
             if (invincibleCounter > 60) {
@@ -279,6 +329,10 @@ public class Player extends Entity {
                         image = attackUp1;
                     if (spriteNum == 2)
                         image = attackUp2;
+                    // ============ DEBUG ONLY ============ //
+                    drawWeaponHitBox(g2d, SCREEN_X + solidArea.x,
+                            SCREEN_Y + solidArea.y - currentWeapon.attackArea.height);
+                    // ============ DEBUG ONLY ============ //
                 }
                 break;
             case "left":
@@ -294,6 +348,10 @@ public class Player extends Entity {
                         image = attackLeft1;
                     if (spriteNum == 2)
                         image = attackLeft2;
+                    // ============ DEBUG ONLY ============ //
+                    drawWeaponHitBox(g2d, SCREEN_X + solidArea.x - currentWeapon.attackArea.width,
+                            SCREEN_Y + solidArea.y);
+                    // ============ DEBUG ONLY ============ //
                 }
                 break;
             case "down":
@@ -308,6 +366,10 @@ public class Player extends Entity {
                         image = attackDown1;
                     if (spriteNum == 2)
                         image = attackDown2;
+                    // ============ DEBUG ONLY ============ //
+                    drawWeaponHitBox(g2d, SCREEN_X + solidArea.x,
+                            SCREEN_Y + solidArea.y + currentWeapon.attackArea.height);
+                    // ============ DEBUG ONLY ============ //
                 }
                 break;
             case "right":
@@ -322,6 +384,84 @@ public class Player extends Entity {
                         image = attackRight1;
                     if (spriteNum == 2)
                         image = attackRight2;
+                    // ============ DEBUG ONLY ============ //
+                    drawWeaponHitBox(g2d, SCREEN_X + solidArea.x + currentWeapon.attackArea.width,
+                            SCREEN_Y + solidArea.y);
+                    // ============ DEBUG ONLY ============ //
+                }
+                break;
+            case "up-left":
+                if (attacking == false) {
+                    if (spriteNum == 1)
+                        image = up_left1;
+                    if (spriteNum == 2)
+                        image = up_left2;
+                }
+                if (attacking == true) {
+                    x = SCREEN_X - gamePanel.getTileSize();
+                    if (spriteNum == 1)
+                        image = attackUpLeft1;
+                    if (spriteNum == 2)
+                        image = attackUpLeft2;
+                    // ============ DEBUG ONLY ============ //
+                    drawWeaponHitBox(g2d, SCREEN_X + solidArea.x - currentWeapon.attackArea.width,
+                            SCREEN_Y + solidArea.y);
+                    // ============ DEBUG ONLY ============ //
+                }
+                break;
+            case "down-left":
+                if (attacking == false) {
+                    if (spriteNum == 1)
+                        image = down_left1;
+                    if (spriteNum == 2)
+                        image = down_left2;
+                }
+                if (attacking == true) {
+                    x = SCREEN_X - gamePanel.getTileSize();
+                    if (spriteNum == 1)
+                        image = attackDownLeft1;
+                    if (spriteNum == 2)
+                        image = attackDownLeft2;
+                    // ============ DEBUG ONLY ============ //
+                    drawWeaponHitBox(g2d, SCREEN_X + solidArea.x - currentWeapon.attackArea.width,
+                            SCREEN_Y + solidArea.y);
+                    // ============ DEBUG ONLY ============ //
+                }
+                break;
+            case "down-right":
+                if (attacking == false) {
+                    if (spriteNum == 1)
+                        image = down_right1;
+                    if (spriteNum == 2)
+                        image = down_right2;
+                }
+                if (attacking == true) {
+                    if (spriteNum == 1)
+                        image = attackDownRight1;
+                    if (spriteNum == 2)
+                        image = attackDownRight2;
+                    // ============ DEBUG ONLY ============ //
+                    drawWeaponHitBox(g2d, SCREEN_X + solidArea.x + currentWeapon.attackArea.width,
+                            SCREEN_Y + solidArea.y);
+                    // ============ DEBUG ONLY ============ //
+                }
+                break;
+            case "up-right":
+                if (attacking == false) {
+                    if (spriteNum == 1)
+                        image = up_right1;
+                    if (spriteNum == 2)
+                        image = up_right2;
+                }
+                if (attacking == true) {
+                    if (spriteNum == 1)
+                        image = attackUpRight1;
+                    if (spriteNum == 2)
+                        image = attackUpRight2;
+                    // ============ DEBUG ONLY ============ //
+                    drawWeaponHitBox(g2d, SCREEN_X + solidArea.x + currentWeapon.attackArea.width,
+                            SCREEN_Y + solidArea.y);
+                    // ============ DEBUG ONLY ============ //
                 }
                 break;
         }
@@ -399,6 +539,18 @@ public class Player extends Entity {
                     worldY += attackArea.height;
                     break;
                 case "right":
+                    worldX += attackArea.width;
+                    break;
+                case "up-left":
+                    worldX -= attackArea.width;
+                    break;
+                case "down-left":
+                    worldX -= attackArea.width;
+                    break;
+                case "down-right":
+                    worldX += attackArea.width;
+                    break;
+                case "up-right":
                     worldX += attackArea.width;
                     break;
             }
@@ -487,6 +639,15 @@ public class Player extends Entity {
         }
     }
 
+    // ============ DEBUG ONLY ============ //
+    private void drawWeaponHitBox(Graphics2D g2d, int startX, int startY) {
+        if (gamePanel.gameState == GAME_STATE.Play && keyHandler.isShowDebugTexts() == true) {
+            g2d.setColor(Color.RED);
+            g2d.drawRect(startX, startY, currentWeapon.attackArea.width, currentWeapon.attackArea.height);
+        }
+    }
+    // ============ DEBUG ONLY ============ //
+
     // Getter
     public ArrayList<Entity> getInventory() {
         return inventory;
@@ -494,5 +655,9 @@ public class Player extends Entity {
 
     public int getInvincibleCounter() {
         return invincibleCounter;
+    }
+
+    public boolean isAttacking() {
+        return attacking;
     }
 }

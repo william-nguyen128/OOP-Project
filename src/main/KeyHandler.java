@@ -95,28 +95,29 @@ public class KeyHandler implements KeyListener {
     }
 
     public void playState(int code) {
+        // Vertical & Horizontal movements
         if (code == KeyEvent.VK_W || code == KeyEvent.VK_UP)
-            upPressed = true;
+            upPressed = true; // NORTH
         if (code == KeyEvent.VK_A || code == KeyEvent.VK_LEFT)
-            leftPressed = true;
+            leftPressed = true; // WEST
         if (code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN)
-            downPressed = true;
+            downPressed = true; // SOUTH
         if (code == KeyEvent.VK_D || code == KeyEvent.VK_RIGHT)
-            rightPressed = true;
-        if (code == KeyEvent.VK_I)
-            gamePanel.gameState = GAME_STATE.Character;
-        if (code == KeyEvent.VK_E)
-            interactPressed = true;
-        if (code == KeyEvent.VK_J)
-            attackPressed = true;
-        if (code == KeyEvent.VK_K)
-            castPressed = true;
-        if (code == KeyEvent.VK_ESCAPE)
-            gamePanel.gameState = GAME_STATE.Options;
+            rightPressed = true; // EAST
 
-        // Pause the game
+        // Other key bindings
+        if (code == KeyEvent.VK_I)
+            gamePanel.gameState = GAME_STATE.Character; // Character Screen/Inventory
+        if (code == KeyEvent.VK_E)
+            interactPressed = true; // Interacting
+        if (code == KeyEvent.VK_J)
+            attackPressed = true; // Attacking
+        if (code == KeyEvent.VK_K)
+            castPressed = true; // (Spell) Casting
         if (code == KeyEvent.VK_P)
-            gamePanel.gameState = GAME_STATE.Pause;
+            gamePanel.gameState = GAME_STATE.Pause; // Pause the game
+        if (code == KeyEvent.VK_ESCAPE)
+            gamePanel.gameState = GAME_STATE.Options; // Option Screen
 
         // ============ DEBUG ONLY ============ //
         if (code == KeyEvent.VK_T)

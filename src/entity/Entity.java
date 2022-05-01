@@ -17,9 +17,12 @@ public class Entity {
     // Attributes
     protected GamePanel gamePanel;
     protected BufferedImage image, image2, image3;
-    protected BufferedImage up1, up2, left1, left2, down1, down2, right1, right2;
+    protected BufferedImage up1, up2, left1, left2, down1, down2, right1, right2,
+            up_left1, up_left2, down_left1, down_left2, down_right1, down_right2, up_right1, up_right2;
     protected BufferedImage attackUp1, attackUp2, attackLeft1, attackLeft2,
-            attackDown1, attackDown2, attackRight1, attackRight2;
+            attackDown1, attackDown2, attackRight1, attackRight2,
+            attackUpLeft1, attackUpLeft2, attackDownLeft1, attackDownLeft2,
+            attackDownRight1, attackDownRight2, attackUpRight1, attackUpRight2;
     protected Rectangle solidArea = new Rectangle(0, 0, 48, 48);
     protected Rectangle attackArea = new Rectangle(0, 0, 0, 0);
     protected int solidAreaDefaultX, solidAreaDefaultY;
@@ -122,6 +125,18 @@ public class Entity {
             case "right":
                 direction = "left";
                 break;
+            case "up-left":
+                direction = "down-right";
+                break;
+            case "down-left":
+                direction = "up-right";
+                break;
+            case "down-right":
+                direction = "up-left";
+                break;
+            case "up-right":
+                direction = "down-left";
+                break;
         }
     }
 
@@ -205,6 +220,22 @@ public class Entity {
                 case "right":
                     worldX += speed;
                     break;
+                case "up-left":
+                    worldX -= speed;
+                    worldY -= speed;
+                    break;
+                case "down-left":
+                    worldX -= speed;
+                    worldY += speed;
+                    break;
+                case "down-right":
+                    worldX += speed;
+                    worldY += speed;
+                    break;
+                case "up-right":
+                    worldX += speed;
+                    worldY -= speed;
+                    break;
             }
 
         // Player's sprite change
@@ -262,6 +293,30 @@ public class Entity {
                         image = right1;
                     if (spriteNum == 2)
                         image = right2;
+                    break;
+                case "up-left":
+                    if (spriteNum == 1)
+                        image = up_left1;
+                    if (spriteNum == 2)
+                        image = up_left2;
+                    break;
+                case "down-left":
+                    if (spriteNum == 1)
+                        image = down_left1;
+                    if (spriteNum == 2)
+                        image = down_left2;
+                    break;
+                case "down-right":
+                    if (spriteNum == 1)
+                        image = down_right1;
+                    if (spriteNum == 2)
+                        image = down_right2;
+                    break;
+                case "up-right":
+                    if (spriteNum == 1)
+                        image = up_right1;
+                    if (spriteNum == 2)
+                        image = up_right2;
                     break;
             }
 
@@ -361,6 +416,10 @@ public class Entity {
 
     public Rectangle getSolidArea() {
         return solidArea;
+    }
+
+    public Rectangle getAttackArea() {
+        return attackArea;
     }
 
     public int getSolidAreaDefaultX() {
