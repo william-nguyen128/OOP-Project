@@ -52,6 +52,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     // FPS
     private int FPS = 60;
+    private int currentFPS = 0;
 
     // System
     private TileManager tileManager = new TileManager(this);
@@ -183,6 +184,7 @@ public class GamePanel extends JPanel implements Runnable {
 
             if (timer >= 1000000000) {
                 System.out.println("FPS: " + drawCount);
+                currentFPS = drawCount;
                 drawCount = 0;
                 timer = 0;
             }
@@ -308,6 +310,10 @@ public class GamePanel extends JPanel implements Runnable {
             int y = 400;
             int lineHeight = 20;
 
+            // Show current FPS
+            g2d.drawString("FPS : " + currentFPS, x, y);
+            y += lineHeight;
+
             // Show World's Coordinates
             g2d.drawString("getWorldX() : " + player.getWorldX(), x, y);
             y += lineHeight;
@@ -317,7 +323,7 @@ public class GamePanel extends JPanel implements Runnable {
             y += lineHeight;
             g2d.drawString("row : " + (player.getWorldY() + player.getSolidArea().y) / TILE_SIZE, x, y);
             y += lineHeight;
-            g2d.drawString("Draw Time: " + passed, x, y);
+            g2d.drawString("Draw Time : " + passed, x, y);
             y += lineHeight;
 
             // Show Player's hit box
@@ -327,7 +333,7 @@ public class GamePanel extends JPanel implements Runnable {
 
             // Show Player's Invincibility Frame
             g2d.setColor(Color.WHITE);
-            g2d.drawString("Invincible: " + player.getInvincibleCounter(), x, y);
+            g2d.drawString("Invincible Frame : " + player.getInvincibleCounter(), x, y);
         }
         // ============ DEBUG ONLY ============ //
     }
