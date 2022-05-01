@@ -52,7 +52,7 @@ public class GamePanel extends JPanel implements Runnable {
 
     // FPS
     private int FPS = 60;
-    private double currentFPS = 0;
+    private int currentFPS = 0;
 
     // System
     private TileManager tileManager = new TileManager(this);
@@ -175,7 +175,7 @@ public class GamePanel extends JPanel implements Runnable {
         long lastTime = System.nanoTime();
         long currentTime;
         long timer = 0;
-        double drawCount = 0;
+        int drawCount = 0;
 
         while (gameThread != null) {
             currentTime = System.nanoTime();
