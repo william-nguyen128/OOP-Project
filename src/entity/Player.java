@@ -53,6 +53,7 @@ public class Player extends Entity {
         invincible = false;
 
         // Player's Status
+        type = TYPE.Player;
         level = 1;
         maxLife = 6;
         life = maxLife;
@@ -84,23 +85,39 @@ public class Player extends Entity {
         int width = gamePanel.getTileSize();
         int height = gamePanel.getTileSize();
 
-        up1 = setup("/player/boy_up_1", width, height);
-        up2 = setup("/player/boy_up_2", width, height);
-        left1 = setup("/player/boy_left_1", width, height);
-        left2 = setup("/player/boy_left_2", width, height);
-        down1 = setup("/player/boy_down_1", width, height);
-        down2 = setup("/player/boy_down_2", width, height);
-        right1 = setup("/player/boy_right_1", width, height);
-        right2 = setup("/player/boy_right_2", width, height);
+        up1 = setup("/player/player_left_1", width, height);
+        up2 = setup("/player/player_left_2", width, height);
+        up3 = setup("/player/player_left_3", width, height);
+        up4 = setup("/player/player_left_4", width, height);
+        left1 = setup("/player/player_left_1", width, height);
+        left2 = setup("/player/player_left_2", width, height);
+        left3 = setup("/player/player_left_3", width, height);
+        left4 = setup("/player/player_left_4", width, height);
+        down1 = setup("/player/player_right_1", width, height);
+        down2 = setup("/player/player_right_2", width, height);
+        down3 = setup("/player/player_right_3", width, height);
+        down4 = setup("/player/player_right_4", width, height);
+        right1 = setup("/player/player_right_1", width, height);
+        right2 = setup("/player/player_right_2", width, height);
+        right3 = setup("/player/player_right_3", width, height);
+        right4 = setup("/player/player_right_4", width, height);
 
-        up_left1 = setup("/player/boy_left_1", width, height);
-        up_left2 = setup("/player/boy_left_2", width, height);
-        down_left1 = setup("/player/boy_left_1", width, height);
-        down_left2 = setup("/player/boy_left_2", width, height);
-        down_right1 = setup("/player/boy_right_1", width, height);
-        down_right2 = setup("/player/boy_right_2", width, height);
-        up_right1 = setup("/player/boy_right_1", width, height);
-        up_right2 = setup("/player/boy_right_2", width, height);
+        up_left1 = setup("/player/player_left_1", width, height);
+        up_left2 = setup("/player/player_left_2", width, height);
+        up_left3 = setup("/player/player_left_3", width, height);
+        up_left4 = setup("/player/player_left_4", width, height);
+        down_left1 = setup("/player/player_left_1", width, height);
+        down_left2 = setup("/player/player_left_2", width, height);
+        down_left3 = setup("/player/player_left_3", width, height);
+        down_left4 = setup("/player/player_left_4", width, height);
+        down_right1 = setup("/player/player_right_1", width, height);
+        down_right2 = setup("/player/player_right_2", width, height);
+        down_right3 = setup("/player/player_right_3", width, height);
+        down_right4 = setup("/player/player_right_4", width, height);
+        up_right1 = setup("/player/player_right_1", width, height);
+        up_right2 = setup("/player/player_right_2", width, height);
+        up_right3 = setup("/player/player_right_3", width, height);
+        up_right4 = setup("/player/player_right_4", width, height);
     }
 
     private void getPlayerAttackImage() {
@@ -267,10 +284,14 @@ public class Player extends Entity {
 
             // Player's sprite change
             spriteCounter++;
-            if (spriteCounter > 15) {
+            if (spriteCounter > 10) {
                 if (spriteNum == 1)
                     spriteNum = 2;
                 else if (spriteNum == 2)
+                    spriteNum = 3;
+                else if (spriteNum == 3)
+                    spriteNum = 4;
+                else if (spriteNum == 4)
                     spriteNum = 1;
                 spriteCounter = 0;
             }
@@ -331,6 +352,10 @@ public class Player extends Entity {
                         image = up1;
                     if (spriteNum == 2)
                         image = up2;
+                    if (spriteNum == 3)
+                        image = up3;
+                    if (spriteNum == 4)
+                        image = up4;
                 }
                 if (attacking == true) {
                     y = SCREEN_Y - gamePanel.getTileSize();
@@ -350,6 +375,10 @@ public class Player extends Entity {
                         image = left1;
                     if (spriteNum == 2)
                         image = left2;
+                    if (spriteNum == 3)
+                        image = left3;
+                    if (spriteNum == 4)
+                        image = left4;
                 }
                 if (attacking == true) {
                     x = SCREEN_X - gamePanel.getTileSize();
@@ -369,6 +398,10 @@ public class Player extends Entity {
                         image = down1;
                     if (spriteNum == 2)
                         image = down2;
+                    if (spriteNum == 3)
+                        image = down3;
+                    if (spriteNum == 4)
+                        image = down4;
                 }
                 if (attacking == true) {
                     if (spriteNum == 1)
@@ -387,6 +420,10 @@ public class Player extends Entity {
                         image = right1;
                     if (spriteNum == 2)
                         image = right2;
+                    if (spriteNum == 3)
+                        image = right3;
+                    if (spriteNum == 4)
+                        image = right4;
                 }
                 if (attacking == true) {
                     if (spriteNum == 1)
@@ -405,6 +442,10 @@ public class Player extends Entity {
                         image = up_left1;
                     if (spriteNum == 2)
                         image = up_left2;
+                    if (spriteNum == 3)
+                        image = up_left3;
+                    if (spriteNum == 4)
+                        image = up_left4;
                 }
                 if (attacking == true) {
                     x = SCREEN_X - gamePanel.getTileSize();
@@ -424,6 +465,10 @@ public class Player extends Entity {
                         image = down_left1;
                     if (spriteNum == 2)
                         image = down_left2;
+                    if (spriteNum == 3)
+                        image = down_left3;
+                    if (spriteNum == 4)
+                        image = down_left4;
                 }
                 if (attacking == true) {
                     x = SCREEN_X - gamePanel.getTileSize();
@@ -443,6 +488,10 @@ public class Player extends Entity {
                         image = down_right1;
                     if (spriteNum == 2)
                         image = down_right2;
+                    if (spriteNum == 3)
+                        image = down_right3;
+                    if (spriteNum == 4)
+                        image = down_right4;
                 }
                 if (attacking == true) {
                     if (spriteNum == 1)
@@ -461,6 +510,10 @@ public class Player extends Entity {
                         image = up_right1;
                     if (spriteNum == 2)
                         image = up_right2;
+                    if (spriteNum == 3)
+                        image = up_right3;
+                    if (spriteNum == 4)
+                        image = up_right4;
                 }
                 if (attacking == true) {
                     if (spriteNum == 1)

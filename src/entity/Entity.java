@@ -17,8 +17,14 @@ public class Entity {
     // Attributes
     protected GamePanel gamePanel;
     protected BufferedImage image, image2, image3;
-    protected BufferedImage up1, up2, left1, left2, down1, down2, right1, right2,
-            up_left1, up_left2, down_left1, down_left2, down_right1, down_right2, up_right1, up_right2;
+    protected BufferedImage up1, up2, up3, up4;
+    protected BufferedImage left1, left2, left3, left4;
+    protected BufferedImage down1, down2, down3, down4;
+    protected BufferedImage right1, right2, right3, right4;
+    protected BufferedImage up_left1, up_left2, up_left3, up_left4;
+    protected BufferedImage down_left1, down_left2, down_left3, down_left4;
+    protected BufferedImage down_right1, down_right2, down_right3, down_right4;
+    protected BufferedImage up_right1, up_right2, up_right3, up_right4;
     protected BufferedImage attackUp1, attackUp2, attackLeft1, attackLeft2,
             attackDown1, attackDown2, attackRight1, attackRight2,
             attackUpLeft1, attackUpLeft2, attackDownLeft1, attackDownLeft2,
