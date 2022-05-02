@@ -2,15 +2,12 @@ package entity.monster;
 
 import java.util.Random;
 
-import entity.Entity;
-import entity.TYPE;
 import entity.object.OBJ_Coin_Bronze;
 import entity.object.OBJ_Heart;
 import entity.object.OBJ_ManaCrystal;
-import entity.object.OBJ_Rock;
 import main.GamePanel;
 
-public class MON_GreenSlime extends Entity {
+public class MON_GreenSlime extends Monster {
     // Attribute
     private GamePanel gamePanel;
 
@@ -19,7 +16,6 @@ public class MON_GreenSlime extends Entity {
         super(gamePanel);
         this.gamePanel = gamePanel;
 
-        type = TYPE.Monster;
         name = "Green Slime";
         speed = 1;
         maxLife = 5;
@@ -27,7 +23,6 @@ public class MON_GreenSlime extends Entity {
         attack = 5;
         defense = 0;
         exp = 2;
-        projectile = new OBJ_Rock(gamePanel);
 
         solidArea.x = 3;
         solidArea.y = 18;
@@ -65,43 +60,7 @@ public class MON_GreenSlime extends Entity {
 
     // Overridden methods
     @Override
-    public void setAction() {
-        actionLockCounter++;
-        if (actionLockCounter == 60) {
-            Random random = new Random();
-            int i = random.nextInt(100) + 1; // Random from 1 to 100
-
-            if (i > 0 && i <= 12.5)
-                direction = "up";
-            if (i > 12.5 && i <= 25)
-                direction = "left";
-            if (i > 25 && i <= 37.5)
-                direction = "down";
-            if (i > 37.5 && i <= 50)
-                direction = "right";
-            if (i > 50 && i <= 62.5)
-                direction = "up-left";
-            if (i > 62.5 && i <= 75)
-                direction = "down-left";
-            if (i > 75 && i <= 87.5)
-                direction = "down-right";
-            if (i > 87.5 && i <= 100)
-                direction = "up-right";
-
-            actionLockCounter = 0;
-        }
-
-        int i = new Random().nextInt(100) + 1;
-        if (i > 99 && projectile.isAlive() == false && shotAvailableCounter == 30) {
-            projectile.set(worldX, worldY, direction, true, this);
-            gamePanel.getProjectileList().add(projectile);
-            shotAvailableCounter = 0;
-        }
-    }
-
-    @Override
     public void damageReaction() {
-        actionLockCounter = 0;
         direction = gamePanel.getPlayer().getDirection();
     }
 

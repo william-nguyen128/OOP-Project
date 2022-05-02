@@ -1,7 +1,6 @@
 package main;
 
 import entity.monster.MON_GreenSlime;
-import entity.npc.NPC_OldMan;
 import entity.object.OBJ_Axe;
 import entity.object.OBJ_Heart;
 import entity.object.OBJ_ManaCrystal;
@@ -38,12 +37,6 @@ public class AssetSetter {
         gamePanel.getObjects()[7] = new OBJ_ManaCrystal(gamePanel);
         gamePanel.getObjects()[7].setWorldX(gamePanel.getTileSize() * 22);
         gamePanel.getObjects()[7].setWorldY(gamePanel.getTileSize() * 31);
-    }
-
-    public void setNPC() {
-        gamePanel.getNPCs()[0] = new NPC_OldMan(gamePanel);
-        gamePanel.getNPCs()[0].setWorldX(gamePanel.getTileSize() * 21);
-        gamePanel.getNPCs()[0].setWorldY(gamePanel.getTileSize() * 21);
     }
 
     public void setMonster() {

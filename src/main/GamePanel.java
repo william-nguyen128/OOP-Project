@@ -99,7 +99,6 @@ public class GamePanel extends JPanel implements Runnable {
 
     protected void setupGame() {
         assetSetter.setObject();
-        assetSetter.setNPC();
         assetSetter.setMonster();
         gameState = GAME_STATE.Title;
 
@@ -115,7 +114,6 @@ public class GamePanel extends JPanel implements Runnable {
         player.setItems();
 
         assetSetter.setObject();
-        assetSetter.setNPC();
         assetSetter.setMonster();
     }
 

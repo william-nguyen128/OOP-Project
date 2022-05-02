@@ -130,7 +130,7 @@ public class KeyHandler implements KeyListener {
             else
                 showDebugTexts = false;
         if (code == KeyEvent.VK_R)
-            gamePanel.getTileManager().loadMap("/maps/worldV2.txt");
+            gamePanel.getTileManager().loadMap("/maps/worldV3.txt");
         // ============ DEBUG ONLY ============ //
     }
 
