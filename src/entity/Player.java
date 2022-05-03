@@ -710,7 +710,7 @@ public class Player extends Entity {
     }
     // ============ DEBUG ONLY ============ //
 
-    // Getter
+    // Getters
     public ArrayList<Entity> getInventory() {
         return inventory;
     }
