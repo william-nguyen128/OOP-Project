@@ -4,8 +4,7 @@ public enum TYPE {
     Player,
     NPC,
     Monster,
-    Sword,
-    Axe,
+    Weapon,
     Shield,
     Consumable,
     PickupOnly;

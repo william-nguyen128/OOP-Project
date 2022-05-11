@@ -17,6 +17,7 @@ import javax.swing.JPanel;
 
 import entity.Entity;
 import entity.Player;
+import entity.monster.Monster;
 import tiles.TileManager;
 
 public class GamePanel extends JPanel implements Runnable {
@@ -70,10 +71,10 @@ public class GamePanel extends JPanel implements Runnable {
     private Player player = new Player(this, keyHandler);
     private Entity obj[] = new Entity[20];
     private Entity npc[] = new Entity[10];
-    private Entity monster[] = new Entity[20];
+    private Monster monster[] = new Monster[20];
+    private ArrayList<Entity> entityList = new ArrayList<>();
     private ArrayList<Entity> projectileList = new ArrayList<>();
     private ArrayList<Entity> particleList = new ArrayList<>();
-    private ArrayList<Entity> entityList = new ArrayList<>();
 
     // Game States
     public GAME_STATE gameState;
@@ -110,6 +111,10 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     protected void restart() {
+        entityList.clear();
+        projectileList.clear();
+        particleList.clear();
+
         player.setDefaultValues();
         player.setItems();
 
@@ -333,8 +338,10 @@ public class GamePanel extends JPanel implements Runnable {
             g2d.drawString("Draw Time : " + passed, x, y);
             y += lineHeight;
 
-            // Show Player's moving direction
+            // Show Player's moving direction & facing direction
             g2d.drawString("Moving Direction : " + player.getDirection(), x, y);
+            y += lineHeight;
+            g2d.drawString("Facing Right? : " + player.isFacingRight(), x, y);
             y += lineHeight;
 
             // Show Player's hit box
@@ -472,7 +479,7 @@ public class GamePanel extends JPanel implements Runnable {
         return npc;
     }
 
-    public Entity[] getMonsters() {
+    public Monster[] getMonsters() {
         return monster;
     }
 

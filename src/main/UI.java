@@ -13,10 +13,6 @@ import java.io.InputStream;
 // import java.text.DecimalFormat;
 import java.util.ArrayList;
 
-import entity.Entity;
-import entity.object.OBJ_Heart;
-import entity.object.OBJ_ManaCrystal;
-
 public class UI {
     private GamePanel gamePanel;
     private Graphics2D g2d;
@@ -50,14 +46,6 @@ public class UI {
         }
 
         // HUD
-        Entity heart = new OBJ_Heart(gamePanel);
-        heart_full = heart.getImage();
-        heart_half = heart.getImage2();
-        heart_blank = heart.getImage3();
-
-        Entity crystal = new OBJ_ManaCrystal(gamePanel);
-        crystal_full = crystal.getImage();
-        crystal_blank = crystal.getImage2();
     }
 
     public void addMessage(String text) {
@@ -471,7 +459,16 @@ public class UI {
         g2d.setColor(Color.WHITE);
         g2d.drawString(text, x - 4, y - 4);
 
+        // Show this run's money
+        g2d.setColor(Color.YELLOW);
+        g2d.setFont(g2d.getFont().deriveFont(30F));
+        text = "Money collected this run: " + gamePanel.getPlayer().getCoin();
+        x = getXForCenteredText(text);
+        y += gamePanel.getTileSize() * 3;
+        g2d.drawString(text, x, y);
+
         // "Quit" button
+        g2d.setColor(Color.WHITE);
         g2d.setFont(g2d.getFont().deriveFont(50F));
         text = "Quit";
         int length = (int) g2d.getFontMetrics().getStringBounds(text, g2d).getWidth();
@@ -666,9 +663,10 @@ public class UI {
         int textX = frameX + gamePanel.getTileSize();
         int textY = frameY + gamePanel.getTileSize() * 3;
 
-        currentDialogue = "Quit the game and\nreturn to the tile screen?";
+        currentDialogue = "End this run now???\nYou sure, mate???";
 
         for (String line : currentDialogue.split("\n")) {
+            textX = getXForCenteredText(line);
             g2d.drawString(line, textX, textY);
             textY += 40;
         }
@@ -695,8 +693,9 @@ public class UI {
             g2d.drawString(">", textX - 25, textY);
             if (gamePanel.getKeyHandler().isInteractPressed() == true) {
                 subState = 0;
+                commandNum = 0;
                 gamePanel.stopMusic();
-                gamePanel.gameState = GAME_STATE.Title;
+                gamePanel.gameState = GAME_STATE.GameOver;
             }
         }
     }
