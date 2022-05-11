@@ -28,23 +28,13 @@ public class OBJ_Fireball extends Projectile {
 
     // Get images
     private void getFireballImage() {
-        up1 = setup("/projectile/fireball_up_1", gamePanel.getTileSize(), gamePanel.getTileSize());
-        up2 = setup("/projectile/fireball_up_2", gamePanel.getTileSize(), gamePanel.getTileSize());
-        left1 = setup("/projectile/fireball_left_1", gamePanel.getTileSize(), gamePanel.getTileSize());
-        left2 = setup("/projectile/fireball_left_2", gamePanel.getTileSize(), gamePanel.getTileSize());
-        down1 = setup("/projectile/fireball_down_1", gamePanel.getTileSize(), gamePanel.getTileSize());
-        down2 = setup("/projectile/fireball_down_2", gamePanel.getTileSize(), gamePanel.getTileSize());
-        right1 = setup("/projectile/fireball_right_1", gamePanel.getTileSize(), gamePanel.getTileSize());
-        right2 = setup("/projectile/fireball_right_2", gamePanel.getTileSize(), gamePanel.getTileSize());
+        int width = gamePanel.getTileSize();
+        int height = gamePanel.getTileSize();
 
-        up_left1 = setup("/projectile/fireball_up_1", gamePanel.getTileSize(), gamePanel.getTileSize());
-        up_left2 = setup("/projectile/fireball_up_2", gamePanel.getTileSize(), gamePanel.getTileSize());
-        down_left1 = setup("/projectile/fireball_down_1", gamePanel.getTileSize(), gamePanel.getTileSize());
-        down_left2 = setup("/projectile/fireball_down_2", gamePanel.getTileSize(), gamePanel.getTileSize());
-        down_right1 = setup("/projectile/fireball_down_1", gamePanel.getTileSize(), gamePanel.getTileSize());
-        down_right2 = setup("/projectile/fireball_down_2", gamePanel.getTileSize(), gamePanel.getTileSize());
-        up_right1 = setup("/projectile/fireball_up_1", gamePanel.getTileSize(), gamePanel.getTileSize());
-        up_right2 = setup("/projectile/fireball_up_2", gamePanel.getTileSize(), gamePanel.getTileSize());
+        for (int i = 0; i < 2; i++) {
+            leftSprites[i] = setup("/projectile/fireball_left_" + (i + 1), width, height);
+            rightSprites[i] = setup("/projectile/fireball_right_" + (i + 1), width, height);
+        }
     }
 
     // Overridden methods

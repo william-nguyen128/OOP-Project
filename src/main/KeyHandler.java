@@ -6,7 +6,7 @@ import java.awt.event.KeyListener;
 public class KeyHandler implements KeyListener {
     // Attributes
     private GamePanel gamePanel;
-    private boolean upPressed, leftPressed, downPressed, rightPressed, interactPressed, attackPressed, castPressed;
+    private boolean upPressed, leftPressed, downPressed, rightPressed, interactPressed, castPressed;
 
     // DEBUG
     private boolean showDebugTexts = false;
@@ -84,8 +84,7 @@ public class KeyHandler implements KeyListener {
             if (gamePanel.getUserInterface().getCommandNum() > 2)
                 gamePanel.getUserInterface().setCommandNum(0);
         }
-        if (code == KeyEvent.VK_SPACE || code == KeyEvent.VK_ENTER ||
-                code == KeyEvent.VK_E || code == KeyEvent.VK_J) {
+        if (code == KeyEvent.VK_E || code == KeyEvent.VK_SPACE || code == KeyEvent.VK_ENTER) {
             if (gamePanel.getUserInterface().getCommandNum() == 0) {
                 gamePanel.gameState = GAME_STATE.Play;
                 gamePanel.playMusic(0);
@@ -114,8 +113,6 @@ public class KeyHandler implements KeyListener {
             gamePanel.gameState = GAME_STATE.Character; // Character Screen/Inventory
         if (code == KeyEvent.VK_E)
             interactPressed = true; // Interacting
-        if (code == KeyEvent.VK_J)
-            attackPressed = true; // Attacking
         if (code == KeyEvent.VK_K)
             castPressed = true; // (Spell) Casting
         if (code == KeyEvent.VK_P)
@@ -137,7 +134,7 @@ public class KeyHandler implements KeyListener {
     private void optionsState(int code) {
         if (code == KeyEvent.VK_ESCAPE)
             gamePanel.gameState = GAME_STATE.Play;
-        if (code == KeyEvent.VK_SPACE || code == KeyEvent.VK_ENTER || code == KeyEvent.VK_E || code == KeyEvent.VK_J)
+        if (code == KeyEvent.VK_E || code == KeyEvent.VK_SPACE || code == KeyEvent.VK_ENTER)
             interactPressed = true;
 
         int maxCommandNum = 0;
@@ -197,7 +194,7 @@ public class KeyHandler implements KeyListener {
     }
 
     private void dialogueState(int code) {
-        if (code == KeyEvent.VK_SPACE || code == KeyEvent.VK_ENTER || code == KeyEvent.VK_E || code == KeyEvent.VK_J)
+        if (code == KeyEvent.VK_E || code == KeyEvent.VK_SPACE || code == KeyEvent.VK_ENTER)
             gamePanel.gameState = GAME_STATE.Play;
     }
 
@@ -224,12 +221,12 @@ public class KeyHandler implements KeyListener {
                 gamePanel.getUserInterface().setSlotCol(gamePanel.getUserInterface().getSlotCol() + 1);
                 gamePanel.playSoundEffect(9);
             }
-        if (code == KeyEvent.VK_E || code == KeyEvent.VK_J || code == KeyEvent.VK_SPACE || code == KeyEvent.VK_ENTER)
+        if (code == KeyEvent.VK_E || code == KeyEvent.VK_SPACE || code == KeyEvent.VK_ENTER)
             gamePanel.getPlayer().selectItem();
     }
 
     public void gameOverState(int code) {
-        if (code == KeyEvent.VK_E || code == KeyEvent.VK_J || code == KeyEvent.VK_SPACE || code == KeyEvent.VK_ENTER)
+        if (code == KeyEvent.VK_E || code == KeyEvent.VK_SPACE || code == KeyEvent.VK_ENTER)
             if (gamePanel.getUserInterface().getCommandNum() == 0) {
                 gamePanel.playSoundEffect(9);
                 gamePanel.gameState = GAME_STATE.Title;
@@ -264,14 +261,6 @@ public class KeyHandler implements KeyListener {
 
     public void setInteractPressed(boolean interactPressed) {
         this.interactPressed = interactPressed;
-    }
-
-    public boolean isAttackPressed() {
-        return attackPressed;
-    }
-
-    public void setAttackPressed(boolean attackPressed) {
-        this.attackPressed = attackPressed;
     }
 
     public boolean isCastPressed() {
