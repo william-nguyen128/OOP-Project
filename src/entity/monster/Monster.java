@@ -75,7 +75,7 @@ public class Monster extends Entity {
                     break;
             }
 
-        // Player's sprite change
+        // Monster's sprite change
         spriteCounter++;
         if (spriteCounter > 15) {
             if (spriteNum == 1)
@@ -85,6 +85,7 @@ public class Monster extends Entity {
             spriteCounter = 0;
         }
 
+        // Invincibility frame
         if (invincible == true) {
             invincibleCounter++;
             if (invincibleCounter > 30) {

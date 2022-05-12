@@ -163,9 +163,7 @@ public class Entity {
         if (gamePanel.getPlayer().invincible == false) {
             gamePanel.playSoundEffect(6);
 
-            int damage = attack - gamePanel.getPlayer().defense;
-            if (damage < 0)
-                damage = 1;
+            int damage = attack;
 
             gamePanel.getPlayer().life -= damage;
             gamePanel.getPlayer().invincible = true;
