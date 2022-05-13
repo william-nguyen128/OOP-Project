@@ -31,9 +31,10 @@ public class UI {
     private int slotCol = 0;
     private int slotRow = 0;
     private int subState = 0;
+    public int titleScreenState=0;
 
     // DEBUG ONLY
-    // private double playTime;
+    //private double playTime;
     // private DecimalFormat dFormat = new DecimalFormat("#0.00");
 
     // Constructor
@@ -76,6 +77,9 @@ public class UI {
         if (gamePanel.gameState == GAME_STATE.Title) {
             drawTitleScreen();
         }
+        if (gamePanel.gameState == GAME_STATE.Upgrade){
+            drawUpgradeScreen();
+        }
 
         // Play State
         if (gamePanel.gameState == GAME_STATE.Play) {
@@ -111,10 +115,14 @@ public class UI {
         // Game Over State
         if (gamePanel.gameState == GAME_STATE.GameOver)
             drawGameOverScreen();
+
+
     }
 
     // Methods to draw each screen
     private void drawTitleScreen() {
+
+
         g2d.setColor(new Color(0, 0, 0));
         g2d.fillRect(0, 0, gamePanel.getScreenWidth(), gamePanel.getScreenHeight());
 
@@ -151,7 +159,7 @@ public class UI {
             g2d.drawString("<", x + length + gamePanel.getTileSize() / 2, y);
         }
 
-        text = "LOAD GAME";
+        text = "PLAYER UPGRADE";
         x = getXForCenteredText(text);
         y += gamePanel.getTileSize();
         length = (int) g2d.getFontMetrics().getStringBounds(text, g2d).getWidth();
@@ -170,6 +178,62 @@ public class UI {
             g2d.drawString(">", x - gamePanel.getTileSize(), y);
             g2d.drawString("<", x + length + gamePanel.getTileSize() / 2, y);
         }
+    }
+
+
+        public void drawUpgradeScreen(){
+            //player Upgrade screen
+            g2d.setColor(new Color(0, 0, 0));
+            g2d.fillRect(0, 0, gamePanel.getScreenWidth(), gamePanel.getScreenHeight());
+
+            g2d.setColor(Color.WHITE);
+            g2d.setFont(g2d.getFont().deriveFont(42F));
+
+            String text="Upgrade    ";
+            int x = getXForCenteredText(text);
+            int y= gamePanel.getTileSize()*3;
+            g2d.drawString(text,x,y);
+
+
+            text = "current money: ";
+            x = getXForCenteredText(text);
+            y+=gamePanel.getTileSize();
+            g2d.drawString(text,x,y);
+
+
+            text = "boost strength ";
+            x = getXForCenteredText(text);
+            y+=gamePanel.getTileSize();
+            g2d.drawString(text,x,y);
+
+            if (commandNum == 0){
+                g2d.drawString(">",x-gamePanel.getTileSize(),y);
+            }
+            text = "boost speed ";
+            x = getXForCenteredText(text);
+            y+=gamePanel.getTileSize();
+            g2d.drawString(text,x,y);
+
+            if (commandNum == 1){
+                g2d.drawString(">",x-gamePanel.getTileSize(),y);
+            }
+            text = "boost hp ";
+            x = getXForCenteredText(text);
+            y+=gamePanel.getTileSize();
+            g2d.drawString(text,x,y);
+
+            if (commandNum == 2){
+                g2d.drawString(">",x-gamePanel.getTileSize(),y);
+            }
+            text = "Back ";
+            x = getXForCenteredText(text);
+            y+=gamePanel.getTileSize();
+            g2d.drawString(text,x,y);
+
+            if (commandNum == 3){
+                g2d.drawString(">",x-gamePanel.getTileSize(),y);
+            }
+
     }
 
     private void drawPlayerLife() {

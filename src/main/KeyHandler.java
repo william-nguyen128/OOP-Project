@@ -21,9 +21,11 @@ public class KeyHandler implements KeyListener {
         int code = e.getKeyCode();
 
         // Title State
-        if (gamePanel.gameState == GAME_STATE.Title)
+        if (gamePanel.gameState == GAME_STATE.Title) {
             titleState(code);
-
+        }
+        else if(gamePanel.gameState == GAME_STATE.Upgrade)
+            upgradeState(code);
         // Play State
         else if (gamePanel.gameState == GAME_STATE.Play)
             playState(code);
@@ -72,6 +74,7 @@ public class KeyHandler implements KeyListener {
 
     // Set keys' actions for each game state
     private void titleState(int code) {
+
         if (code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
             gamePanel.getUserInterface().setCommandNum(gamePanel.getUserInterface().getCommandNum() - 1);
             gamePanel.playSoundEffect(9);
@@ -87,14 +90,47 @@ public class KeyHandler implements KeyListener {
         if (code == KeyEvent.VK_SPACE || code == KeyEvent.VK_ENTER ||
                 code == KeyEvent.VK_E || code == KeyEvent.VK_J) {
             if (gamePanel.getUserInterface().getCommandNum() == 0) {
+                gamePanel.getUserInterface().titleScreenState = 1;
                 gamePanel.gameState = GAME_STATE.Play;
                 gamePanel.playMusic(0);
             }
             if (gamePanel.getUserInterface().getCommandNum() == 1) {
-                // Add later
+                gamePanel.gameState = GAME_STATE.Upgrade;
             }
             if (gamePanel.getUserInterface().getCommandNum() == 2)
                 System.exit(0);
+        }
+    }
+    private void upgradeState(int code){
+        if (code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
+            gamePanel.getUserInterface().setCommandNum(gamePanel.getUserInterface().getCommandNum() - 1);
+            gamePanel.playSoundEffect(9);
+            if (gamePanel.getUserInterface().getCommandNum() < 0)
+                gamePanel.getUserInterface().setCommandNum(4);
+        }
+        if (code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN) {
+            gamePanel.getUserInterface().setCommandNum(gamePanel.getUserInterface().getCommandNum() + 1);
+            gamePanel.playSoundEffect(9);
+            if (gamePanel.getUserInterface().getCommandNum() > 4)
+                gamePanel.getUserInterface().setCommandNum(0);
+        }
+        if (code == KeyEvent.VK_SPACE || code == KeyEvent.VK_ENTER ||
+                code == KeyEvent.VK_E || code == KeyEvent.VK_J) {
+            if (gamePanel.getUserInterface().getCommandNum() == 0) {
+                gamePanel.getUserInterface().titleScreenState=1;
+                //gamePanel.gameState = GAME_STATE.Play;
+                //gamePanel.playMusic(0);
+            }
+            if (gamePanel.getUserInterface().getCommandNum() == 1) {
+                // Add later
+            }
+            if (gamePanel.getUserInterface().getCommandNum() == 2) {
+                // Add later
+            }
+            if (gamePanel.getUserInterface().getCommandNum() == 3) {
+                gamePanel.gameState = GAME_STATE.Title;
+            }
+
         }
     }
 
