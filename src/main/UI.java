@@ -10,26 +10,22 @@ import java.awt.AlphaComposite;
 import java.io.IOException;
 import java.io.InputStream;
 
-// import java.text.DecimalFormat;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class UI {
     private GamePanel gamePanel;
     private Graphics2D g2d;
     private Font maruMonica_40;
-    // private boolean messageOn = false;
     private ArrayList<String> message = new ArrayList<>();
     private ArrayList<Integer> messageCounter = new ArrayList<>();
-    // private boolean gameFinished = false;
     private String currentDialogue = "";
     private int commandNum = 0;
     private int slotCol = 0;
     private int slotRow = 0;
     private int subState = 0;
-
-    // DEBUG ONLY
-    // private double playTime;
-    // private DecimalFormat dFormat = new DecimalFormat("#0.00");
+    private double playTimeSecond = 0.0;
+    private int playTimeMinute = 0;
 
     // Constructor
     public UI(GamePanel gamePanel) {
@@ -67,12 +63,14 @@ public class UI {
         // Play State
         if (gamePanel.gameState == GAME_STATE.Play) {
             drawPlayerExp();
+            drawTimer();
             drawMessage();
         }
 
         // Pause State
         if (gamePanel.gameState == GAME_STATE.Pause) {
             drawPlayerExp();
+            drawTimer();
             drawPauseScreen();
         }
 
@@ -92,8 +90,10 @@ public class UI {
             drawOptionsScreen();
 
         // Game Over State
-        if (gamePanel.gameState == GAME_STATE.GameOver)
+        if (gamePanel.gameState == GAME_STATE.GameOver) {
             drawGameOverScreen();
+            drawTimer();
+        }
     }
 
     // Methods to draw each screen
@@ -161,7 +161,7 @@ public class UI {
         int height = gamePanel.getTileSize() / 2;
 
         // Draw the bar's background
-        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.8f));
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.9f));
         g2d.setColor(new Color(35, 35, 35)); // Black-ish
         g2d.fillRect(0, 0, gamePanel.getScreenWidth(), height);
 
@@ -174,6 +174,40 @@ public class UI {
         g2d.setColor(new Color(45, 90, 230)); // Light blue
         g2d.fillRect(2, 2, (int) expBarValue, height - 4);
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+    }
+
+    private void drawTimer() {
+        g2d.setColor(Color.WHITE);
+        g2d.setFont(g2d.getFont().deriveFont(Font.BOLD, 36F));
+
+        String text;
+        int x;
+        int y;
+        DecimalFormat dFormat = new DecimalFormat("#00.00");
+
+        if (gamePanel.gameState == GAME_STATE.Play) {
+            if (playTimeSecond >= 60.0) {
+                playTimeMinute++;
+                resetPlayTimeSecond();
+            }
+            playTimeSecond += (double) 1 / 60;
+
+            text = playTimeMinute + ":" + dFormat.format(playTimeSecond);
+            x = getXForCenteredText(text);
+            y = (int) (gamePanel.getTileSize() * 1.5);
+
+            g2d.drawString(text, x, y);
+        } else if (gamePanel.gameState == GAME_STATE.Pause) {
+            text = playTimeMinute + ":" + dFormat.format(playTimeSecond);
+            x = getXForCenteredText(text);
+            y = (int) (gamePanel.getTileSize() * 1.5);
+            g2d.drawString(text, x, y);
+        } else if (gamePanel.gameState == GAME_STATE.GameOver) {
+            text = "Play time: " + playTimeMinute + ":" + dFormat.format(playTimeSecond);
+            x = getXForCenteredText(text);
+            y = gamePanel.getTileSize() * 8;
+            g2d.drawString(text, x, y);
+        }
     }
 
     private void drawPauseScreen() {
@@ -746,5 +780,13 @@ public class UI {
 
     public void setSlotRow(int slotRow) {
         this.slotRow = slotRow;
+    }
+
+    public void resetPlayTimeSecond() {
+        playTimeSecond = 0.0;
+    }
+
+    public void resetPlayTimeMinute() {
+        playTimeMinute = 0;
     }
 }

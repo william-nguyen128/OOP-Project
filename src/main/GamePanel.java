@@ -120,6 +120,9 @@ public class GamePanel extends JPanel implements Runnable {
 
         assetSetter.setObject();
         assetSetter.setMonster();
+
+        ui.resetPlayTimeSecond();
+        ui.resetPlayTimeMinute();
     }
 
     private void setFullScreen() {
