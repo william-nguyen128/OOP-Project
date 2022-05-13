@@ -4,7 +4,6 @@ import java.awt.Rectangle;
 // import java.awt.Color;
 import java.awt.Graphics2D;
 // import java.awt.Font;
-import java.awt.AlphaComposite;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -216,6 +215,7 @@ public class Player extends Entity {
                 spriteCounter = 0;
             }
         } else {
+            // Standing still
             standCounter++;
             if (standCounter == 20) {
                 spriteNum = 1;
@@ -323,12 +323,12 @@ public class Player extends Entity {
             y = gamePanel.getScreenHeight() - (gamePanel.getWorldHeight() - worldY);
 
         if (invincible == true)
-            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+            changeAlpha(g2d, 0.3f);
 
         g2d.drawImage(image, x, y, null);
 
         // Reset alpha
-        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+        changeAlpha(g2d, 1f);
     }
 
     // Restricted method (Used for Weapons and Projectiles only)
@@ -373,8 +373,6 @@ public class Player extends Entity {
                 gamePanel.playSoundEffect(6);
 
                 int damage = gamePanel.getMonsters()[index].attack;
-                if (damage < 0)
-                    damage = 1;
 
                 life -= damage;
                 invincible = true;
@@ -384,6 +382,7 @@ public class Player extends Entity {
     private void checkLevelUp() {
         if (exp >= nextLevelExp) {
             level++;
+            exp -= nextLevelExp;
             nextLevelExp = nextLevelExp * 2;
             maxLife += 2;
             strength++;

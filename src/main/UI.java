@@ -5,32 +5,27 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Graphics2D;
 import java.awt.BasicStroke;
-import java.awt.image.BufferedImage;
+import java.awt.AlphaComposite;
 
 import java.io.IOException;
 import java.io.InputStream;
 
-// import java.text.DecimalFormat;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class UI {
     private GamePanel gamePanel;
     private Graphics2D g2d;
     private Font maruMonica_40;
-    private BufferedImage heart_full, heart_half, heart_blank, crystal_full, crystal_blank;
-    // private boolean messageOn = false;
     private ArrayList<String> message = new ArrayList<>();
     private ArrayList<Integer> messageCounter = new ArrayList<>();
-    // private boolean gameFinished = false;
     private String currentDialogue = "";
     private int commandNum = 0;
     private int slotCol = 0;
     private int slotRow = 0;
     private int subState = 0;
-
-    // DEBUG ONLY
-    // private double playTime;
-    // private DecimalFormat dFormat = new DecimalFormat("#0.00");
+    private double playTimeSecond = 0.0;
+    private int playTimeMinute = 0;
 
     // Constructor
     public UI(GamePanel gamePanel) {
@@ -67,22 +62,20 @@ public class UI {
 
         // Play State
         if (gamePanel.gameState == GAME_STATE.Play) {
-            drawPlayerLife();
-            drawPlayerMana();
+            drawPlayerExp();
+            drawTimer();
             drawMessage();
         }
 
         // Pause State
         if (gamePanel.gameState == GAME_STATE.Pause) {
-            drawPlayerLife();
-            drawPlayerMana();
+            drawPlayerExp();
+            drawTimer();
             drawPauseScreen();
         }
 
         // Dialogue State
         if (gamePanel.gameState == GAME_STATE.Dialogue) {
-            drawPlayerLife();
-            drawPlayerMana();
             drawDialogueScreen();
         }
 
@@ -97,8 +90,10 @@ public class UI {
             drawOptionsScreen();
 
         // Game Over State
-        if (gamePanel.gameState == GAME_STATE.GameOver)
+        if (gamePanel.gameState == GAME_STATE.GameOver) {
             drawGameOverScreen();
+            drawTimer();
+        }
     }
 
     // Methods to draw each screen
@@ -160,56 +155,58 @@ public class UI {
         }
     }
 
-    private void drawPlayerLife() {
-        int x = gamePanel.getTileSize() / 2;
-        int y = gamePanel.getTileSize() / 2;
-        int i = 0;
+    private void drawPlayerExp() {
+        double oneScale = (double) gamePanel.getScreenWidth() / gamePanel.getPlayer().getNextLevelEXP();
+        double expBarValue = oneScale * gamePanel.getPlayer().getEXP();
+        int height = gamePanel.getTileSize() / 2;
 
-        // Draw MAX LIFE
-        while (i < gamePanel.getPlayer().getMaxLife() / 2) {
-            g2d.drawImage(heart_blank, x, y, null);
-            i++;
-            x += gamePanel.getTileSize();
-        }
+        // Draw the bar's background
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.9f));
+        g2d.setColor(new Color(35, 35, 35)); // Black-ish
+        g2d.fillRect(0, 0, gamePanel.getScreenWidth(), height);
 
-        // Reset
-        x = gamePanel.getTileSize() / 2;
-        y = gamePanel.getTileSize() / 2;
-        i = 0;
+        // Draw the bar's frame
+        g2d.setColor(new Color(240, 230, 20)); // (Slightly) Darkened yellow
+        g2d.setStroke(new BasicStroke(2));
+        g2d.drawRect(1, 1, gamePanel.getScreenWidth() - 2, height - 2);
 
-        // Draw CURRENT LIFE
-        while (i < gamePanel.getPlayer().getLife()) {
-            g2d.drawImage(heart_half, x, y, null);
-            i++;
-            if (i < gamePanel.getPlayer().getLife())
-                g2d.drawImage(heart_full, x, y, null);
-            i++;
-            x += gamePanel.getTileSize();
-        }
+        // Draw the bar's EXP value
+        g2d.setColor(new Color(45, 90, 230)); // Light blue
+        g2d.fillRect(2, 2, (int) expBarValue, height - 4);
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
     }
 
-    private void drawPlayerMana() {
-        int x = gamePanel.getTileSize() / 2 - 5;
-        int y = (int) (gamePanel.getTileSize() * 1.5);
-        int i = 0;
+    private void drawTimer() {
+        g2d.setColor(Color.WHITE);
+        g2d.setFont(g2d.getFont().deriveFont(Font.BOLD, 36F));
 
-        // Draw MAX MANA
-        while (i < gamePanel.getPlayer().getMaxMana()) {
-            g2d.drawImage(crystal_blank, x, y, null);
-            i++;
-            x += 35;
-        }
+        String text;
+        int x;
+        int y;
+        DecimalFormat dFormat = new DecimalFormat("#00.00");
 
-        // Reset
-        x = gamePanel.getTileSize() / 2 - 5;
-        y = (int) (gamePanel.getTileSize() * 1.5);
-        i = 0;
+        if (gamePanel.gameState == GAME_STATE.Play) {
+            if (playTimeSecond >= 60.0) {
+                playTimeMinute++;
+                resetPlayTimeSecond();
+            }
+            playTimeSecond += (double) 1 / 60;
 
-        // Draw CURRENT MANA
-        while (i < gamePanel.getPlayer().getMana()) {
-            g2d.drawImage(crystal_full, x, y, null);
-            i++;
-            x += 35;
+            text = playTimeMinute + ":" + dFormat.format(playTimeSecond);
+            x = getXForCenteredText(text);
+            y = (int) (gamePanel.getTileSize() * 1.5);
+
+            g2d.drawString(text, x, y);
+        } else if (gamePanel.gameState == GAME_STATE.Pause) {
+            text = playTimeMinute + ":" + dFormat.format(playTimeSecond);
+            x = getXForCenteredText(text);
+            y = (int) (gamePanel.getTileSize() * 1.5);
+            g2d.drawString(text, x, y);
+        } else if (gamePanel.gameState == GAME_STATE.GameOver) {
+            text = "Play time: " + playTimeMinute + ":" + dFormat.format(playTimeSecond);
+            x = getXForCenteredText(text);
+            y = gamePanel.getTileSize() * 8;
+            g2d.drawString(text, x, y);
         }
     }
 
@@ -783,5 +780,13 @@ public class UI {
 
     public void setSlotRow(int slotRow) {
         this.slotRow = slotRow;
+    }
+
+    public void resetPlayTimeSecond() {
+        playTimeSecond = 0.0;
+    }
+
+    public void resetPlayTimeMinute() {
+        playTimeMinute = 0;
     }
 }

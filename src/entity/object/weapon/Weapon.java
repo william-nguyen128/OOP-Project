@@ -3,7 +3,6 @@ package entity.object.weapon;
 import java.awt.Graphics2D;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
-import java.awt.AlphaComposite;
 
 import entity.Entity;
 import entity.TYPE;
@@ -117,9 +116,9 @@ public class Weapon extends Entity {
             drawWeaponHitBox(g2d, x, y);
         // ============ DEBUG ONLY ============ //
 
-        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.6f));
+        changeAlpha(g2d, 0.6f);
         g2d.drawImage(image, x, y, null);
-        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f)); // Reset alpha
+        changeAlpha(g2d, 1f); // Reset alpha
     }
 
     // Private (Internal) method
