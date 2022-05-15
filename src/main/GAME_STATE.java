@@ -6,7 +6,6 @@ public enum GAME_STATE {
     CharacterUpdate1,
     CharacterUpdate2,
     CharacterUpdate3,
-    NotEnoughCoin,
     Play,
     Pause,
     Dialogue,

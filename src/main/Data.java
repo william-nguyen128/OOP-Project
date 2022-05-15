@@ -25,7 +25,15 @@ public class Data {
             //max life
             bw.write(String.valueOf(gamePanel.getPlayer().getMaxLife()));
             bw.newLine();
-            //coin
+            //speed Fee
+            bw.write(String.valueOf(gamePanel.getPlayer().getSpeedUpgradeFee()));
+            bw.newLine();
+            //strength Fee
+            bw.write(String.valueOf(gamePanel.getPlayer().getStrengthUpgradeFee()));
+            bw.newLine();
+            //HP fee
+            bw.write(String.valueOf(gamePanel.getPlayer().getHpUpgradeFee()));
+            bw.newLine();
             bw.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -44,6 +52,15 @@ public class Data {
             //max life
             s = br.readLine();
             gamePanel.getPlayer().setLife(Integer.parseInt(s));
+            //speed fee
+            s = br.readLine();
+            gamePanel.getPlayer().setSpeedUpgradeFee(Integer.parseInt(s));
+            //strength fee
+            s = br.readLine();
+            gamePanel.getPlayer().setStrengthUpgradeFee(Integer.parseInt(s));
+            //max life fee
+            s = br.readLine();
+            gamePanel.getPlayer().setHpUpgradeFee(Integer.parseInt(s));
 
             br.close();
 

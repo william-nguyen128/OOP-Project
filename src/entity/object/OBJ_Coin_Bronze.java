@@ -8,7 +8,6 @@ import main.GamePanel;
 public class OBJ_Coin_Bronze extends Entity {
     // Attribute
     private GamePanel gamePanel;
-    private Player player;
 
     // Constructor
     public OBJ_Coin_Bronze(GamePanel gamePanel) {
