@@ -2,9 +2,7 @@ package entity.monster;
 
 import java.util.Random;
 
-import entity.object.OBJ_Coin_Bronze;
-import entity.object.OBJ_Heart;
-import entity.object.OBJ_ManaCrystal;
+import entity.object.*;
 import main.GamePanel;
 
 public class MON_GreenSlime extends Monster {
@@ -68,11 +66,17 @@ public class MON_GreenSlime extends Monster {
     public void checkDrop() {
         int i = new Random().nextInt(100) + 1;
 
-        if (i < 50)
-            dropItem(new OBJ_Coin_Bronze(gamePanel));
-        if (i >= 50 && i < 75)
+
+
+        if (i >= 0 && i < 55)
+        dropItem(new OBJ_Coin_Bronze(gamePanel));
+        if (i >= 55 && i < 60)
             dropItem(new OBJ_Heart(gamePanel));
-        if (i >= 75 && i < 100)
-            dropItem(new OBJ_ManaCrystal(gamePanel));
+        if (i >= 90 && i < 100)
+            dropItem(new OBJ_Potion_Red(gamePanel));
+        if (i >= 60 && i < 80)
+            dropItem(new OBJ_Coin_Golden(gamePanel));
+        if (i >= 80 && i < 100)
+            dropItem(new OBJ_Coin_Silver(gamePanel));
     }
 }

@@ -49,6 +49,13 @@ public class KeyHandler implements KeyListener {
         // Game Over State
         else if (gamePanel.gameState == GAME_STATE.GameOver)
             gameOverState(code);
+        // Character Update State
+        else if (gamePanel.gameState == GAME_STATE.CharacterUpdate1)
+            characterUpdateState(code);
+        else if (gamePanel.gameState == GAME_STATE.CharacterUpdate2)
+            characterUpdateState(code);
+        else if (gamePanel.gameState == GAME_STATE.CharacterUpdate3)
+            characterUpdateState(code);
     }
 
     @Override
@@ -101,6 +108,12 @@ public class KeyHandler implements KeyListener {
                 System.exit(0);
         }
     }
+    private void characterUpdateState(int code){
+        if (code == KeyEvent.VK_SPACE || code == KeyEvent.VK_ENTER ||
+                code == KeyEvent.VK_E || code == KeyEvent.VK_J)
+            gamePanel.gameState = GAME_STATE.Upgrade;
+
+    }
     private void upgradeState(int code){
         if (code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
             gamePanel.getUserInterface().setCommandNum(gamePanel.getUserInterface().getCommandNum() - 1);
@@ -118,13 +131,18 @@ public class KeyHandler implements KeyListener {
                 code == KeyEvent.VK_E || code == KeyEvent.VK_J) {
             if (gamePanel.getUserInterface().getCommandNum() == 0) {
                 gamePanel.getUserInterface().titleScreenState=1;
+                gamePanel.gameState = GAME_STATE.CharacterUpdate1;
+                gamePanel.getPlayer().upgradeStrength();
                 //gamePanel.gameState = GAME_STATE.Play;
                 //gamePanel.playMusic(0);
             }
             if (gamePanel.getUserInterface().getCommandNum() == 1) {
-                // Add later
+                gamePanel.gameState = GAME_STATE.CharacterUpdate2;
+                gamePanel.getPlayer().upgradeSpeed();
             }
             if (gamePanel.getUserInterface().getCommandNum() == 2) {
+                gamePanel.gameState = GAME_STATE.CharacterUpdate3;
+                gamePanel.getPlayer().upgradeHP();
                 // Add later
             }
             if (gamePanel.getUserInterface().getCommandNum() == 3) {

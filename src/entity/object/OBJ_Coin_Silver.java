@@ -1,6 +1,7 @@
 package entity.object;
 
 import entity.Entity;
+import entity.Player;
 import entity.TYPE;
 import main.GamePanel;
 
@@ -24,6 +25,7 @@ public class OBJ_Coin_Silver extends Entity{
     public void use(Entity entity) {
         gamePanel.playSoundEffect(1);
         gamePanel.getUserInterface().addMessage("Coin +" + value);
-        coin+=value;
+        gamePanel.getPlayer().setCoin(gamePanel.getPlayer().getCoin() + value);
+        gamePanel.getCoin().saveCoin();
     }
 }

@@ -13,6 +13,7 @@ import entity.object.OBJ_Fireball;
 import entity.object.OBJ_Key;
 import entity.object.OBJ_Shield_Wood;
 import entity.object.OBJ_Sword_Normal;
+import main.Coin;
 import main.GAME_STATE;
 import main.GamePanel;
 import main.KeyHandler;
@@ -25,6 +26,48 @@ public class Player extends Entity {
     public final int SCREEN_X;
     public final int SCREEN_Y;
     public final int MAX_INV_SIZE = 20;
+    private int DefaultCoin;
+
+
+
+    private int speedUpgradeFee = 50;
+    private int strengthUpgradeFee= 50;
+    private int hpUpgradeFee = 50;
+
+
+
+
+
+    public int getStrengthUpgradeFee() {
+        return strengthUpgradeFee;
+    }
+
+    public void setStrengthUpgradeFee(int strengthUpgradeFee) {
+        this.strengthUpgradeFee = strengthUpgradeFee;
+    }
+
+    public int getHpUpgradeFee() {
+        return hpUpgradeFee;
+    }
+
+    public void setHpUpgradeFee(int hpUpgradeFee) {
+        this.hpUpgradeFee = hpUpgradeFee;
+    }
+
+
+
+    public int getSpeedUpgradeFee() {
+        return speedUpgradeFee;
+    }
+
+    public void setSpeedUpgradeFee(int speedUpgradeFee) {
+        this.speedUpgradeFee = speedUpgradeFee;
+    }
+
+
+
+
+
 
     // Constructor
     public Player(GamePanel gamePanel, KeyHandler keyHandler) {
@@ -62,7 +105,6 @@ public class Player extends Entity {
         dexterity = 1; // More dexterity = Less damage received
         exp = 0;
         nextLevelExp = 5;
-        coin = 0;
         currentWeapon = new OBJ_Sword_Normal(gamePanel);
         currentShield = new OBJ_Shield_Wood(gamePanel);
         projectile = new OBJ_Fireball(gamePanel);
@@ -518,7 +560,6 @@ public class Player extends Entity {
                             gamePanel.getMonsters()[index].exp + " EXP gained from "
                                     + gamePanel.getMonsters()[index].name + "!");
                     exp += gamePanel.getMonsters()[index].exp;
-                    checkLevelUp();
                 }
             }
     }
@@ -621,7 +662,28 @@ public class Player extends Entity {
             gamePanel.playSoundEffect(8);
             gamePanel.gameState = GAME_STATE.Dialogue;
             gamePanel.getUserInterface().setCurrentDialogue("Level up!");
+            gamePanel.getData().saveData();
         }
+    }
+    public void upgradeStrength(){
+        strength++;
+        coin-=strengthUpgradeFee*2;
+        setStrengthUpgradeFee(getStrengthUpgradeFee()*2);
+        gamePanel.getData().saveData();
+    }
+
+    public void upgradeSpeed(){
+        speed++;
+        coin-=getSpeedUpgradeFee()*2;
+        setSpeedUpgradeFee(getSpeedUpgradeFee()*2);
+        gamePanel.getData().saveData();
+    }
+
+    public void upgradeHP(){
+        maxLife++;
+        coin-=getHpUpgradeFee()*2;
+        setHpUpgradeFee(getHpUpgradeFee()*2);
+        gamePanel.getData().saveData();
     }
 
     private void pickUpObject(int index) {
@@ -669,4 +731,6 @@ public class Player extends Entity {
     public boolean isAttacking() {
         return attacking;
     }
+
+
 }

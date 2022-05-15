@@ -13,6 +13,8 @@ public class Main {
 
         GamePanel gamePanel = new GamePanel();
         window.add(gamePanel);
+        gamePanel.getData().loadData();
+        gamePanel.getCoin().loadCoin();
         gamePanel.getConfig().loadConfig();
         if (gamePanel.isFullScreenOn() == true)
             window.setUndecorated(true);

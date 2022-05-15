@@ -1,12 +1,14 @@
 package entity.object;
 
 import entity.Entity;
+import entity.Player;
 import entity.TYPE;
 import main.GamePanel;
 
 public class OBJ_Coin_Bronze extends Entity {
     // Attribute
     private GamePanel gamePanel;
+    private Player player;
 
     // Constructor
     public OBJ_Coin_Bronze(GamePanel gamePanel) {
@@ -25,5 +27,6 @@ public class OBJ_Coin_Bronze extends Entity {
         gamePanel.playSoundEffect(1);
         gamePanel.getUserInterface().addMessage("Coin +" + value);
         gamePanel.getPlayer().setCoin(gamePanel.getPlayer().getCoin() + value);
+        gamePanel.getCoin().saveCoin();
     }
 }

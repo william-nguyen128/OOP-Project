@@ -14,6 +14,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 
 import entity.Entity;
+import entity.Player;
 import entity.object.OBJ_Heart;
 import entity.object.OBJ_ManaCrystal;
 
@@ -36,7 +37,6 @@ public class UI {
     // DEBUG ONLY
     //private double playTime;
     // private DecimalFormat dFormat = new DecimalFormat("#0.00");
-
     // Constructor
     public UI(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
@@ -113,9 +113,18 @@ public class UI {
             drawOptionsScreen();
 
         // Game Over State
-        if (gamePanel.gameState == GAME_STATE.GameOver)
+        if (gamePanel.gameState == GAME_STATE.GameOver){
             drawGameOverScreen();
+            gamePanel.getCoin().saveCoin();
+        }
 
+        // Character Update State
+        if (gamePanel.gameState ==GAME_STATE.CharacterUpdate1)
+            drawCharacterUpdate1();
+        if (gamePanel.gameState ==GAME_STATE.CharacterUpdate2)
+            drawCharacterUpdate2();
+        if (gamePanel.gameState ==GAME_STATE.CharacterUpdate3)
+            drawCharacterUpdate3();
 
     }
 
@@ -180,8 +189,117 @@ public class UI {
         }
     }
 
+        private void drawCharacterUpdate1(){
+            g2d.setColor(Color.WHITE);
+            g2d.setFont(g2d.getFont().deriveFont(32F));
 
-        public void drawUpgradeScreen(){
+            // Sub window
+            int frameX = gamePanel.getTileSize() * 6;
+            int frameY = gamePanel.getTileSize()*4;
+            int frameWidth = gamePanel.getTileSize() * 8;
+            int frameHeight = gamePanel.getTileSize() * 4;
+            drawSubWindow(frameX, frameY, frameWidth, frameHeight);
+
+            switch (subState){
+                case 0: characterUpdateStrength(frameX,frameY);
+                case 1: break;
+                case 2: break;
+            }
+
+
+        }
+    private void drawCharacterUpdate2(){
+        g2d.setColor(Color.WHITE);
+        g2d.setFont(g2d.getFont().deriveFont(32F));
+
+        // Sub window
+        int frameX = gamePanel.getTileSize() * 6;
+        int frameY = gamePanel.getTileSize()*4;
+        int frameWidth = gamePanel.getTileSize() * 8;
+        int frameHeight = gamePanel.getTileSize() * 4;
+        drawSubWindow(frameX, frameY, frameWidth, frameHeight);
+
+        switch (subState){
+            case 0: characterUpdateSpeed(frameX,frameY);
+            case 1: break;
+            case 2: break;
+        }
+
+
+    }
+    private void drawCharacterUpdate3(){
+        g2d.setColor(Color.WHITE);
+        g2d.setFont(g2d.getFont().deriveFont(32F));
+
+        // Sub window
+        int frameX = gamePanel.getTileSize() * 6;
+        int frameY = gamePanel.getTileSize()*4;
+        int frameWidth = gamePanel.getTileSize() * 8;
+        int frameHeight = gamePanel.getTileSize() * 4;
+        drawSubWindow(frameX, frameY, frameWidth, frameHeight);
+
+        switch (subState){
+            case 0: characterUpdateHP(frameX,frameY);
+            case 1: break;
+            case 2: break;
+        }
+
+
+    }
+
+        private void characterUpdateStrength(int frameX, int frameY){
+            int textX;
+            int textY;
+
+            // Title
+            String text = "Strength increase by 1 !";
+            textX = getXForCenteredText(text);
+            textY = frameY + gamePanel.getTileSize();
+            g2d.drawString(text, textX, textY);
+
+            String text2 = "coin remaining:"+gamePanel.getPlayer().getCoin();
+            textX = getXForCenteredText(text);
+            textY = frameY*3/2 + gamePanel.getTileSize();
+            g2d.drawString(text2, textX, textY);
+
+
+        }
+    private void characterUpdateSpeed(int frameX, int frameY){
+        int textX;
+        int textY;
+
+        // Title
+        String text3 = "Speed increase by 1 !";
+        textX = getXForCenteredText(text3);
+        textY = frameY + gamePanel.getTileSize();
+        g2d.drawString(text3, textX, textY);
+
+        String text4 = "coin remaining:"+ gamePanel.getPlayer().getCoin();
+        textX = getXForCenteredText(text4);
+        textY = frameY*3/2 + gamePanel.getTileSize();
+        g2d.drawString(text4, textX, textY);
+
+
+    }
+    private void characterUpdateHP(int frameX, int frameY){
+        int textX;
+        int textY;
+
+        // Title
+        String text5 = "Max Life increase by 1 !";
+        textX = getXForCenteredText(text5);
+        textY = frameY + gamePanel.getTileSize();
+        g2d.drawString(text5, textX, textY);
+
+        String text6 = "coin remaining:"+gamePanel.getPlayer().getCoin();
+        textX = getXForCenteredText(text6);
+        textY = frameY*3/2 + gamePanel.getTileSize();
+        g2d.drawString(text6, textX, textY);
+
+
+    }
+
+        private void drawUpgradeScreen(){
             //player Upgrade screen
             g2d.setColor(new Color(0, 0, 0));
             g2d.fillRect(0, 0, gamePanel.getScreenWidth(), gamePanel.getScreenHeight());
@@ -189,19 +307,18 @@ public class UI {
             g2d.setColor(Color.WHITE);
             g2d.setFont(g2d.getFont().deriveFont(42F));
 
-            String text="Upgrade    ";
+            String text="Upgrade character ";
             int x = getXForCenteredText(text);
             int y= gamePanel.getTileSize()*3;
             g2d.drawString(text,x,y);
 
 
-            text = "current money: ";
+            text = "current money: "+ gamePanel.getPlayer().getCoin();
             x = getXForCenteredText(text);
             y+=gamePanel.getTileSize();
             g2d.drawString(text,x,y);
 
-
-            text = "boost strength ";
+            text = "boost strength ("+gamePanel.getPlayer().getStrengthUpgradeFee()+")";
             x = getXForCenteredText(text);
             y+=gamePanel.getTileSize();
             g2d.drawString(text,x,y);
@@ -209,7 +326,7 @@ public class UI {
             if (commandNum == 0){
                 g2d.drawString(">",x-gamePanel.getTileSize(),y);
             }
-            text = "boost speed ";
+            text = "boost speed ("+gamePanel.getPlayer().getSpeedUpgradeFee()+")";
             x = getXForCenteredText(text);
             y+=gamePanel.getTileSize();
             g2d.drawString(text,x,y);
@@ -217,7 +334,7 @@ public class UI {
             if (commandNum == 1){
                 g2d.drawString(">",x-gamePanel.getTileSize(),y);
             }
-            text = "boost hp ";
+            text = "boost hp ("+gamePanel.getPlayer().getHpUpgradeFee()+")";
             x = getXForCenteredText(text);
             y+=gamePanel.getTileSize();
             g2d.drawString(text,x,y);
@@ -288,6 +405,7 @@ public class UI {
             x += 35;
         }
     }
+
 
     private void drawPauseScreen() {
         g2d.setFont(g2d.getFont().deriveFont(Font.PLAIN, 80F));
