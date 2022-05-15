@@ -879,6 +879,7 @@ public class UI {
                 subState = 0;
                 gamePanel.stopMusic();
                 gamePanel.gameState = GAME_STATE.Title;
+                gamePanel.restart();
             }
         }
     }
