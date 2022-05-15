@@ -131,19 +131,23 @@ public class KeyHandler implements KeyListener {
                 code == KeyEvent.VK_E || code == KeyEvent.VK_J) {
             if (gamePanel.getUserInterface().getCommandNum() == 0) {
                 gamePanel.getUserInterface().titleScreenState=1;
-                gamePanel.gameState = GAME_STATE.CharacterUpdate1;
-                gamePanel.getPlayer().upgradeStrength();
-                //gamePanel.gameState = GAME_STATE.Play;
-                //gamePanel.playMusic(0);
+                if(gamePanel.getPlayer().getCoin()-gamePanel.getPlayer().getStrengthUpgradeFee()>0) {
+                    gamePanel.gameState = GAME_STATE.CharacterUpdate1;
+                    gamePanel.getPlayer().upgradeStrength();
+                }
+
             }
             if (gamePanel.getUserInterface().getCommandNum() == 1) {
-                gamePanel.gameState = GAME_STATE.CharacterUpdate2;
-                gamePanel.getPlayer().upgradeSpeed();
+                if(gamePanel.getPlayer().getCoin()-gamePanel.getPlayer().getSpeedUpgradeFee()>0) {
+                    gamePanel.gameState = GAME_STATE.CharacterUpdate2;
+                    gamePanel.getPlayer().upgradeSpeed();
+                }
             }
             if (gamePanel.getUserInterface().getCommandNum() == 2) {
-                gamePanel.gameState = GAME_STATE.CharacterUpdate3;
-                gamePanel.getPlayer().upgradeHP();
-                // Add later
+                if(gamePanel.getPlayer().getCoin()-gamePanel.getPlayer().getHpUpgradeFee()>0) {
+                    gamePanel.gameState = GAME_STATE.CharacterUpdate3;
+                    gamePanel.getPlayer().upgradeHP();
+                }
             }
             if (gamePanel.getUserInterface().getCommandNum() == 3) {
                 gamePanel.gameState = GAME_STATE.Title;

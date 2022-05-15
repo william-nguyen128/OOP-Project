@@ -666,24 +666,34 @@ public class Player extends Entity {
         }
     }
     public void upgradeStrength(){
-        strength++;
-        coin-=strengthUpgradeFee*2;
-        setStrengthUpgradeFee(getStrengthUpgradeFee()*2);
-        gamePanel.getData().saveData();
+        if(coin-getStrengthUpgradeFee()>0) {
+            coin -= strengthUpgradeFee ;
+            strength++;
+            setStrengthUpgradeFee(getStrengthUpgradeFee() * 2);
+            gamePanel.getData().saveData();
+            gamePanel.getCoin().saveCoin();
+        }
     }
 
     public void upgradeSpeed(){
-        speed++;
-        coin-=getSpeedUpgradeFee()*2;
-        setSpeedUpgradeFee(getSpeedUpgradeFee()*2);
-        gamePanel.getData().saveData();
+        if(coin-getSpeedUpgradeFee()>0) {
+            coin -= getSpeedUpgradeFee() ;
+            speed++;
+            setSpeedUpgradeFee(getSpeedUpgradeFee() * 2);
+            gamePanel.getData().saveData();
+            gamePanel.getCoin().saveCoin();
+        }
     }
 
+
     public void upgradeHP(){
-        maxLife++;
-        coin-=getHpUpgradeFee()*2;
-        setHpUpgradeFee(getHpUpgradeFee()*2);
-        gamePanel.getData().saveData();
+        if(coin - getHpUpgradeFee()>0) {
+            coin -= getHpUpgradeFee() ;
+            maxLife++;
+            setHpUpgradeFee(getHpUpgradeFee() * 2);
+            gamePanel.getData().saveData();
+            gamePanel.getCoin().saveCoin();
+        }
     }
 
     private void pickUpObject(int index) {

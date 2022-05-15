@@ -1,17 +1,12 @@
 package entity;
 
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
 import main.GamePanel;
 import main.UtilityTool;
 
-import java.awt.Rectangle;
-import java.awt.Graphics2D;
-import java.awt.AlphaComposite;
-import java.awt.Color;
+import javax.imageio.ImageIO;
+import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 
 public class Entity {
     // Attributes
@@ -52,6 +47,34 @@ public class Entity {
     // Entity's attributes
     protected TYPE type;
     protected String name;
+
+    public int getDefaultSpeed() {
+        return DefaultSpeed;
+    }
+
+    public void setDefaultSpeed(int defaultSpeed) {
+        DefaultSpeed = defaultSpeed;
+    }
+
+    public int getDefaultMaxLife() {
+        return DefaultMaxLife;
+    }
+
+    public void setDefaultMaxLife(int defaultMaxLife) {
+        DefaultMaxLife = defaultMaxLife;
+    }
+
+    public int getDefaultStrength() {
+        return DefaultStrength;
+    }
+
+    public void setDefaultStrength(int defaultStrength) {
+        DefaultStrength = defaultStrength;
+    }
+
+    protected int DefaultSpeed;
+    protected int DefaultMaxLife;
+    protected int DefaultStrength;
     protected int speed;
     protected int maxLife;
     protected int life;
@@ -473,6 +496,10 @@ public class Entity {
     public void setLife(int life) {
         this.life = life;
     }
+
+    public void setStrength ( int strength){ this.strength=strength;}
+
+    public void setSpeed ( int speed){this.speed=speed;}
 
     public int getMana() {
         return mana;
