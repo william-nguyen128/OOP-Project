@@ -17,7 +17,7 @@ public class OBJ_Coin_Silver extends Entity{
         type = TYPE.PickupOnly;
         name = "Silver Coin";
         value = 2;
-        down1 = setup("/objects/coin_silver", gamePanel.getTileSize(), gamePanel.getTileSize());
+        rightSprites[0] = setup("/objects/coin_silver", gamePanel.getTileSize(), gamePanel.getTileSize());
     }
 
     // Overridden method
@@ -26,6 +26,8 @@ public class OBJ_Coin_Silver extends Entity{
         gamePanel.playSoundEffect(1);
         gamePanel.getUserInterface().addMessage("Coin +" + value);
         gamePanel.getPlayer().setCoin(gamePanel.getPlayer().getCoin() + value);
+
+        gamePanel.getPlayer().setCoin2(gamePanel.getPlayer().getCoin2() +value);
         gamePanel.getCoin().saveCoin();
     }
 }

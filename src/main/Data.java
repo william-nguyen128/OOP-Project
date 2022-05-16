@@ -34,6 +34,7 @@ public class Data {
             //HP fee
             bw.write(String.valueOf(gamePanel.getPlayer().getHpUpgradeFee()));
             bw.newLine();
+
             bw.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -45,7 +46,7 @@ public class Data {
 
             //speed
             String s = br.readLine();
-            gamePanel.getPlayer().setSpeed(Integer.parseInt(s));
+            gamePanel.getPlayer().setSpeed(Double.parseDouble(s));
             //strength
             s = br.readLine();
             gamePanel.getPlayer().setStrength(Integer.parseInt(s));
@@ -61,6 +62,7 @@ public class Data {
             //max life fee
             s = br.readLine();
             gamePanel.getPlayer().setHpUpgradeFee(Integer.parseInt(s));
+
 
             br.close();
 

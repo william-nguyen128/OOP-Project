@@ -26,6 +26,7 @@ public class OBJ_Coin_Bronze extends Entity {
         gamePanel.playSoundEffect(1);
         gamePanel.getUserInterface().addMessage("Coin +" + value);
         gamePanel.getPlayer().setCoin(gamePanel.getPlayer().getCoin() + value);
+        gamePanel.getPlayer().setCoin2(gamePanel.getPlayer().getCoin2() +value);
         gamePanel.getCoin().saveCoin();
     }
 }

@@ -67,7 +67,7 @@ public class Entity {
     protected int DefaultSpeed;
     protected int DefaultMaxLife;
     protected int DefaultStrength;
-    protected int speed;
+    protected double speed;
     protected int maxLife;
     protected int life;
     protected int maxMana;
@@ -80,6 +80,17 @@ public class Entity {
     protected int exp;
     protected int nextLevelExp;
     protected int coin;
+    protected int coin2;
+
+    public int getCoin2() {
+        return coin2;
+    }
+
+    public void setCoin2(int coin2) {
+        this.coin2 = coin2;
+    }
+
+
     protected Projectile projectile;
 
     // Items' attributes
@@ -327,7 +338,7 @@ public class Entity {
 
     public void setStrength ( int strength){ this.strength=strength;}
 
-    public void setSpeed ( int speed){this.speed=speed;}
+    public void setSpeed ( Double speed){this.speed=speed;}
 
     public int getMana() {
         return mana;
@@ -337,7 +348,7 @@ public class Entity {
         this.mana = mana;
     }
 
-    public int getSpeed() {
+    public double getSpeed() {
         return speed;
     }
 

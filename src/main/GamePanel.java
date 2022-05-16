@@ -119,7 +119,6 @@ public class GamePanel extends JPanel implements Runnable {
 
         player.setDefaultValues();
         player.setItems();
-
         assetSetter.setObject();
         assetSetter.setMonster();
 

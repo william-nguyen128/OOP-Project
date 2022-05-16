@@ -43,5 +43,8 @@ public class AssetSetter {
         gamePanel.getMonsters()[5] = new MON_GreenSlime(gamePanel);
         gamePanel.getMonsters()[5].setWorldX(gamePanel.getTileSize() * 20);
         gamePanel.getMonsters()[5].setWorldY(gamePanel.getTileSize() * 39);
+
+
     }
+
 }
