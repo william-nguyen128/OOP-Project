@@ -5,38 +5,58 @@ import java.awt.Font;
 import java.awt.FontFormatException;
 import java.awt.Graphics2D;
 import java.awt.BasicStroke;
-import java.awt.image.BufferedImage;
+import java.awt.AlphaComposite;
 
 import java.io.IOException;
 import java.io.InputStream;
 
-// import java.text.DecimalFormat;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+
 
 import entity.Entity;
 import entity.Player;
-import entity.object.OBJ_Heart;
-import entity.object.OBJ_ManaCrystal;
+
+
 
 public class UI {
     private GamePanel gamePanel;
     private Graphics2D g2d;
     private Font maruMonica_40;
-    private BufferedImage heart_full, heart_half, heart_blank, crystal_full, crystal_blank;
-    // private boolean messageOn = false;
     private ArrayList<String> message = new ArrayList<>();
     private ArrayList<Integer> messageCounter = new ArrayList<>();
-    // private boolean gameFinished = false;
     private String currentDialogue = "";
     private int commandNum = 0;
     private int slotCol = 0;
     private int slotRow = 0;
     private int subState = 0;
+
     public int titleScreenState=0;
 
     // DEBUG ONLY
     //private double playTime;
     // private DecimalFormat dFormat = new DecimalFormat("#0.00");
+
+    public double getPlayTimeSecond() {
+        return playTimeSecond;
+    }
+
+    public void setPlayTimeSecond(double playTimeSecond) {
+        this.playTimeSecond = playTimeSecond;
+    }
+
+    public int getPlayTimeMinute() {
+        return playTimeMinute;
+    }
+
+    public void setPlayTimeMinute(int playTimeMinute) {
+        this.playTimeMinute = playTimeMinute;
+    }
+
+    private double playTimeSecond = 0.0;
+    private int playTimeMinute = 0;
+
+
     // Constructor
     public UI(GamePanel gamePanel) {
         this.gamePanel = gamePanel;
@@ -51,14 +71,6 @@ public class UI {
         }
 
         // HUD
-        Entity heart = new OBJ_Heart(gamePanel);
-        heart_full = heart.getImage();
-        heart_half = heart.getImage2();
-        heart_blank = heart.getImage3();
-
-        Entity crystal = new OBJ_ManaCrystal(gamePanel);
-        crystal_full = crystal.getImage();
-        crystal_blank = crystal.getImage2();
     }
 
     public void addMessage(String text) {
@@ -83,22 +95,20 @@ public class UI {
 
         // Play State
         if (gamePanel.gameState == GAME_STATE.Play) {
-            drawPlayerLife();
-            drawPlayerMana();
+            drawPlayerExp();
+            drawTimer();
             drawMessage();
         }
 
         // Pause State
         if (gamePanel.gameState == GAME_STATE.Pause) {
-            drawPlayerLife();
-            drawPlayerMana();
+            drawPlayerExp();
+            drawTimer();
             drawPauseScreen();
         }
 
         // Dialogue State
         if (gamePanel.gameState == GAME_STATE.Dialogue) {
-            drawPlayerLife();
-            drawPlayerMana();
             drawDialogueScreen();
         }
 
@@ -113,6 +123,7 @@ public class UI {
             drawOptionsScreen();
 
         // Game Over State
+
         if (gamePanel.gameState == GAME_STATE.GameOver){
             drawGameOverScreen();
             gamePanel.getCoin().saveCoin();
@@ -125,6 +136,11 @@ public class UI {
             drawCharacterUpdate2();
         if (gamePanel.gameState ==GAME_STATE.CharacterUpdate3)
             drawCharacterUpdate3();
+
+        if (gamePanel.gameState == GAME_STATE.GameOver) {
+            drawGameOverScreen();
+            drawTimer();
+        }
 
     }
 
@@ -189,6 +205,7 @@ public class UI {
         }
     }
 
+
         private void drawCharacterUpdate1(){
             g2d.setColor(Color.WHITE);
             g2d.setFont(g2d.getFont().deriveFont(32F));
@@ -252,7 +269,7 @@ public class UI {
             int textY;
 
             // Title
-            String text = "Strength increase by 1 !";
+            String text = "Strength was increased!";
             textX = getXForCenteredText(text);
             textY = frameY + gamePanel.getTileSize();
             g2d.drawString(text, textX, textY);
@@ -269,7 +286,7 @@ public class UI {
         int textY;
 
         // Title
-        String text3 = "Speed increase by 1 !";
+        String text3 = "Speed was increased!";
         textX = getXForCenteredText(text3);
         textY = frameY + gamePanel.getTileSize();
         g2d.drawString(text3, textX, textY);
@@ -286,7 +303,7 @@ public class UI {
         int textY;
 
         // Title
-        String text5 = "Max Life increase by 1 !";
+        String text5 = "Max Life was increased!";
         textX = getXForCenteredText(text5);
         textY = frameY + gamePanel.getTileSize();
         g2d.drawString(text5, textX, textY);
@@ -357,52 +374,61 @@ public class UI {
         int x = gamePanel.getTileSize() / 2;
         int y = gamePanel.getTileSize() / 2;
         int i = 0;
-
-        // Draw MAX LIFE
-        while (i < gamePanel.getPlayer().getMaxLife() / 2) {
-            g2d.drawImage(heart_blank, x, y, null);
-            i++;
-            x += gamePanel.getTileSize();
-        }
-
-        // Reset
-        x = gamePanel.getTileSize() / 2;
-        y = gamePanel.getTileSize() / 2;
-        i = 0;
-
-        // Draw CURRENT LIFE
-        while (i < gamePanel.getPlayer().getLife()) {
-            g2d.drawImage(heart_half, x, y, null);
-            i++;
-            if (i < gamePanel.getPlayer().getLife())
-                g2d.drawImage(heart_full, x, y, null);
-            i++;
-            x += gamePanel.getTileSize();
-        }
     }
 
-    private void drawPlayerMana() {
-        int x = gamePanel.getTileSize() / 2 - 5;
-        int y = (int) (gamePanel.getTileSize() * 1.5);
-        int i = 0;
+    private void drawPlayerExp() {
+        double oneScale = (double) gamePanel.getScreenWidth() / gamePanel.getPlayer().getNextLevelEXP();
+        double expBarValue = oneScale * gamePanel.getPlayer().getEXP();
+        int height = gamePanel.getTileSize() / 2;
 
-        // Draw MAX MANA
-        while (i < gamePanel.getPlayer().getMaxMana()) {
-            g2d.drawImage(crystal_blank, x, y, null);
-            i++;
-            x += 35;
-        }
 
-        // Reset
-        x = gamePanel.getTileSize() / 2 - 5;
-        y = (int) (gamePanel.getTileSize() * 1.5);
-        i = 0;
+        // Draw the bar's background
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.9f));
+        g2d.setColor(new Color(35, 35, 35)); // Black-ish
+        g2d.fillRect(0, 0, gamePanel.getScreenWidth(), height);
 
-        // Draw CURRENT MANA
-        while (i < gamePanel.getPlayer().getMana()) {
-            g2d.drawImage(crystal_full, x, y, null);
-            i++;
-            x += 35;
+        // Draw the bar's frame
+        g2d.setColor(new Color(240, 230, 20)); // (Slightly) Darkened yellow
+        g2d.setStroke(new BasicStroke(2));
+        g2d.drawRect(1, 1, gamePanel.getScreenWidth() - 2, height - 2);
+
+        // Draw the bar's EXP value
+        g2d.setColor(new Color(45, 90, 230)); // Light blue
+        g2d.fillRect(2, 2, (int) expBarValue, height - 4);
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+    }
+
+    private void drawTimer() {
+        g2d.setColor(Color.WHITE);
+        g2d.setFont(g2d.getFont().deriveFont(Font.BOLD, 36F));
+
+        String text;
+        int x;
+        int y;
+        DecimalFormat dFormat = new DecimalFormat("#00.00");
+
+        if (gamePanel.gameState == GAME_STATE.Play) {
+            if (playTimeSecond >= 60.0) {
+                playTimeMinute++;
+                resetPlayTimeSecond();
+            }
+            playTimeSecond += (double) 1 / 60;
+
+            text = playTimeMinute + ":" + dFormat.format(playTimeSecond);
+            x = getXForCenteredText(text);
+            y = (int) (gamePanel.getTileSize() * 1.5);
+
+            g2d.drawString(text, x, y);
+        } else if (gamePanel.gameState == GAME_STATE.Pause) {
+            text = playTimeMinute + ":" + dFormat.format(playTimeSecond);
+            x = getXForCenteredText(text);
+            y = (int) (gamePanel.getTileSize() * 1.5);
+            g2d.drawString(text, x, y);
+        } else if (gamePanel.gameState == GAME_STATE.GameOver) {
+            text = "Play time: " + playTimeMinute + ":" + dFormat.format(playTimeSecond);
+            x = getXForCenteredText(text);
+            y = gamePanel.getTileSize() * 8;
+            g2d.drawString(text, x, y);
         }
     }
 
@@ -653,7 +679,16 @@ public class UI {
         g2d.setColor(Color.WHITE);
         g2d.drawString(text, x - 4, y - 4);
 
+        // Show this run's money
+        g2d.setColor(Color.YELLOW);
+        g2d.setFont(g2d.getFont().deriveFont(30F));
+        text = "Money collected this run: " + gamePanel.getPlayer().getCoin2();
+        x = getXForCenteredText(text);
+        y += gamePanel.getTileSize() * 3;
+        g2d.drawString(text, x, y);
+
         // "Quit" button
+        g2d.setColor(Color.WHITE);
         g2d.setFont(g2d.getFont().deriveFont(50F));
         text = "Quit";
         int length = (int) g2d.getFontMetrics().getStringBounds(text, g2d).getWidth();
@@ -664,6 +699,7 @@ public class UI {
             g2d.drawString(">", x - 40, y);
             g2d.drawString("<", x + length + gamePanel.getTileSize() / 2, y);
         }
+
     }
 
     private void options_top(int frameX, int frameY) {
@@ -848,9 +884,10 @@ public class UI {
         int textX = frameX + gamePanel.getTileSize();
         int textY = frameY + gamePanel.getTileSize() * 3;
 
-        currentDialogue = "Quit the game and\nreturn to the tile screen?";
+        currentDialogue = "End this run now???\nYou sure, mate???";
 
         for (String line : currentDialogue.split("\n")) {
+            textX = getXForCenteredText(line);
             g2d.drawString(line, textX, textY);
             textY += 40;
         }
@@ -877,8 +914,12 @@ public class UI {
             g2d.drawString(">", textX - 25, textY);
             if (gamePanel.getKeyHandler().isInteractPressed() == true) {
                 subState = 0;
+                commandNum = 0;
                 gamePanel.stopMusic();
+
                 gamePanel.gameState = GAME_STATE.Title;
+
+                gamePanel.gameState = GAME_STATE.GameOver;
                 gamePanel.restart();
             }
         }
@@ -967,5 +1008,13 @@ public class UI {
 
     public void setSlotRow(int slotRow) {
         this.slotRow = slotRow;
+    }
+
+    public void resetPlayTimeSecond() {
+        playTimeSecond = 0.0;
+    }
+
+    public void resetPlayTimeMinute() {
+        playTimeMinute = 0;
     }
 }

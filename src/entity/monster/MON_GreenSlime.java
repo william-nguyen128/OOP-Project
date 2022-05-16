@@ -2,7 +2,11 @@ package entity.monster;
 
 import java.util.Random;
 
+
 import entity.object.*;
+
+import entity.object.OBJ_Coin_Bronze;
+
 import main.GamePanel;
 
 public class MON_GreenSlime extends Monster {
@@ -16,9 +20,9 @@ public class MON_GreenSlime extends Monster {
 
         name = "Green Slime";
         speed = 1;
-        maxLife = 5;
+        maxLife = 50;
         life = maxLife;
-        attack = 5;
+        attack = 1;
         defense = 0;
         exp = 2;
 
@@ -37,46 +41,28 @@ public class MON_GreenSlime extends Monster {
         int width = gamePanel.getTileSize();
         int height = gamePanel.getTileSize();
 
-        up1 = setup("/monster/greenslime_down_1", width, height);
-        up2 = setup("/monster/greenslime_down_2", width, height);
-        left1 = setup("/monster/greenslime_down_1", width, height);
-        left2 = setup("/monster/greenslime_down_2", width, height);
-        down1 = setup("/monster/greenslime_down_1", width, height);
-        down2 = setup("/monster/greenslime_down_2", width, height);
-        right1 = setup("/monster/greenslime_down_1", width, height);
-        right2 = setup("/monster/greenslime_down_2", width, height);
-
-        up_left1 = setup("/monster/greenslime_down_1", width, height);
-        up_left2 = setup("/monster/greenslime_down_2", width, height);
-        down_left1 = setup("/monster/greenslime_down_1", width, height);
-        down_left2 = setup("/monster/greenslime_down_2", width, height);
-        down_right1 = setup("/monster/greenslime_down_1", width, height);
-        down_right2 = setup("/monster/greenslime_down_2", width, height);
-        up_right1 = setup("/monster/greenslime_down_1", width, height);
-        up_right2 = setup("/monster/greenslime_down_2", width, height);
+        for (int i = 0; i < 2; i++) {
+            leftSprites[i] = setup("/monster/greenslime_down_" + (i + 1), width, height);
+            rightSprites[i] = setup("/monster/greenslime_down_" + (i + 1), width, height);
+        }
     }
 
-    // Overridden methods
-    @Override
-    public void damageReaction() {
-        direction = gamePanel.getPlayer().getDirection();
-    }
-
+    // Overridden method
     @Override
     public void checkDrop() {
         int i = new Random().nextInt(100) + 1;
 
-
-
         if (i >= 0 && i < 55)
         dropItem(new OBJ_Coin_Bronze(gamePanel));
-        if (i >= 55 && i < 60)
-            dropItem(new OBJ_Heart(gamePanel));
         if (i >= 90 && i < 100)
             dropItem(new OBJ_Potion_Red(gamePanel));
         if (i >= 60 && i < 80)
             dropItem(new OBJ_Coin_Golden(gamePanel));
         if (i >= 80 && i < 100)
             dropItem(new OBJ_Coin_Silver(gamePanel));
+
+        if (i < 50)
+            dropItem(new OBJ_Coin_Bronze(gamePanel));
+
     }
 }

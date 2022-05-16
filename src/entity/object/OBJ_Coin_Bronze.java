@@ -17,7 +17,7 @@ public class OBJ_Coin_Bronze extends Entity {
         type = TYPE.PickupOnly;
         name = "Bronze Coin";
         value = 1;
-        down1 = setup("/objects/coin_bronze", gamePanel.getTileSize(), gamePanel.getTileSize());
+        rightSprites[0] = setup("/objects/coin_bronze", gamePanel.getTileSize(), gamePanel.getTileSize());
     }
 
     // Overridden method

@@ -50,7 +50,7 @@ public class CollisionChecker {
                 entity.getSolidArea().x = entity.getWorldX() + entity.getSolidArea().x;
                 entity.getSolidArea().y = entity.getWorldY() + entity.getSolidArea().y;
 
-                // Get getObjects()ect's solid area position
+                // Get object's solid area position
                 gamePanel.getObjects()[i].getSolidArea().x = gamePanel.getObjects()[i].getWorldX()
                         + gamePanel.getObjects()[i].getSolidArea().x;
                 gamePanel.getObjects()[i].getSolidArea().y = gamePanel.getObjects()[i].getWorldY()
@@ -103,7 +103,7 @@ public class CollisionChecker {
         return index;
     }
 
-    // NPCs & Monsters collision
+    // Player & NPCs / Player & Monsters collisions
     public int checkEntity(Entity entity, Entity[] target) {
         int index = 999;
 
@@ -113,7 +113,7 @@ public class CollisionChecker {
                 entity.getSolidArea().x = entity.getWorldX() + entity.getSolidArea().x;
                 entity.getSolidArea().y = entity.getWorldY() + entity.getSolidArea().y;
 
-                // Get getObjects()ect's solid area position
+                // Get target's solid area position
                 target[i].getSolidArea().x = target[i].getWorldX() + target[i].getSolidArea().x;
                 target[i].getSolidArea().y = target[i].getWorldY() + target[i].getSolidArea().y;
 
@@ -171,7 +171,7 @@ public class CollisionChecker {
         entity.getSolidArea().x = entity.getWorldX() + entity.getSolidArea().x;
         entity.getSolidArea().y = entity.getWorldY() + entity.getSolidArea().y;
 
-        // Get getObjects()ect's solid area position
+        // Get Player's solid area position
         gamePanel.getPlayer().getSolidArea().x = gamePanel.getPlayer().getWorldX()
                 + gamePanel.getPlayer().getSolidArea().x;
         gamePanel.getPlayer().getSolidArea().y = gamePanel.getPlayer().getWorldY()

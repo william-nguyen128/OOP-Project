@@ -11,15 +11,9 @@ import java.io.IOException;
 public class Entity {
     // Attributes
     protected GamePanel gamePanel;
-    protected BufferedImage image, image2, image3;
-    protected BufferedImage up1, up2, left1, left2, down1, down2, right1, right2,
-            up_left1, up_left2, down_left1, down_left2, down_right1, down_right2, up_right1, up_right2;
-    protected BufferedImage attackUp1, attackUp2, attackLeft1, attackLeft2,
-            attackDown1, attackDown2, attackRight1, attackRight2,
-            attackUpLeft1, attackUpLeft2, attackDownLeft1, attackDownLeft2,
-            attackDownRight1, attackDownRight2, attackUpRight1, attackUpRight2;
+    protected BufferedImage leftSprites[] = new BufferedImage[10];
+    protected BufferedImage rightSprites[] = new BufferedImage[10];
     protected Rectangle solidArea = new Rectangle(0, 0, 48, 48);
-    protected Rectangle attackArea = new Rectangle(0, 0, 0, 0);
     protected int solidAreaDefaultX, solidAreaDefaultY;
     protected boolean collision = false;
     protected String dialogues[] = new String[20];
@@ -27,6 +21,7 @@ public class Entity {
     // State
     protected int worldX, worldY;
     protected String direction = "down";
+    protected boolean facingRight = true;
     protected int spriteNum = 1;
     protected int dialogueIndex = 0;
     protected boolean collisionOn = false;
@@ -34,15 +29,12 @@ public class Entity {
     protected boolean attacking = false;
     protected boolean alive = true;
     protected boolean dying = false;
-    private boolean hpBarOn = false;
 
     // Counter
     protected int spriteCounter = 0;
     protected int actionLockCounter = 0;
     protected int invincibleCounter = 0;
     protected int shotAvailableCounter = 0;
-    private int dyingCounter = 0;
-    private int hpBarCounter = 0;
 
     // Entity's attributes
     protected TYPE type;
@@ -88,8 +80,6 @@ public class Entity {
     protected int exp;
     protected int nextLevelExp;
     protected int coin;
-    protected Entity currentWeapon;
-    protected Entity currentShield;
     protected Projectile projectile;
 
     // Items' attributes
@@ -104,17 +94,8 @@ public class Entity {
         this.gamePanel = gamePanel;
     }
 
-    // Parent methods (Empty)
-    public void setAction() {
-    }
-
-    public void damageReaction() {
-    }
-
+    // Parent method (Empty)
     public void use(Entity entity) {
-    }
-
-    public void checkDrop() {
     }
 
     // For Monsters
@@ -205,9 +186,7 @@ public class Entity {
         if (gamePanel.getPlayer().invincible == false) {
             gamePanel.playSoundEffect(6);
 
-            int damage = attack - gamePanel.getPlayer().defense;
-            if (damage < 0)
-                damage = 0;
+            int damage = attack;
 
             gamePanel.getPlayer().life -= damage;
             gamePanel.getPlayer().invincible = true;
@@ -216,159 +195,29 @@ public class Entity {
 
     // Parent methods
     public void update() {
-        setAction();
-
-        collisionOn = false;
-        gamePanel.getCollisionChecker().checkTile(this);
-        gamePanel.getCollisionChecker().checkObject(this, false);
-        gamePanel.getCollisionChecker().checkEntity(this, gamePanel.getNPCs());
-        gamePanel.getCollisionChecker().checkEntity(this, gamePanel.getMonsters());
-        boolean contactPlayer = gamePanel.getCollisionChecker().checkPlayer(this);
-
-        if (type == TYPE.Monster && contactPlayer == true)
-            damagePlayer(attack);
-
-        // If collision = false => Player can move
-        if (collisionOn == false)
-            switch (direction) {
-                case "up":
-                    worldY -= speed;
-                    break;
-                case "left":
-                    worldX -= speed;
-                    break;
-                case "down":
-                    worldY += speed;
-                    break;
-                case "right":
-                    worldX += speed;
-                    break;
-                case "up-left":
-                    worldX -= speed;
-                    worldY -= speed;
-                    break;
-                case "down-left":
-                    worldX -= speed;
-                    worldY += speed;
-                    break;
-                case "down-right":
-                    worldX += speed;
-                    worldY += speed;
-                    break;
-                case "up-right":
-                    worldX += speed;
-                    worldY -= speed;
-                    break;
-            }
-
-        // Player's sprite change
-        spriteCounter++;
-        if (spriteCounter > 15) {
-            if (spriteNum == 1)
-                spriteNum = 2;
-            else if (spriteNum == 2)
-                spriteNum = 1;
-            spriteCounter = 0;
-        }
-
-        if (invincible == true) {
-            invincibleCounter++;
-            if (invincibleCounter > 40) {
-                invincible = false;
-                invincibleCounter = 0;
-            }
-        }
-        if (shotAvailableCounter < 30)
-            shotAvailableCounter++;
     }
 
     public void draw(Graphics2D g2d) {
-        int screenX = worldX - gamePanel.getPlayer().worldX + gamePanel.getPlayer().SCREEN_X;
-        int screenY = worldY - gamePanel.getPlayer().worldY + gamePanel.getPlayer().SCREEN_Y;
+        int screenX = worldX - gamePanel.getPlayer().getWorldX() + gamePanel.getPlayer().SCREEN_X;
+        int screenY = worldY - gamePanel.getPlayer().getWorldY() + gamePanel.getPlayer().SCREEN_Y;
 
-        if (worldX + gamePanel.getTileSize() > gamePanel.getPlayer().worldX - gamePanel.getPlayer().SCREEN_X &&
-                worldX - gamePanel.getTileSize() < gamePanel.getPlayer().worldX + gamePanel.getPlayer().SCREEN_X &&
-                worldY + gamePanel.getTileSize() > gamePanel.getPlayer().worldY - gamePanel.getPlayer().SCREEN_Y &&
-                worldY - gamePanel.getTileSize() < gamePanel.getPlayer().worldY + gamePanel.getPlayer().SCREEN_Y) {
+        if (worldX + gamePanel.getTileSize() > gamePanel.getPlayer().getWorldX() - gamePanel.getPlayer().SCREEN_X &&
+                worldX - gamePanel.getTileSize() < gamePanel.getPlayer().getWorldX() + gamePanel.getPlayer().SCREEN_X &&
+                worldY + gamePanel.getTileSize() > gamePanel.getPlayer().getWorldY() - gamePanel.getPlayer().SCREEN_Y &&
+                worldY - gamePanel.getTileSize() < gamePanel.getPlayer().getWorldY() + gamePanel.getPlayer().SCREEN_Y) {
             BufferedImage image = null;
 
-            switch (direction) {
-                case "up":
-                    if (spriteNum == 1)
-                        image = up1;
-                    if (spriteNum == 2)
-                        image = up2;
-                    break;
-                case "left":
-                    if (spriteNum == 1)
-                        image = left1;
-                    if (spriteNum == 2)
-                        image = left2;
-                    break;
-                case "down":
-                    if (spriteNum == 1)
-                        image = down1;
-                    if (spriteNum == 2)
-                        image = down2;
-                    break;
-                case "right":
-                    if (spriteNum == 1)
-                        image = right1;
-                    if (spriteNum == 2)
-                        image = right2;
-                    break;
-                case "up-left":
-                    if (spriteNum == 1)
-                        image = up_left1;
-                    if (spriteNum == 2)
-                        image = up_left2;
-                    break;
-                case "down-left":
-                    if (spriteNum == 1)
-                        image = down_left1;
-                    if (spriteNum == 2)
-                        image = down_left2;
-                    break;
-                case "down-right":
-                    if (spriteNum == 1)
-                        image = down_right1;
-                    if (spriteNum == 2)
-                        image = down_right2;
-                    break;
-                case "up-right":
-                    if (spriteNum == 1)
-                        image = up_right1;
-                    if (spriteNum == 2)
-                        image = up_right2;
-                    break;
+            if (facingRight == false) {
+                if (spriteNum == 1)
+                    image = leftSprites[0];
+                if (spriteNum == 2)
+                    image = leftSprites[1];
+            } else {
+                if (spriteNum == 1)
+                    image = rightSprites[0];
+                if (spriteNum == 2)
+                    image = rightSprites[1];
             }
-
-            // Monster HP bar
-            if (type == TYPE.Monster && hpBarOn == true) {
-                double oneScale = (double) gamePanel.getTileSize() / maxLife;
-                double hpBarValue = oneScale * life;
-
-                g2d.setColor(new Color(35, 35, 35));
-                g2d.fillRect(screenX - 1, screenY - 16, gamePanel.getTileSize() + 2, 12);
-
-                g2d.setColor(new Color(255, 0, 30));
-                g2d.fillRect(screenX, screenY - 15, (int) hpBarValue, 10);
-
-                hpBarCounter++;
-
-                if (hpBarCounter > 600) {
-                    hpBarCounter = 0;
-                    hpBarOn = false;
-                }
-            }
-
-            if (invincible == true) {
-                hpBarOn = true;
-                hpBarCounter = 0;
-                changeAlpha(g2d, 0.4f);
-            }
-            if (dying == true)
-                dyingAnimation(g2d);
 
             g2d.drawImage(image, screenX, screenY, null);
 
@@ -395,54 +244,13 @@ public class Entity {
         return image;
     }
 
-    private void dyingAnimation(Graphics2D g2d) {
-        dyingCounter++;
-
-        int i = 5;
-
-        if (dyingCounter <= i)
-            changeAlpha(g2d, 0f);
-        if (dyingCounter > i && dyingCounter <= i * 2)
-            changeAlpha(g2d, 1f);
-        if (dyingCounter > i * 2 && dyingCounter <= i * 3)
-            changeAlpha(g2d, 0f);
-        if (dyingCounter > i * 3 && dyingCounter <= i * 4)
-            changeAlpha(g2d, 1f);
-        if (dyingCounter > i * 4 && dyingCounter <= i * 5)
-            changeAlpha(g2d, 0f);
-        if (dyingCounter > i * 5 && dyingCounter <= i * 6)
-            changeAlpha(g2d, 1f);
-        if (dyingCounter > i * 6 && dyingCounter <= i * 7)
-            changeAlpha(g2d, 0f);
-        if (dyingCounter > i * 7 && dyingCounter <= i * 8)
-            changeAlpha(g2d, 1f);
-        if (dyingCounter > i * 8)
-            alive = false;
-    }
-
     // Getters
     public BufferedImage getDown1() {
-        return down1;
-    }
-
-    public BufferedImage getImage() {
-        return image;
-    }
-
-    public BufferedImage getImage2() {
-        return image2;
-    }
-
-    public BufferedImage getImage3() {
-        return image3;
+        return rightSprites[0];
     }
 
     public Rectangle getSolidArea() {
         return solidArea;
-    }
-
-    public Rectangle getAttackArea() {
-        return attackArea;
     }
 
     public int getSolidAreaDefaultX() {
@@ -459,6 +267,10 @@ public class Entity {
 
     public String getDirection() {
         return direction;
+    }
+
+    public boolean isFacingRight() {
+        return facingRight;
     }
 
     public int getWorldX() {
@@ -479,6 +291,22 @@ public class Entity {
 
     public void setCollisionOn(boolean collisionOn) {
         this.collisionOn = collisionOn;
+    }
+
+    public boolean isInvincible() {
+        return invincible;
+    }
+
+    public void setInvincible(boolean invincible) {
+        this.invincible = invincible;
+    }
+
+    public boolean isAttacking() {
+        return attacking;
+    }
+
+    public void setAttacking(boolean attacking) {
+        this.attacking = attacking;
     }
 
     public boolean isAlive() {
@@ -533,6 +361,10 @@ public class Entity {
         return dexterity;
     }
 
+    public int getAttack() {
+        return attack;
+    }
+
     public int getEXP() {
         return exp;
     }
@@ -549,15 +381,11 @@ public class Entity {
         this.coin = coin;
     }
 
-    public Entity getCurrentWeapon() {
-        return currentWeapon;
-    }
-
-    public Entity getCurrentShield() {
-        return currentShield;
-    }
-
     public String getDescription() {
         return description;
+    }
+
+    public int getInvincibleCounter() {
+        return invincibleCounter;
     }
 }

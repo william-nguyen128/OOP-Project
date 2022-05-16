@@ -11,7 +11,7 @@ public class OBJ_Shield_Wood extends Entity {
 
         type = TYPE.Shield;
         name = "Wooden Shield";
-        down1 = setup("/objects/shield_wood", gamePanel.getTileSize(), gamePanel.getTileSize());
+        rightSprites[0] = setup("/objects/shield_wood", gamePanel.getTileSize(), gamePanel.getTileSize());
         defenseValue = 1;
         description = "[" + name + "]\nA wooden shield.\nYou made it yourself.";
     }

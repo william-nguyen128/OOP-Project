@@ -17,7 +17,7 @@ public class OBJ_Potion_Red extends Entity {
         type = TYPE.Consumable;
         name = "Red Potion";
         value = 5;
-        down1 = setup("/objects/potion_red", gamePanel.getTileSize(), gamePanel.getTileSize());
+        rightSprites[0] = setup("/objects/potion_red", gamePanel.getTileSize(), gamePanel.getTileSize());
         description = "[" + name + "]\nHeals you for " + value + " HP.";
     }
 

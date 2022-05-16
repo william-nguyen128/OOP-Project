@@ -3,42 +3,28 @@ package entity;
 import main.GamePanel;
 
 public class Projectile extends Entity {
-    // Attribute
-    private Entity caster;
-
     // Constructor
     public Projectile(GamePanel gamePanel) {
         super(gamePanel);
     }
 
     // Set starting values
-    public void set(int worldX, int worldY, String direction, boolean alive, Entity caster) {
+    public void set(int worldX, int worldY, String direction, boolean alive) {
         this.worldX = worldX;
         this.worldY = worldY;
         this.direction = direction;
         this.alive = alive;
-        this.caster = caster;
         this.life = this.maxLife;
     }
 
     // Overridden method
     @Override
     public void update() {
-        if (caster == gamePanel.getPlayer()) {
-            int monsterIndex = gamePanel.getCollisionChecker().checkEntity(this, gamePanel.getMonsters());
-            if (monsterIndex != 999) {
-                gamePanel.getPlayer().damageMonster(monsterIndex, attack);
-                generateParticle(caster.projectile, gamePanel.getMonsters()[monsterIndex]);
-                alive = false;
-            }
-        }
-        if (caster != gamePanel.getPlayer()) {
-            boolean contactPlayer = gamePanel.getCollisionChecker().checkPlayer(this);
-            if (gamePanel.getPlayer().invincible == false && contactPlayer == true) {
-                damagePlayer(attack);
-                generateParticle(caster.projectile, gamePanel.getPlayer());
-                alive = false;
-            }
+        int monsterIndex = gamePanel.getCollisionChecker().checkEntity(this, gamePanel.getMonsters());
+        if (monsterIndex != 999) {
+            gamePanel.getPlayer().damageMonster(monsterIndex, attack);
+            generateParticle(gamePanel.getPlayer().projectile, gamePanel.getMonsters()[monsterIndex]);
+            alive = false;
         }
 
         switch (direction) {
@@ -87,11 +73,11 @@ public class Projectile extends Entity {
     }
 
     // Parent methods
-    public boolean haveResource(Entity caster) {
+    public boolean haveResource(Entity player) {
         boolean haveResource = false;
         return haveResource;
     }
 
-    public void subtractResource(Entity caster) {
+    public void subtractResource(Entity player) {
     }
 }

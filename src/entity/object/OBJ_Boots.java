@@ -11,6 +11,6 @@ public class OBJ_Boots extends Entity {
 
         type = TYPE.Consumable;
         name = "Boots";
-        down1 = setup("/objects/boots", gamePanel.getTileSize(), gamePanel.getTileSize());
+        rightSprites[0] = setup("/objects/boots", gamePanel.getTileSize(), gamePanel.getTileSize());
     }
 }
