@@ -48,7 +48,7 @@ public class Weapon extends Entity {
 
             // Check Monster collision w/ the updated worldX, worldY, and solidArea
             int monsterIndex = gamePanel.getCollisionChecker().checkEntity(this, gamePanel.getMonsters());
-            gamePanel.getPlayer().damageMonster(monsterIndex, attack);
+            gamePanel.getPlayer().damageMonster(monsterIndex, attack * gamePanel.getPlayer().getStrength());
 
             int currentWorldX = worldX;
 

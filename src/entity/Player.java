@@ -68,7 +68,6 @@ public class Player extends Entity {
         currentWeapon = new WPN_Whip(gamePanel);
         currentShield = new OBJ_Shield_Wood(gamePanel);
         projectile = new OBJ_Fireball(gamePanel);
-        attack = getAttack(); // Determined by strength & current weapon
         defense = getDefense(); // Determined by dexterity & current shield
     }
 
@@ -92,7 +91,7 @@ public class Player extends Entity {
 
     // Public methods
     public int getAttack() {
-        return attack = strength * currentWeapon.attackValue;
+        return attack = strength * currentWeapon.attack;
     }
 
     public int getDefense() {
@@ -105,10 +104,8 @@ public class Player extends Entity {
         if (itemIndex < inventory.size()) {
             Entity selectedItem = inventory.get(itemIndex);
 
-            if (selectedItem.type == TYPE.Weapon) {
+            if (selectedItem.type == TYPE.Weapon)
                 currentWeapon = (Weapon) selectedItem;
-                attack = getAttack();
-            }
             if (selectedItem.type == TYPE.Shield) {
                 currentShield = selectedItem;
                 defense = getDefense();
