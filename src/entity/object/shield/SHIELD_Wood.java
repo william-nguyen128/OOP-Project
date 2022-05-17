@@ -1,12 +1,11 @@
-package entity.object;
+package entity.object.shield;
 
-import entity.Entity;
 import entity.TYPE;
 import main.GamePanel;
 
-public class OBJ_Shield_Wood extends Entity {
+public class SHIELD_Wood extends Shield {
     // Constructor
-    public OBJ_Shield_Wood(GamePanel gamePanel) {
+    public SHIELD_Wood(GamePanel gamePanel) {
         super(gamePanel);
 
         type = TYPE.Shield;
