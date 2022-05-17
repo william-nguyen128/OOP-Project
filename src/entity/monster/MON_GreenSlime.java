@@ -2,7 +2,7 @@ package entity.monster;
 
 import java.util.Random;
 
-import entity.object.OBJ_Coin_Bronze;
+import entity.object.coin.COIN_Bronze;
 import main.GamePanel;
 
 public class MON_GreenSlime extends Monster {
@@ -49,6 +49,6 @@ public class MON_GreenSlime extends Monster {
         int i = new Random().nextInt(100) + 1;
 
         if (i < 50)
-            dropItem(new OBJ_Coin_Bronze(gamePanel));
+            dropItem(new COIN_Bronze(gamePanel));
     }
 }

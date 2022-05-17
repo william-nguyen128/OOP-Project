@@ -1,22 +1,14 @@
-package entity.object;
+package entity.object.coin;
 
 import entity.Entity;
 import entity.TYPE;
 import main.GamePanel;
 
-public class OBJ_Coin_Bronze extends Entity {
-    // Attribute
-    private GamePanel gamePanel;
-
+public class Coin extends Entity {
     // Constructor
-    public OBJ_Coin_Bronze(GamePanel gamePanel) {
+    public Coin(GamePanel gamePanel) {
         super(gamePanel);
-        this.gamePanel = gamePanel;
-
         type = TYPE.PickupOnly;
-        name = "Bronze Coin";
-        value = 1;
-        rightSprites[0] = setup("/objects/coin_bronze", gamePanel.getTileSize(), gamePanel.getTileSize());
     }
 
     // Overridden method
