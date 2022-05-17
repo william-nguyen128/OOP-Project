@@ -19,6 +19,10 @@ public class Weapon extends Entity {
         type = TYPE.Weapon;
     }
 
+    public void setAttack(int attack) {
+        this.attack = attack;
+    }
+
     // Set starting values
     public void set(int worldX, int worldY, boolean facingRight) {
         int playerWidth = gamePanel.getPlayer().getSolidArea().width;

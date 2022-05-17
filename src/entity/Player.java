@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import entity.object.OBJ_Fireball;
 import entity.object.OBJ_Shield_Wood;
 
-import main.Coin;
 import entity.object.weapon.WPN_Whip;
 import entity.object.weapon.Weapon;
 import main.GAME_STATE;
@@ -30,9 +29,27 @@ public class Player extends Entity {
     public final int SCREEN_Y;
     public final int MAX_INV_SIZE = 20;
 
+    private int coin;
+    private int totalCoin;
     private int speedUpgradeFee = 50;
-    private int strengthUpgradeFee= 50;
+    private int strengthUpgradeFee = 50;
     private int hpUpgradeFee = 50;
+
+    public int getCoin() {
+        return coin;
+    }
+
+    public void setCoin(int coin) {
+        this.coin = coin;
+    }
+
+    public int getTotalCoin() {
+        return totalCoin;
+    }
+
+    public void setTotalCoin(int totalCoin) {
+        this.totalCoin = totalCoin;
+    }
 
     public int getStrengthUpgradeFee() {
         return strengthUpgradeFee;
@@ -50,8 +67,6 @@ public class Player extends Entity {
         this.hpUpgradeFee = hpUpgradeFee;
     }
 
-
-
     public int getSpeedUpgradeFee() {
         return speedUpgradeFee;
     }
@@ -59,11 +74,6 @@ public class Player extends Entity {
     public void setSpeedUpgradeFee(int speedUpgradeFee) {
         this.speedUpgradeFee = speedUpgradeFee;
     }
-
-
-
-
-
 
     // Constructor
     public Player(GamePanel gamePanel, KeyHandler keyHandler) {
@@ -93,12 +103,12 @@ public class Player extends Entity {
         // Player's Status
         type = TYPE.Player;
         level = 1;
-        coin2 = 0;
+        coin = 0;
         maxLife = 6;
         life = maxLife;
         maxMana = 4;
         mana = maxMana;
-        strength = 1; // More strength = More damage dealt
+        strength = 10; // More strength = More damage dealt
         dexterity = 1; // More dexterity = Less damage received
         exp = 0;
         nextLevelExp = 5;
@@ -106,7 +116,7 @@ public class Player extends Entity {
 
         currentShield = new OBJ_Shield_Wood(gamePanel);
         projectile = new OBJ_Fireball(gamePanel);
-        attack = getAttack(); // Determined by strength & current weapon
+        currentWeapon.setAttack(currentWeapon.getAttack() * strength); // Determined by strength & current weapon
         defense = getDefense(); // Determined by dexterity & current shield
     }
 
@@ -129,9 +139,9 @@ public class Player extends Entity {
     }
 
     // Public methods
-    public int getAttack() {
-        return attack = getStrength() * currentWeapon.attackValue;
-    }
+    // public int getAttack() {
+    // return attack = strength * currentWeapon.attackValue;
+    // }
 
     public int getDefense() {
         return defense = dexterity * currentShield.defenseValue;
@@ -145,7 +155,7 @@ public class Player extends Entity {
 
             if (selectedItem.type == TYPE.Weapon) {
                 currentWeapon = (Weapon) selectedItem;
-                attack = getAttack();
+                // attack = getAttack();
             }
             if (selectedItem.type == TYPE.Shield) {
                 currentShield = selectedItem;
@@ -425,41 +435,38 @@ public class Player extends Entity {
             maxLife += 2;
             strength++;
             dexterity++;
-            attack = getAttack();
+            // attack = getAttack();
             defense = getDefense();
             gamePanel.playSoundEffect(8);
             gamePanel.gameState = GAME_STATE.Dialogue;
             gamePanel.getUserInterface().setCurrentDialogue("Level up!");
         }
     }
-    public void upgradeStrength(){
-        if(coin-getStrengthUpgradeFee()>0) {
-            coin -= strengthUpgradeFee ;
+
+    public void upgradeStrength() {
+        if (coin - getStrengthUpgradeFee() > 0) {
+            coin -= strengthUpgradeFee;
             strength++;
             setStrengthUpgradeFee(getStrengthUpgradeFee() * 2);
             gamePanel.getData().saveData();
-            gamePanel.getCoin().saveCoin();
         }
     }
 
-    public void upgradeSpeed(){
-        if(coin-getSpeedUpgradeFee()>0) {
-            coin -= getSpeedUpgradeFee() ;
-            speed+=0.4;
+    public void upgradeSpeed() {
+        if (coin - getSpeedUpgradeFee() > 0) {
+            coin -= getSpeedUpgradeFee();
+            speed += 0.4;
             setSpeedUpgradeFee(getSpeedUpgradeFee() * 2);
             gamePanel.getData().saveData();
-            gamePanel.getCoin().saveCoin();
         }
     }
 
-
-    public void upgradeHP(){
-        if(coin - getHpUpgradeFee()>0) {
-            coin -= getHpUpgradeFee() ;
+    public void upgradeHP() {
+        if (coin - getHpUpgradeFee() > 0) {
+            coin -= getHpUpgradeFee();
             maxLife++;
             setHpUpgradeFee(getHpUpgradeFee() * 2);
             gamePanel.getData().saveData();
-            gamePanel.getCoin().saveCoin();
         }
     }
 
@@ -503,6 +510,5 @@ public class Player extends Entity {
     public int getAttackCounter() {
         return attackCounter;
     }
-
 
 }

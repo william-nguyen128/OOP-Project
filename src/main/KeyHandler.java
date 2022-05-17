@@ -23,8 +23,7 @@ public class KeyHandler implements KeyListener {
         // Title State
         if (gamePanel.gameState == GAME_STATE.Title) {
             titleState(code);
-        }
-        else if(gamePanel.gameState == GAME_STATE.Upgrade)
+        } else if (gamePanel.gameState == GAME_STATE.Upgrade)
             upgradeState(code);
         // Play State
         else if (gamePanel.gameState == GAME_STATE.Play)
@@ -101,57 +100,59 @@ public class KeyHandler implements KeyListener {
                 gamePanel.playMusic(0);
             }
             if (gamePanel.getUserInterface().getCommandNum() == 1) {
+                gamePanel.getUserInterface().setCommandNum(0);
                 gamePanel.gameState = GAME_STATE.Upgrade;
             }
             if (gamePanel.getUserInterface().getCommandNum() == 2)
                 System.exit(0);
         }
     }
-    private void characterUpdateState(int code){
+
+    private void characterUpdateState(int code) {
         if (code == KeyEvent.VK_SPACE || code == KeyEvent.VK_ENTER ||
                 code == KeyEvent.VK_E || code == KeyEvent.VK_J)
             gamePanel.gameState = GAME_STATE.Upgrade;
 
     }
-    private void upgradeState(int code){
+
+    private void upgradeState(int code) {
         if (code == KeyEvent.VK_W || code == KeyEvent.VK_UP) {
             gamePanel.getUserInterface().setCommandNum(gamePanel.getUserInterface().getCommandNum() - 1);
             gamePanel.playSoundEffect(9);
             if (gamePanel.getUserInterface().getCommandNum() < 0)
-                gamePanel.getUserInterface().setCommandNum(4);
+                gamePanel.getUserInterface().setCommandNum(3);
         }
         if (code == KeyEvent.VK_S || code == KeyEvent.VK_DOWN) {
             gamePanel.getUserInterface().setCommandNum(gamePanel.getUserInterface().getCommandNum() + 1);
             gamePanel.playSoundEffect(9);
-            if (gamePanel.getUserInterface().getCommandNum() > 4)
+            if (gamePanel.getUserInterface().getCommandNum() > 3)
                 gamePanel.getUserInterface().setCommandNum(0);
         }
-        if (code == KeyEvent.VK_SPACE || code == KeyEvent.VK_ENTER ||
-                code == KeyEvent.VK_E || code == KeyEvent.VK_J) {
+        if (code == KeyEvent.VK_SPACE || code == KeyEvent.VK_ENTER || code == KeyEvent.VK_E) {
             if (gamePanel.getUserInterface().getCommandNum() == 0) {
-                gamePanel.getUserInterface().titleScreenState=1;
-                if(gamePanel.getPlayer().getCoin()-gamePanel.getPlayer().getStrengthUpgradeFee()>0) {
+                gamePanel.getUserInterface().titleScreenState = 1;
+                if (gamePanel.getPlayer().getCoin() - gamePanel.getPlayer().getStrengthUpgradeFee() > 0) {
                     gamePanel.gameState = GAME_STATE.CharacterUpdate1;
                     gamePanel.getPlayer().upgradeStrength();
                 }
 
             }
             if (gamePanel.getUserInterface().getCommandNum() == 1) {
-                if(gamePanel.getPlayer().getCoin()-gamePanel.getPlayer().getSpeedUpgradeFee()>0) {
+                if (gamePanel.getPlayer().getCoin() - gamePanel.getPlayer().getSpeedUpgradeFee() > 0) {
                     gamePanel.gameState = GAME_STATE.CharacterUpdate2;
                     gamePanel.getPlayer().upgradeSpeed();
                 }
             }
             if (gamePanel.getUserInterface().getCommandNum() == 2) {
-                if(gamePanel.getPlayer().getCoin()-gamePanel.getPlayer().getHpUpgradeFee()>0) {
+                if (gamePanel.getPlayer().getCoin() - gamePanel.getPlayer().getHpUpgradeFee() > 0) {
                     gamePanel.gameState = GAME_STATE.CharacterUpdate3;
                     gamePanel.getPlayer().upgradeHP();
                 }
             }
             if (gamePanel.getUserInterface().getCommandNum() == 3) {
+                gamePanel.getUserInterface().setCommandNum(1);
                 gamePanel.gameState = GAME_STATE.Title;
             }
-
         }
     }
 
@@ -288,6 +289,9 @@ public class KeyHandler implements KeyListener {
             if (gamePanel.getUserInterface().getCommandNum() == 0) {
                 gamePanel.playSoundEffect(9);
                 gamePanel.gameState = GAME_STATE.Title;
+                gamePanel.getPlayer()
+                        .setTotalCoin(gamePanel.getPlayer().getTotalCoin() + gamePanel.getPlayer().getCoin());
+                gamePanel.getData().saveData();
                 gamePanel.restart();
             }
     }

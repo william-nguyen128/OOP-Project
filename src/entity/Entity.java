@@ -79,23 +79,12 @@ public class Entity {
     protected int defense;
     protected int exp;
     protected int nextLevelExp;
-    protected int coin;
-    protected int coin2;
-
-    public int getCoin2() {
-        return coin2;
-    }
-
-    public void setCoin2(int coin2) {
-        this.coin2 = coin2;
-    }
-
 
     protected Projectile projectile;
 
     // Items' attributes
     protected int value;
-    protected int attackValue;
+    // protected int attackValue;
     protected int defenseValue;
     protected String description = "";
     protected int castCost;
@@ -336,9 +325,13 @@ public class Entity {
         this.life = life;
     }
 
-    public void setStrength ( int strength){ this.strength=strength;}
+    public void setStrength(int strength) {
+        this.strength = strength;
+    }
 
-    public void setSpeed ( Double speed){this.speed=speed;}
+    public void setSpeed(double speed) {
+        this.speed = speed;
+    }
 
     public int getMana() {
         return mana;
@@ -382,14 +375,6 @@ public class Entity {
 
     public int getNextLevelEXP() {
         return nextLevelExp;
-    }
-
-    public int getCoin() {
-        return coin;
-    }
-
-    public void setCoin(int coin) {
-        this.coin = coin;
     }
 
     public String getDescription() {

@@ -65,7 +65,6 @@ public class GamePanel extends JPanel implements Runnable {
     private UI ui = new UI(this);
     private EventHandler eventHandler = new EventHandler(this);
     private Config config = new Config(this);
-    private Coin coin = new Coin(this);
     private Data data = new Data(this);
     private Thread gameThread;
 
@@ -471,13 +470,10 @@ public class GamePanel extends JPanel implements Runnable {
         return config;
     }
 
-    public Coin getCoin(){
-        return coin;
-    }
-
-    public Data getData(){
+    public Data getData() {
         return data;
     }
+
     public Player getPlayer() {
         return player;
     }

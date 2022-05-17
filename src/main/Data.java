@@ -1,37 +1,43 @@
 package main;
 
-import entity.Player;
-
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.FileReader;
+import java.io.FileWriter;
 
 public class Data {
+    // Attribute
+    private GamePanel gamePanel;
 
-    GamePanel gamePanel;
-
-    public Data(GamePanel gamePanel){
-        this.gamePanel=gamePanel;
+    // Constructor
+    public Data(GamePanel gamePanel) {
+        this.gamePanel = gamePanel;
     }
 
-    public void saveData(){
+    public void saveData() {
         try {
-            BufferedWriter bw = new BufferedWriter(new FileWriter("C:\\Users\\thanh\\Downloads\\project\\OOP-Project\\data.txt"));
+            BufferedWriter bw = new BufferedWriter(new FileWriter("data.txt"));
 
-            //speed
+            // coin
+            bw.write(String.valueOf(gamePanel.getPlayer().getTotalCoin()));
+            bw.newLine();
+
+            // speed
             bw.write(String.valueOf(gamePanel.getPlayer().getSpeed()));
             bw.newLine();
-            //strength
+            // strength
             bw.write(String.valueOf(gamePanel.getPlayer().getStrength()));
             bw.newLine();
-            //max life
+            // max life
             bw.write(String.valueOf(gamePanel.getPlayer().getMaxLife()));
             bw.newLine();
-            //speed Fee
+            // speed Fee
             bw.write(String.valueOf(gamePanel.getPlayer().getSpeedUpgradeFee()));
             bw.newLine();
-            //strength Fee
+            // strength Fee
             bw.write(String.valueOf(gamePanel.getPlayer().getStrengthUpgradeFee()));
             bw.newLine();
-            //HP fee
+            // HP fee
             bw.write(String.valueOf(gamePanel.getPlayer().getHpUpgradeFee()));
             bw.newLine();
 
@@ -40,32 +46,35 @@ public class Data {
             e.printStackTrace();
         }
     }
-    public void loadData(){
-        try {
-            BufferedReader br = new BufferedReader(new FileReader("C:\\Users\\thanh\\Downloads\\project\\OOP-Project\\data.txt"));
 
-            //speed
+    public void loadData() {
+        try {
+            BufferedReader br = new BufferedReader(new FileReader("data.txt"));
+
+            // coin
             String s = br.readLine();
+            gamePanel.getPlayer().setTotalCoin(Integer.parseInt(s));
+
+            // speed
+            s = br.readLine();
             gamePanel.getPlayer().setSpeed(Double.parseDouble(s));
-            //strength
+            // strength
             s = br.readLine();
             gamePanel.getPlayer().setStrength(Integer.parseInt(s));
-            //max life
+            // max life
             s = br.readLine();
             gamePanel.getPlayer().setLife(Integer.parseInt(s));
-            //speed fee
+            // speed fee
             s = br.readLine();
             gamePanel.getPlayer().setSpeedUpgradeFee(Integer.parseInt(s));
-            //strength fee
+            // strength fee
             s = br.readLine();
             gamePanel.getPlayer().setStrengthUpgradeFee(Integer.parseInt(s));
-            //max life fee
+            // max life fee
             s = br.readLine();
             gamePanel.getPlayer().setHpUpgradeFee(Integer.parseInt(s));
 
-
             br.close();
-
 
         } catch (Exception e) {
             e.printStackTrace();
