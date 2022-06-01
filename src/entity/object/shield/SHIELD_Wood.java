@@ -1,6 +1,5 @@
 package entity.object.shield;
 
-import entity.TYPE;
 import main.GamePanel;
 
 public class SHIELD_Wood extends Shield {
@@ -8,7 +7,6 @@ public class SHIELD_Wood extends Shield {
     public SHIELD_Wood(GamePanel gamePanel) {
         super(gamePanel);
 
-        type = TYPE.Shield;
         name = "Wooden Shield";
         rightSprites[0] = setup("/objects/shield_wood", gamePanel.getTileSize(), gamePanel.getTileSize());
         defenseValue = 1;
