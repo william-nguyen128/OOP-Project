@@ -14,7 +14,7 @@ public class WPN_Whip extends Weapon {
         attack = 10;
         solidArea = new Rectangle(0, 0, gamePanel.getTileSize() * 4, gamePanel.getTileSize() * 2);
         description = "[" + name + "]\n"
-                + "Damage: 10\n"
+                + "Damage: " + attack + "\n"
                 + "Slash horizontally.";
 
         setWhipAttackImage();

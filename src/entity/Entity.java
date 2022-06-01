@@ -61,8 +61,6 @@ public class Entity {
 
     // Items' attributes
     protected int value;
-    protected int attackValue;
-    protected int defenseValue;
     protected String description = "";
     protected int castCost;
 

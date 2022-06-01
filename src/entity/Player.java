@@ -1,15 +1,14 @@
 package entity;
 
 import java.awt.Rectangle;
-// import java.awt.Color;
 import java.awt.Graphics2D;
-// import java.awt.Font;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import entity.object.OBJ_Fireball;
-import entity.object.OBJ_Shield_Wood;
+import entity.object.shield.SHIELD_Wood;
+import entity.object.shield.Shield;
 import entity.object.weapon.WPN_Whip;
 import entity.object.weapon.Weapon;
 import main.GAME_STATE;
@@ -22,7 +21,7 @@ public class Player extends Entity {
     private int standCounter = 0;
     private ArrayList<Entity> inventory = new ArrayList<>();
     private Weapon currentWeapon;
-    private Entity currentShield;
+    private Shield currentShield;
     private int attackCounter = 0;
     public final int SCREEN_X;
     public final int SCREEN_Y;
@@ -66,9 +65,8 @@ public class Player extends Entity {
         nextLevelExp = 5;
         coin = 0;
         currentWeapon = new WPN_Whip(gamePanel);
-        currentShield = new OBJ_Shield_Wood(gamePanel);
+        currentShield = new SHIELD_Wood(gamePanel);
         projectile = new OBJ_Fireball(gamePanel);
-        attack = getAttack(); // Determined by strength & current weapon
         defense = getDefense(); // Determined by dexterity & current shield
     }
 
@@ -92,11 +90,11 @@ public class Player extends Entity {
 
     // Public methods
     public int getAttack() {
-        return attack = strength * currentWeapon.attackValue;
+        return attack = strength * currentWeapon.attack;
     }
 
     public int getDefense() {
-        return defense = dexterity * currentShield.defenseValue;
+        return defense = dexterity * currentShield.getDefenseValue();
     }
 
     public void selectItem() {
@@ -105,12 +103,10 @@ public class Player extends Entity {
         if (itemIndex < inventory.size()) {
             Entity selectedItem = inventory.get(itemIndex);
 
-            if (selectedItem.type == TYPE.Weapon) {
+            if (selectedItem.type == TYPE.Weapon)
                 currentWeapon = (Weapon) selectedItem;
-                attack = getAttack();
-            }
             if (selectedItem.type == TYPE.Shield) {
-                currentShield = selectedItem;
+                currentShield = (Shield) selectedItem;
                 defense = getDefense();
             }
             if (selectedItem.type == TYPE.Consumable) {
