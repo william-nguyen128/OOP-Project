@@ -39,8 +39,6 @@ public class UI {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        // HUD
     }
 
     public void addMessage(String text) {
@@ -186,11 +184,16 @@ public class UI {
         DecimalFormat dFormat = new DecimalFormat("#00.00");
 
         if (gamePanel.gameState == GAME_STATE.Play) {
-            if (playTimeSecond >= 60.0) {
-                playTimeMinute++;
-                resetPlayTimeSecond();
+            if (playTimeMinute >= 1 && gamePanel.getNPCs()[0] == null) {
+                gamePanel.clearMonster();
+                gamePanel.getAssetSetter().setNPC();
+            } else {
+                if (playTimeSecond >= 60.0) {
+                    playTimeMinute++;
+                    resetPlayTimeSecond();
+                }
+                playTimeSecond += (double) 1 / 60;
             }
-            playTimeSecond += (double) 1 / 60;
 
             text = playTimeMinute + ":" + dFormat.format(playTimeSecond);
             x = getXForCenteredText(text);

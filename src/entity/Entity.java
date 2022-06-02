@@ -21,14 +21,12 @@ public class Entity {
     protected Rectangle solidArea = new Rectangle(0, 0, 48, 48);
     protected int solidAreaDefaultX, solidAreaDefaultY;
     protected boolean collision = false;
-    protected String dialogues[] = new String[20];
 
     // State
     protected int worldX, worldY;
     protected String direction = "down";
     protected boolean facingRight = true;
     protected int spriteNum = 1;
-    protected int dialogueIndex = 0;
     protected boolean collisionOn = false;
     protected boolean invincible = false;
     protected boolean attacking = false;
@@ -69,8 +67,39 @@ public class Entity {
         this.gamePanel = gamePanel;
     }
 
-    // Parent method (Empty)
+    // Parent methods
     public void use(Entity entity) {
+    }
+
+    public void update() {
+    }
+
+    public void draw(Graphics2D g2d) {
+        // Default draw for objects
+        int screenX = worldX - gamePanel.getPlayer().getWorldX() + gamePanel.getPlayer().SCREEN_X;
+        int screenY = worldY - gamePanel.getPlayer().getWorldY() + gamePanel.getPlayer().SCREEN_Y;
+
+        if (worldX + gamePanel.getTileSize() > gamePanel.getPlayer().getWorldX() - gamePanel.getPlayer().SCREEN_X &&
+                worldX - gamePanel.getTileSize() < gamePanel.getPlayer().getWorldX() + gamePanel.getPlayer().SCREEN_X &&
+                worldY + gamePanel.getTileSize() > gamePanel.getPlayer().getWorldY() - gamePanel.getPlayer().SCREEN_Y &&
+                worldY - gamePanel.getTileSize() < gamePanel.getPlayer().getWorldY() + gamePanel.getPlayer().SCREEN_Y) {
+            BufferedImage image = null;
+
+            if (facingRight == false) {
+                if (spriteNum == 1)
+                    image = leftSprites[0];
+                if (spriteNum == 2)
+                    image = leftSprites[1];
+            } else {
+                if (spriteNum == 1)
+                    image = rightSprites[0];
+                if (spriteNum == 2)
+                    image = rightSprites[1];
+            }
+
+            g2d.drawImage(image, screenX, screenY, null);
+            changeAlpha(g2d, 1f);
+        }
     }
 
     // For Monsters
@@ -82,41 +111,6 @@ public class Entity {
                 gamePanel.getObjects()[i].worldY = worldY; // Deceased monster's worldY
                 break;
             }
-    }
-
-    // For NPC
-    public void speak() {
-        if (dialogues[dialogueIndex] == null)
-            dialogueIndex = 0;
-        gamePanel.getUserInterface().setCurrentDialogue(dialogues[dialogueIndex]);
-        dialogueIndex++;
-
-        switch (gamePanel.getPlayer().direction) {
-            case "up":
-                direction = "down";
-                break;
-            case "left":
-                direction = "right";
-                break;
-            case "down":
-                direction = "up";
-                break;
-            case "right":
-                direction = "left";
-                break;
-            case "up-left":
-                direction = "down-right";
-                break;
-            case "down-left":
-                direction = "up-right";
-                break;
-            case "down-right":
-                direction = "up-left";
-                break;
-            case "up-right":
-                direction = "down-left";
-                break;
-        }
     }
 
     // For Particles
@@ -165,38 +159,6 @@ public class Entity {
 
             gamePanel.getPlayer().life -= damage;
             gamePanel.getPlayer().invincible = true;
-        }
-    }
-
-    // Parent methods
-    public void update() {
-    }
-
-    public void draw(Graphics2D g2d) {
-        int screenX = worldX - gamePanel.getPlayer().getWorldX() + gamePanel.getPlayer().SCREEN_X;
-        int screenY = worldY - gamePanel.getPlayer().getWorldY() + gamePanel.getPlayer().SCREEN_Y;
-
-        if (worldX + gamePanel.getTileSize() > gamePanel.getPlayer().getWorldX() - gamePanel.getPlayer().SCREEN_X &&
-                worldX - gamePanel.getTileSize() < gamePanel.getPlayer().getWorldX() + gamePanel.getPlayer().SCREEN_X &&
-                worldY + gamePanel.getTileSize() > gamePanel.getPlayer().getWorldY() - gamePanel.getPlayer().SCREEN_Y &&
-                worldY - gamePanel.getTileSize() < gamePanel.getPlayer().getWorldY() + gamePanel.getPlayer().SCREEN_Y) {
-            BufferedImage image = null;
-
-            if (facingRight == false) {
-                if (spriteNum == 1)
-                    image = leftSprites[0];
-                if (spriteNum == 2)
-                    image = leftSprites[1];
-            } else {
-                if (spriteNum == 1)
-                    image = rightSprites[0];
-                if (spriteNum == 2)
-                    image = rightSprites[1];
-            }
-
-            g2d.drawImage(image, screenX, screenY, null);
-
-            changeAlpha(g2d, 1f);
         }
     }
 

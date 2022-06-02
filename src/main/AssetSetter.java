@@ -1,6 +1,7 @@
 package main;
 
 import entity.monster.MON_GreenSlime;
+import entity.npc.NPC_Princess;
 import entity.object.OBJ_Potion_Red;
 
 public class AssetSetter {
@@ -17,6 +18,12 @@ public class AssetSetter {
         gamePanel.getObjects()[5] = new OBJ_Potion_Red(gamePanel);
         gamePanel.getObjects()[5].setWorldX(gamePanel.getTileSize() * 22);
         gamePanel.getObjects()[5].setWorldY(gamePanel.getTileSize() * 27);
+    }
+
+    public void setNPC() {
+        gamePanel.getNPCs()[0] = new NPC_Princess(gamePanel);
+        gamePanel.getNPCs()[0].setWorldX(gamePanel.getTileSize() * 23);
+        gamePanel.getNPCs()[0].setWorldY(gamePanel.getTileSize() * 21);
     }
 
     public void setMonster() {

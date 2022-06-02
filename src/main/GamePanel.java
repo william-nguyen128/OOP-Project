@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 import entity.Entity;
 import entity.Player;
 import entity.monster.Monster;
+import entity.npc.NPC;
 import tiles.TileManager;
 
 public class GamePanel extends JPanel implements Runnable {
@@ -70,7 +71,7 @@ public class GamePanel extends JPanel implements Runnable {
     // Entities & Objects
     private Player player = new Player(this, keyHandler);
     private Entity obj[] = new Entity[20];
-    private Entity npc[] = new Entity[10];
+    private NPC npc[] = new NPC[10];
     private Monster monster[] = new Monster[20];
     private ArrayList<Entity> entityList = new ArrayList<>();
     private ArrayList<Entity> projectileList = new ArrayList<>();
@@ -478,12 +479,17 @@ public class GamePanel extends JPanel implements Runnable {
         return obj;
     }
 
-    public Entity[] getNPCs() {
+    public NPC[] getNPCs() {
         return npc;
     }
 
     public Monster[] getMonsters() {
         return monster;
+    }
+
+    public void clearMonster() {
+        for (int i = 0; i < monster.length; i++)
+            monster[i] = null;
     }
 
     public ArrayList<Entity> getProjectileList() {
