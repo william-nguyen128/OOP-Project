@@ -47,14 +47,9 @@ public class Entity {
     protected int life;
     protected int maxMana;
     protected int mana;
-    protected int level;
-    protected int strength;
-    protected int dexterity;
     protected int attack;
     protected int defense;
     protected int exp;
-    protected int nextLevelExp;
-    protected int coin;
     protected Projectile projectile;
 
     // Items' attributes
@@ -274,24 +269,20 @@ public class Entity {
         return speed;
     }
 
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
     public int getMaxLife() {
         return maxLife;
     }
 
+    public void setMaxLife(int maxLife) {
+        this.maxLife = maxLife;
+    }
+
     public int getMaxMana() {
         return maxMana;
-    }
-
-    public int getLevel() {
-        return level;
-    }
-
-    public int getStrength() {
-        return strength;
-    }
-
-    public int getDexterity() {
-        return dexterity;
     }
 
     public int getAttack() {
@@ -300,18 +291,6 @@ public class Entity {
 
     public int getEXP() {
         return exp;
-    }
-
-    public int getNextLevelEXP() {
-        return nextLevelExp;
-    }
-
-    public int getCoin() {
-        return coin;
-    }
-
-    public void setCoin(int coin) {
-        this.coin = coin;
     }
 
     public String getDescription() {

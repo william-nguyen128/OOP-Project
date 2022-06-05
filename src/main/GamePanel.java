@@ -66,6 +66,8 @@ public class GamePanel extends JPanel implements Runnable {
     private UI ui = new UI(this);
     private EventHandler eventHandler = new EventHandler(this);
     private Config config = new Config(this);
+    private Data data = new Data(this);
+    private CharacterUpgrade characterUpgrade = new CharacterUpgrade(this);
     private Thread gameThread;
 
     // Entities & Objects
@@ -469,6 +471,14 @@ public class GamePanel extends JPanel implements Runnable {
 
     public Config getConfig() {
         return config;
+    }
+
+    public Data getData() {
+        return data;
+    }
+
+    public CharacterUpgrade getCharacterUpgrade() {
+        return characterUpgrade;
     }
 
     public Player getPlayer() {

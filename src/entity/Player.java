@@ -26,6 +26,11 @@ public class Player extends Entity {
     public final int SCREEN_X;
     public final int SCREEN_Y;
     public final int MAX_INV_SIZE = 20;
+    private int level;
+    private int strength;
+    private int dexterity;
+    private int nextLevelExp;
+    private int coin;
 
     // Constructor
     public Player(GamePanel gamePanel, KeyHandler keyHandler) {
@@ -381,6 +386,7 @@ public class Player extends Entity {
             exp -= nextLevelExp;
             nextLevelExp = nextLevelExp * 2;
             maxLife += 2;
+            life = maxLife;
             strength++;
             dexterity++;
             attack = getAttack();
@@ -415,7 +421,7 @@ public class Player extends Entity {
         }
     }
 
-    // Getters
+    // Getters & Setters
     public ArrayList<Entity> getInventory() {
         return inventory;
     }
@@ -430,5 +436,33 @@ public class Player extends Entity {
 
     public int getAttackCounter() {
         return attackCounter;
+    }
+
+    public int getLevel() {
+        return level;
+    }
+
+    public int getStrength() {
+        return strength;
+    }
+
+    public void setStrength(int strength) {
+        this.strength = strength;
+    }
+
+    public int getDexterity() {
+        return dexterity;
+    }
+
+    public int getNextLevelEXP() {
+        return nextLevelExp;
+    }
+
+    public int getCoin() {
+        return coin;
+    }
+
+    public void setCoin(int coin) {
+        this.coin = coin;
     }
 }
