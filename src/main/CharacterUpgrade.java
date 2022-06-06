@@ -20,7 +20,7 @@ public class CharacterUpgrade {
     public void upgradeStrength() {
         int remaining = totalCoin - strengthCost;
         if (remaining >= 0) {
-            gamePanel.getPlayer().setStrength(gamePanel.getPlayer().getStrength() + 1);
+            gamePanel.getData().increaseStrength(1);
             totalCoin = remaining;
             strengthCost += 10;
         }
@@ -29,7 +29,7 @@ public class CharacterUpgrade {
     public void upgradeSpeed() {
         int remaining = totalCoin - speedCost;
         if (remaining >= 0) {
-            gamePanel.getPlayer().setSpeed(gamePanel.getPlayer().getSpeed() + 1);
+            gamePanel.getData().increaseSpeed(1);
             totalCoin = remaining;
             speedCost += 10;
         }
@@ -38,7 +38,7 @@ public class CharacterUpgrade {
     public void upgradeMaxLife() {
         int remaining = totalCoin - hpCost;
         if (remaining >= 0) {
-            gamePanel.getPlayer().setMaxLife(gamePanel.getPlayer().getMaxLife() + 10);
+            gamePanel.getData().increaseMaxLife(10);
             totalCoin = remaining;
             hpCost += 10;
         }

@@ -7,9 +7,14 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import entity.Player;
+
 public class Data {
     // Attribute
     private GamePanel gamePanel;
+    private int startingStrength = Player.DEFAULT_STRENGTH;
+    private int startingSpeed = Player.DEFALUT_SPEED;
+    private int startingMaxLife = Player.DEFAULT_MAX_LIFE;
 
     // Constructor
     public Data(GamePanel gamePanel) {
@@ -26,13 +31,13 @@ public class Data {
             bw.newLine();
 
             // Strength
-            bw.write(String.valueOf(gamePanel.getPlayer().getStrength()));
+            bw.write(String.valueOf(startingStrength));
             bw.newLine();
             // Speed
-            bw.write(String.valueOf(gamePanel.getPlayer().getSpeed()));
+            bw.write(String.valueOf(startingSpeed));
             bw.newLine();
             // Max Life
-            bw.write(String.valueOf(gamePanel.getPlayer().getMaxLife()));
+            bw.write(String.valueOf(startingMaxLife));
             bw.newLine();
 
             // Strength Cost
@@ -62,13 +67,13 @@ public class Data {
 
             // Strength
             s = br.readLine();
-            gamePanel.getPlayer().setStrength(Integer.parseInt(s));
+            startingStrength = Integer.parseInt(s);
             // Speed
             s = br.readLine();
-            gamePanel.getPlayer().setSpeed(Integer.parseInt(s));
+            startingSpeed = Integer.parseInt(s);
             // Max Life
             s = br.readLine();
-            gamePanel.getPlayer().setMaxLife(Integer.parseInt(s));
+            startingMaxLife = Integer.parseInt(s);
 
             // Strength Cost
             s = br.readLine();
@@ -86,5 +91,31 @@ public class Data {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    // Methods
+    public void increaseStrength(int value) {
+        startingStrength += value;
+    }
+
+    public void increaseSpeed(int value) {
+        startingSpeed += value;
+    }
+
+    public void increaseMaxLife(int value) {
+        startingMaxLife += value;
+    }
+
+    // Getters
+    public int getStartingStrength() {
+        return startingStrength;
+    }
+
+    public int getStartingSpeed() {
+        return startingSpeed;
+    }
+
+    public int getStartingMaxLife() {
+        return startingMaxLife;
     }
 }

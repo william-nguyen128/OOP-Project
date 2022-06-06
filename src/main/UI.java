@@ -274,7 +274,7 @@ public class UI {
                 if (remaining < 0) {
                     g2d.drawString(deny, xDeny, y);
                 } else {
-                    confirm = text + " +1";
+                    confirm = text + " +10";
                     xConfirm = getXForCenteredText(confirm);
                     g2d.drawString(confirm, xConfirm, y);
                 }

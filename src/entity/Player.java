@@ -17,15 +17,18 @@ import main.KeyHandler;
 
 public class Player extends Entity {
     // Attributes
+    public static final int DEFAULT_STRENGTH = 1;
+    public static final int DEFALUT_SPEED = 4;
+    public static final int DEFAULT_MAX_LIFE = 100;
+    public final int SCREEN_X;
+    public final int SCREEN_Y;
+    public final int MAX_INV_SIZE = 20;
     private KeyHandler keyHandler;
     private int standCounter = 0;
     private ArrayList<Entity> inventory = new ArrayList<>();
     private Weapon currentWeapon;
     private Shield currentShield;
     private int attackCounter = 0;
-    public final int SCREEN_X;
-    public final int SCREEN_Y;
-    public final int MAX_INV_SIZE = 20;
     private int level;
     private int strength;
     private int dexterity;
@@ -53,18 +56,18 @@ public class Player extends Entity {
     public void setDefaultValues() {
         worldX = gamePanel.getTileSize() * 23;
         worldY = gamePanel.getTileSize() * 21;
-        speed = 4;
+        speed = gamePanel.getData().getStartingSpeed();
         direction = "down";
         invincible = false;
 
         // Player's Status
         type = TYPE.Player;
         level = 1;
-        maxLife = 100;
+        maxLife = gamePanel.getData().getStartingMaxLife();
         life = maxLife;
         maxMana = 4;
         mana = maxMana;
-        strength = 1; // More strength = More damage dealt
+        strength = gamePanel.getData().getStartingStrength(); // More strength = More damage dealt
         dexterity = 1; // More dexterity = Less damage received
         exp = 0;
         nextLevelExp = 5;
