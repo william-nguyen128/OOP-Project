@@ -91,6 +91,10 @@ public class KeyHandler implements KeyListener {
         if (code == KeyEvent.VK_E || code == KeyEvent.VK_SPACE || code == KeyEvent.VK_ENTER) {
             if (gamePanel.getUserInterface().getCommandNum() == 0) {
                 gamePanel.gameState = GAME_STATE.Play;
+                gamePanel.getPlayer().setMaxLife(gamePanel.getData().getStartingMaxLife());
+                gamePanel.getPlayer().setLife(gamePanel.getData().getStartingMaxLife());
+                gamePanel.getPlayer().setStrength(gamePanel.getData().getStartingStrength());
+                gamePanel.getPlayer().setSpeed(gamePanel.getData().getStartingSpeed());
                 gamePanel.playMusic(0);
             }
             if (gamePanel.getUserInterface().getCommandNum() == 1) {

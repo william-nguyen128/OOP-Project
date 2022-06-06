@@ -260,7 +260,6 @@ public class UI {
                     confirm = text + " +1";
                     xConfirm = getXForCenteredText(confirm);
                     g2d.drawString(confirm, xConfirm, y);
-                    gamePanel.getPlayer().setStrength(1);
                 }
             } else if (text == "Speed") {
                 if (remaining < 0) {
