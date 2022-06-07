@@ -300,4 +300,7 @@ public class Entity {
     public int getInvincibleCounter() {
         return invincibleCounter;
     }
+
+    public void setExp(int i) {
+    }
 }

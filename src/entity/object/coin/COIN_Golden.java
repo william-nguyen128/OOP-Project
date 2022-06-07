@@ -1,4 +1,4 @@
-package entity.coin;
+package entity.object.coin;
 
 import entity.TYPE;
 import main.GamePanel;
