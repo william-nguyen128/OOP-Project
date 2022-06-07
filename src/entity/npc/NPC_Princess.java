@@ -1,15 +1,11 @@
 package entity.npc;
 
-import entity.Entity;
-import entity.TYPE;
 import main.GamePanel;
 
-public class NPC_Princess extends Entity {
+public class NPC_Princess extends NPC {
     // Constructor
     public NPC_Princess(GamePanel gamePanel) {
         super(gamePanel);
-
-        type = TYPE.NPC;
 
         solidArea.x = 0;
         solidArea.y = 16;
@@ -28,20 +24,16 @@ public class NPC_Princess extends Entity {
         int height = gamePanel.getTileSize();
 
         for (int i = 0; i < 2; i++) {
-            leftSprites[i] = setup("/npc/oldman_left_" + (i + 1), width, height);
-            rightSprites[i] = setup("/npc/oldman_right_" + (i + 1), width, height);
+            leftSprites[i] = setup("/npc/princess_lol", width, height);
+            rightSprites[i] = setup("/npc/princess_lol", width, height);
         }
     }
 
     // Set Dialogue method
     private void setDialogue() {
-        dialogues[0] = "Hello, o brave warrior!\nI am the princess of the XXX kingdom.";
-        dialogues[1] = "Thank you for rescuing me from these monsters.";
-    }
-
-    // Overridden method
-    @Override
-    public void speak() {
-        super.speak();
+        dialogues[0] = "Sup bro! Tks 4 saving meh frum thoose monstas.";
+        dialogues[1] = "Where da princess? Why need one when u have meh?";
+        dialogues[2] = "Besides, I dunno if u can even get a gurl with dat face of urs.";
+        dialogues[3] = "Anyweis, why don't cha stay here with meh?\nI'd <3 sum cuddling (U w U)";
     }
 }

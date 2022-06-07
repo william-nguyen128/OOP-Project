@@ -1,14 +1,12 @@
 package entity.object.coin;
 
 import entity.Entity;
-import entity.TYPE;
 import main.GamePanel;
 
 public class Coin extends Entity {
     // Constructor
     public Coin(GamePanel gamePanel) {
         super(gamePanel);
-        type = TYPE.PickupOnly;
     }
 
     // Overridden method

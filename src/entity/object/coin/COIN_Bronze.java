@@ -1,5 +1,6 @@
 package entity.object.coin;
 
+import entity.TYPE;
 import main.GamePanel;
 
 public class COIN_Bronze extends Coin {
@@ -7,6 +8,7 @@ public class COIN_Bronze extends Coin {
     public COIN_Bronze(GamePanel gamePanel) {
         super(gamePanel);
 
+        type = TYPE.PickupOnly;
         name = "Bronze Coin";
         value = 1;
         rightSprites[0] = setup("/objects/coin_bronze", gamePanel.getTileSize(), gamePanel.getTileSize());

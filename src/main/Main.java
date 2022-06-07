@@ -13,6 +13,7 @@ public class Main {
 
         GamePanel gamePanel = new GamePanel();
         window.add(gamePanel);
+        gamePanel.getData().loadData();
         gamePanel.getConfig().loadConfig();
         if (gamePanel.isFullScreenOn() == true)
             window.setUndecorated(true);

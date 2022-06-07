@@ -26,6 +26,8 @@ public class UI {
     private int subState = 0;
     private double playTimeSecond = 0.0;
     private int playTimeMinute = 0;
+    private double confirmCounter = 0.0;
+    private int remaining = 0;
 
     // Constructor
     public UI(GamePanel gamePanel) {
@@ -39,8 +41,6 @@ public class UI {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        // HUD
     }
 
     public void addMessage(String text) {
@@ -56,8 +56,11 @@ public class UI {
         g2d.setColor(Color.WHITE);
 
         // Title State
-        if (gamePanel.gameState == GAME_STATE.Title) {
+        if (gamePanel.gameState == GAME_STATE.Title)
             drawTitleScreen();
+
+        if (gamePanel.gameState == GAME_STATE.Upgrade) {
+            drawUpgradeScreen();
         }
 
         // Play State
@@ -118,8 +121,8 @@ public class UI {
         // Image
         x = gamePanel.getScreenWidth() / 2 - (gamePanel.getTileSize() * 2) / 2;
         y += gamePanel.getTileSize() * 2;
-        g2d.drawImage(gamePanel.getPlayer().getDown1(), x, y, gamePanel.getTileSize() * 2, gamePanel.getTileSize() * 2,
-                null);
+        g2d.drawImage(gamePanel.getPlayer().getDown1(), x, y,
+                gamePanel.getTileSize() * 2, gamePanel.getTileSize() * 2, null);
 
         // Menu
         g2d.setFont(g2d.getFont().deriveFont(Font.BOLD, 48F));
@@ -134,7 +137,7 @@ public class UI {
             g2d.drawString("<", x + length + gamePanel.getTileSize() / 2, y);
         }
 
-        text = "LOAD GAME";
+        text = "CHARACTER UPGRADES";
         x = getXForCenteredText(text);
         y += gamePanel.getTileSize();
         length = (int) g2d.getFontMetrics().getStringBounds(text, g2d).getWidth();
@@ -153,6 +156,139 @@ public class UI {
             g2d.drawString(">", x - gamePanel.getTileSize(), y);
             g2d.drawString("<", x + length + gamePanel.getTileSize() / 2, y);
         }
+    }
+
+    private void drawUpgradeScreen() {
+        gamePanel.getKeyHandler().setUpPressed(true);
+        gamePanel.getKeyHandler().setDownPressed(true);
+        g2d.setColor(new Color(0, 0, 0));
+        g2d.fillRect(0, 0, gamePanel.getScreenWidth(), gamePanel.getScreenHeight());
+
+        // Title
+        g2d.setFont(g2d.getFont().deriveFont(Font.BOLD, 64F));
+        String text = "CHARACTER UPGRADES";
+        int x = getXForCenteredText(text);
+        int y = gamePanel.getTileSize() * 2;
+        g2d.setColor(Color.GRAY);
+        g2d.drawString(text, x + 5, y + 5);
+        g2d.setColor(Color.WHITE);
+        g2d.drawString(text, x, y);
+
+        g2d.setFont(g2d.getFont().deriveFont(Font.BOLD, 40F));
+        // Total Coin
+        text = "Your Wallet: " + gamePanel.getCharacterUpgrade().getTotalCoin() + "G";
+        int length = (int) g2d.getFontMetrics().getStringBounds(text, g2d).getWidth();
+        x = getXForCenteredText(text);
+        y += gamePanel.getTileSize();
+        g2d.drawString(text, x, y);
+
+        // Upgrade Strength
+        text = "Upgrade Strength";
+        x = gamePanel.getTileSize() * 5;
+        y += gamePanel.getTileSize() * 4;
+        g2d.drawString(text, x, y);
+        if (commandNum == 0) {
+            g2d.drawString(">", x - gamePanel.getTileSize(), y);
+            if (gamePanel.getKeyHandler().isInteractPressed() == true) {
+                upgradeConfirm("Strength");
+            }
+        }
+        text = gamePanel.getCharacterUpgrade().getStrengthCost() + "G";
+        x = gamePanel.getTileSize() * 14;
+        g2d.drawString(text, x, y);
+
+        // Upgrade Speed
+        text = "Upgrade Speed";
+        x = gamePanel.getTileSize() * 5;
+        y += gamePanel.getTileSize() + 5;
+        g2d.drawString(text, x, y);
+        if (commandNum == 1) {
+            g2d.drawString(">", x - gamePanel.getTileSize(), y);
+            if (gamePanel.getKeyHandler().isInteractPressed() == true) {
+                upgradeConfirm("Speed");
+            }
+        }
+        text = gamePanel.getCharacterUpgrade().getSpeedCost() + "G";
+        x = gamePanel.getTileSize() * 14;
+        g2d.drawString(text, x, y);
+
+        // Upgrade Max Life
+        text = "Upgrade Max Life";
+        x = gamePanel.getTileSize() * 5;
+        y += gamePanel.getTileSize() + 5;
+        g2d.drawString(text, x, y);
+        if (commandNum == 2) {
+            g2d.drawString(">", x - gamePanel.getTileSize(), y);
+            if (gamePanel.getKeyHandler().isInteractPressed() == true) {
+                upgradeConfirm("Max Life");
+            }
+        }
+        text = gamePanel.getCharacterUpgrade().getHpCost() + "G";
+        x = gamePanel.getTileSize() * 14;
+        g2d.drawString(text, x, y);
+
+        // Back
+        text = "Back";
+        x = getXForCenteredText(text);
+        y += gamePanel.getTileSize() * 2;
+        length = (int) g2d.getFontMetrics().getStringBounds(text, g2d).getWidth();
+        g2d.drawString(text, x, y);
+        if (commandNum == 3) {
+            g2d.drawString(">", x - gamePanel.getTileSize(), y);
+            g2d.drawString("<", x + length + gamePanel.getTileSize() / 2, y);
+        }
+
+        // Save data
+        gamePanel.getData().saveData();
+    }
+
+    private void upgradeConfirm(String text) {
+        gamePanel.getKeyHandler().setUpPressed(false);
+        gamePanel.getKeyHandler().setDownPressed(false);
+        String confirm = "";
+        int xConfirm = getXForCenteredText(confirm);
+        String deny = "Insufficient money!";
+        int xDeny = getXForCenteredText(deny);
+        int y = gamePanel.getTileSize() * 5;
+        g2d.setColor(Color.YELLOW);
+
+        if (confirmCounter < 1.0) {
+            if (text == "Strength") {
+                if (remaining < 0) {
+                    g2d.drawString(deny, xDeny, y);
+                } else {
+                    confirm = text + " +1";
+                    xConfirm = getXForCenteredText(confirm);
+                    g2d.drawString(confirm, xConfirm, y);
+                }
+            } else if (text == "Speed") {
+                if (remaining < 0) {
+                    g2d.drawString(deny, xDeny, y);
+                } else {
+                    confirm = text + " +1";
+                    xConfirm = getXForCenteredText(confirm);
+                    g2d.drawString(confirm, xConfirm, y);
+                }
+            } else if (text == "Max Life") {
+                if (remaining < 0) {
+                    g2d.drawString(deny, xDeny, y);
+                } else {
+                    confirm = text + " +10";
+                    xConfirm = getXForCenteredText(confirm);
+                    g2d.drawString(confirm, xConfirm, y);
+                }
+            }
+            confirmCounter += (double) 1 / 60;
+        } else {
+            confirm = "";
+            confirmCounter = 0.0;
+            gamePanel.getKeyHandler().setInteractPressed(false);
+            gamePanel.getKeyHandler().setUpPressed(true);
+            gamePanel.getKeyHandler().setDownPressed(true);
+        }
+
+        // Reset text color
+        g2d.setColor(Color.WHITE);
     }
 
     private void drawPlayerExp() {
@@ -186,11 +322,16 @@ public class UI {
         DecimalFormat dFormat = new DecimalFormat("#00.00");
 
         if (gamePanel.gameState == GAME_STATE.Play) {
-            if (playTimeSecond >= 60.0) {
-                playTimeMinute++;
-                resetPlayTimeSecond();
+            if (playTimeMinute >= 1 && gamePanel.getNPCs()[0] == null) {
+                gamePanel.clearMonster();
+                gamePanel.getAssetSetter().setNPC();
+            } else {
+                if (playTimeSecond >= 60.0) {
+                    playTimeMinute++;
+                    resetPlayTimeSecond();
+                }
+                playTimeSecond += (double) 1 / 60;
             }
-            playTimeSecond += (double) 1 / 60;
 
             text = playTimeMinute + ":" + dFormat.format(playTimeSecond);
             x = getXForCenteredText(text);
@@ -437,47 +578,6 @@ public class UI {
         gamePanel.getKeyHandler().setInteractPressed(false);
     }
 
-    private void drawGameOverScreen() {
-        g2d.setColor(new Color(0, 0, 0, 150));
-        g2d.fillRect(0, 0, gamePanel.getScreenWidth(), gamePanel.getScreenHeight());
-
-        int x;
-        int y;
-        String text;
-        g2d.setFont(g2d.getFont().deriveFont(Font.BOLD, 110F));
-
-        text = "GAME OVER";
-        // Shadow
-        g2d.setColor(Color.BLACK);
-        x = getXForCenteredText(text);
-        y = gamePanel.getTileSize() * 4;
-        g2d.drawString(text, x, y);
-        // Main text
-        g2d.setColor(Color.WHITE);
-        g2d.drawString(text, x - 4, y - 4);
-
-        // Show this run's money
-        g2d.setColor(Color.YELLOW);
-        g2d.setFont(g2d.getFont().deriveFont(30F));
-        text = "Money collected this run: " + gamePanel.getPlayer().getCoin();
-        x = getXForCenteredText(text);
-        y += gamePanel.getTileSize() * 3;
-        g2d.drawString(text, x, y);
-
-        // "Quit" button
-        g2d.setColor(Color.WHITE);
-        g2d.setFont(g2d.getFont().deriveFont(50F));
-        text = "Quit";
-        int length = (int) g2d.getFontMetrics().getStringBounds(text, g2d).getWidth();
-        x = getXForCenteredText(text);
-        y += gamePanel.getTileSize() * 4;
-        g2d.drawString(text, x, y);
-        if (commandNum == 0) {
-            g2d.drawString(">", x - 40, y);
-            g2d.drawString("<", x + length + gamePanel.getTileSize() / 2, y);
-        }
-    }
-
     private void options_top(int frameX, int frameY) {
         int textX;
         int textY;
@@ -697,6 +797,47 @@ public class UI {
         }
     }
 
+    private void drawGameOverScreen() {
+        g2d.setColor(new Color(0, 0, 0, 150));
+        g2d.fillRect(0, 0, gamePanel.getScreenWidth(), gamePanel.getScreenHeight());
+
+        int x;
+        int y;
+        String text;
+        g2d.setFont(g2d.getFont().deriveFont(Font.BOLD, 110F));
+
+        text = "GAME OVER";
+        // Shadow
+        g2d.setColor(Color.BLACK);
+        x = getXForCenteredText(text);
+        y = gamePanel.getTileSize() * 4;
+        g2d.drawString(text, x, y);
+        // Main text
+        g2d.setColor(Color.WHITE);
+        g2d.drawString(text, x - 4, y - 4);
+
+        // Show this run's money
+        g2d.setColor(Color.YELLOW);
+        g2d.setFont(g2d.getFont().deriveFont(30F));
+        text = "Money collected this run: " + gamePanel.getPlayer().getCoin();
+        x = getXForCenteredText(text);
+        y += gamePanel.getTileSize() * 3;
+        g2d.drawString(text, x, y);
+
+        // "Quit" button
+        g2d.setColor(Color.WHITE);
+        g2d.setFont(g2d.getFont().deriveFont(50F));
+        text = "Quit";
+        int length = (int) g2d.getFontMetrics().getStringBounds(text, g2d).getWidth();
+        x = getXForCenteredText(text);
+        y += gamePanel.getTileSize() * 4;
+        g2d.drawString(text, x, y);
+        if (commandNum == 0) {
+            g2d.drawString(">", x - 40, y);
+            g2d.drawString("<", x + length + gamePanel.getTileSize() / 2, y);
+        }
+    }
+
     public int getItemIndexOnSlot() {
         int itemIndex = slotCol + slotRow * 5;
         return itemIndex;
@@ -788,5 +929,9 @@ public class UI {
 
     public void resetPlayTimeMinute() {
         playTimeMinute = 0;
+    }
+
+    public void setRemaining(int remaining) {
+        this.remaining = remaining;
     }
 }

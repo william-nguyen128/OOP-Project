@@ -21,14 +21,13 @@ public class Entity {
     protected Rectangle solidArea = new Rectangle(0, 0, 48, 48);
     protected int solidAreaDefaultX, solidAreaDefaultY;
     protected boolean collision = false;
-    protected String dialogues[] = new String[20];
+    protected boolean onPath = false;
 
     // State
     protected int worldX, worldY;
     protected String direction = "down";
     protected boolean facingRight = true;
     protected int spriteNum = 1;
-    protected int dialogueIndex = 0;
     protected boolean collisionOn = false;
     protected boolean invincible = false;
     protected boolean attacking = false;
@@ -49,14 +48,9 @@ public class Entity {
     protected int life;
     protected int maxMana;
     protected int mana;
-    protected int level;
-    protected int strength;
-    protected int dexterity;
     protected int attack;
     protected int defense;
     protected int exp;
-    protected int nextLevelExp;
-    protected int coin;
     protected Projectile projectile;
 
     // Items' attributes
@@ -69,8 +63,39 @@ public class Entity {
         this.gamePanel = gamePanel;
     }
 
-    // Parent method (Empty)
+    // Parent methods
     public void use(Entity entity) {
+    }
+
+    public void update() {
+    }
+
+    public void draw(Graphics2D g2d) {
+        // Default draw for objects
+        int screenX = worldX - gamePanel.getPlayer().getWorldX() + gamePanel.getPlayer().SCREEN_X;
+        int screenY = worldY - gamePanel.getPlayer().getWorldY() + gamePanel.getPlayer().SCREEN_Y;
+
+        if (worldX + gamePanel.getTileSize() > gamePanel.getPlayer().getWorldX() - gamePanel.getPlayer().SCREEN_X &&
+                worldX - gamePanel.getTileSize() < gamePanel.getPlayer().getWorldX() + gamePanel.getPlayer().SCREEN_X &&
+                worldY + gamePanel.getTileSize() > gamePanel.getPlayer().getWorldY() - gamePanel.getPlayer().SCREEN_Y &&
+                worldY - gamePanel.getTileSize() < gamePanel.getPlayer().getWorldY() + gamePanel.getPlayer().SCREEN_Y) {
+            BufferedImage image = null;
+
+            if (facingRight == false) {
+                if (spriteNum == 1)
+                    image = leftSprites[0];
+                if (spriteNum == 2)
+                    image = leftSprites[1];
+            } else {
+                if (spriteNum == 1)
+                    image = rightSprites[0];
+                if (spriteNum == 2)
+                    image = rightSprites[1];
+            }
+
+            g2d.drawImage(image, screenX, screenY, null);
+            changeAlpha(g2d, 1f);
+        }
     }
 
     // For Monsters
@@ -82,41 +107,6 @@ public class Entity {
                 gamePanel.getObjects()[i].worldY = worldY; // Deceased monster's worldY
                 break;
             }
-    }
-
-    // For NPC
-    public void speak() {
-        if (dialogues[dialogueIndex] == null)
-            dialogueIndex = 0;
-        gamePanel.getUserInterface().setCurrentDialogue(dialogues[dialogueIndex]);
-        dialogueIndex++;
-
-        switch (gamePanel.getPlayer().direction) {
-            case "up":
-                direction = "down";
-                break;
-            case "left":
-                direction = "right";
-                break;
-            case "down":
-                direction = "up";
-                break;
-            case "right":
-                direction = "left";
-                break;
-            case "up-left":
-                direction = "down-right";
-                break;
-            case "down-left":
-                direction = "up-right";
-                break;
-            case "down-right":
-                direction = "up-left";
-                break;
-            case "up-right":
-                direction = "down-left";
-                break;
-        }
     }
 
     // For Particles
@@ -168,35 +158,61 @@ public class Entity {
         }
     }
 
-    // Parent methods
-    public void update() {
-    }
+    // A* path finding
+    public void searchPath(int goalCol, int goalRow) {
+        int startCol = (worldX + solidArea.x) / gamePanel.getTileSize();
+        int startRow = (worldY + solidArea.y) / gamePanel.getTileSize();
 
-    public void draw(Graphics2D g2d) {
-        int screenX = worldX - gamePanel.getPlayer().getWorldX() + gamePanel.getPlayer().SCREEN_X;
-        int screenY = worldY - gamePanel.getPlayer().getWorldY() + gamePanel.getPlayer().SCREEN_Y;
+        gamePanel.getPathFinder().setNodes(startCol, startRow, goalCol, goalRow);
 
-        if (worldX + gamePanel.getTileSize() > gamePanel.getPlayer().getWorldX() - gamePanel.getPlayer().SCREEN_X &&
-                worldX - gamePanel.getTileSize() < gamePanel.getPlayer().getWorldX() + gamePanel.getPlayer().SCREEN_X &&
-                worldY + gamePanel.getTileSize() > gamePanel.getPlayer().getWorldY() - gamePanel.getPlayer().SCREEN_Y &&
-                worldY - gamePanel.getTileSize() < gamePanel.getPlayer().getWorldY() + gamePanel.getPlayer().SCREEN_Y) {
-            BufferedImage image = null;
+        if (gamePanel.getPathFinder().search() == true) {
+            // Next worldX & worldY
+            int nextX = gamePanel.getPathFinder().getPathList().get(0).getCol() * gamePanel.getTileSize();
+            int nextY = gamePanel.getPathFinder().getPathList().get(0).getRow() * gamePanel.getTileSize();
 
-            if (facingRight == false) {
-                if (spriteNum == 1)
-                    image = leftSprites[0];
-                if (spriteNum == 2)
-                    image = leftSprites[1];
-            } else {
-                if (spriteNum == 1)
-                    image = rightSprites[0];
-                if (spriteNum == 2)
-                    image = rightSprites[1];
+            // Entity's solidArea position
+            int entityLeftX = worldX + solidArea.x;
+            int entityRightX = worldX + solidArea.x + solidArea.width;
+            int entityTopY = worldY + solidArea.y;
+            int entityBottomY = worldY + solidArea.y + solidArea.height;
+
+            if (entityTopY > nextY && entityLeftX >= nextX && entityRightX < nextX + gamePanel.getTileSize())
+                direction = "up";
+            else if (entityTopY < nextY && entityLeftX >= nextX && entityRightX < nextX + gamePanel.getTileSize())
+                direction = "down";
+            else if (entityTopY >= nextY && entityBottomY < nextY + gamePanel.getTileSize()) {
+                if (entityLeftX > nextX)
+                    direction = "left";
+                if (entityLeftX < nextX)
+                    direction = "right";
+            } else if (entityTopY > nextY && entityLeftX > nextX) {
+                direction = "up";
+                checkCollision();
+                if (collisionOn == true)
+                    direction = "left";
+            } else if (entityTopY > nextY && entityLeftX < nextX) {
+                direction = "up";
+                checkCollision();
+                if (collisionOn == true)
+                    direction = "right";
+            } else if (entityTopY < nextY && entityLeftX > nextX) {
+                direction = "down";
+                checkCollision();
+                if (collisionOn == true)
+                    direction = "left";
+            } else if (entityTopY < nextY && entityLeftX < nextX) {
+                direction = "down";
+                checkCollision();
+                if (collisionOn == true)
+                    direction = "right";
             }
 
-            g2d.drawImage(image, screenX, screenY, null);
-
-            changeAlpha(g2d, 1f);
+            // If reaches the goal, stop the search
+            int nextCol = gamePanel.getPathFinder().getPathList().get(0).getCol();
+            int nextRow = gamePanel.getPathFinder().getPathList().get(0).getRow();
+            if (nextCol == goalCol && nextRow == goalRow) {
+                onPath = false;
+            }
         }
     }
 
@@ -217,6 +233,19 @@ public class Entity {
         }
 
         return image;
+    }
+
+    public void checkCollision() {
+        collisionOn = false;
+        gamePanel.getCollisionChecker().checkTile(this);
+        gamePanel.getCollisionChecker().checkObject(this, false);
+        gamePanel.getCollisionChecker().checkEntity(this, gamePanel.getNPCs());
+        gamePanel.getCollisionChecker().checkEntity(this, gamePanel.getMonsters());
+        boolean contactPlayer = gamePanel.getCollisionChecker().checkPlayer(this);
+
+        if (type == TYPE.Monster && contactPlayer == true) {
+            damagePlayer(attack);
+        }
     }
 
     // Getters
@@ -312,24 +341,20 @@ public class Entity {
         return speed;
     }
 
+    public void setSpeed(int speed) {
+        this.speed = speed;
+    }
+
     public int getMaxLife() {
         return maxLife;
     }
 
+    public void setMaxLife(int maxLife) {
+        this.maxLife = maxLife;
+    }
+
     public int getMaxMana() {
         return maxMana;
-    }
-
-    public int getLevel() {
-        return level;
-    }
-
-    public int getStrength() {
-        return strength;
-    }
-
-    public int getDexterity() {
-        return dexterity;
     }
 
     public int getAttack() {
@@ -338,18 +363,6 @@ public class Entity {
 
     public int getEXP() {
         return exp;
-    }
-
-    public int getNextLevelEXP() {
-        return nextLevelExp;
-    }
-
-    public int getCoin() {
-        return coin;
-    }
-
-    public void setCoin(int coin) {
-        this.coin = coin;
     }
 
     public String getDescription() {

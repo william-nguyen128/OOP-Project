@@ -106,7 +106,9 @@ public class EventHandler {
                     .setCurrentDialogue("You drank the water from the pond.\nYour HP and Mana have been recovered!");
             gamePanel.getPlayer().setLife(gamePanel.getPlayer().getMaxLife());
             gamePanel.getPlayer().setMana(gamePanel.getPlayer().getMaxMana());
-            gamePanel.getAssetSetter().setMonster();
+
+            if (gamePanel.getNPCs()[0] == null)
+                gamePanel.getAssetSetter().setMonster();
         }
     }
 }
