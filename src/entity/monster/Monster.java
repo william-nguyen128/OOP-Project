@@ -157,10 +157,10 @@ public class Monster extends Entity {
     }
 
     public void damageReaction() {
-        if (gamePanel.getPlayer().isFacingRight() == false)
-            worldX -= 10;
-        else
-            worldX += 10;
+        // if (gamePanel.getPlayer().isFacingRight() == false)
+        //     worldX -= 10;
+        // else
+        //     worldX += 10;
     }
 
     public void checkDrop() {
