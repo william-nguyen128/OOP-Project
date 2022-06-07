@@ -383,7 +383,7 @@ public class Player extends Entity {
             }
     }
 
-    private void checkLevelUp() {
+    public void checkLevelUp() {
         if (exp >= nextLevelExp) {
             level++;
             exp -= nextLevelExp;
