@@ -15,6 +15,7 @@ import java.util.Comparator;
 
 import javax.swing.JPanel;
 
+import ai.PathFinder;
 import entity.Entity;
 import entity.Player;
 import entity.monster.Monster;
@@ -68,6 +69,7 @@ public class GamePanel extends JPanel implements Runnable {
     private Config config = new Config(this);
     private Data data = new Data(this);
     private CharacterUpgrade characterUpgrade = new CharacterUpgrade(this);
+    private PathFinder pathFinder = new PathFinder(this);
     private Thread gameThread;
 
     // Entities & Objects
@@ -479,6 +481,10 @@ public class GamePanel extends JPanel implements Runnable {
 
     public CharacterUpgrade getCharacterUpgrade() {
         return characterUpgrade;
+    }
+
+    public PathFinder getPathFinder() {
+        return pathFinder;
     }
 
     public Player getPlayer() {

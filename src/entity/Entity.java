@@ -21,6 +21,7 @@ public class Entity {
     protected Rectangle solidArea = new Rectangle(0, 0, 48, 48);
     protected int solidAreaDefaultX, solidAreaDefaultY;
     protected boolean collision = false;
+    protected boolean onPath = false;
 
     // State
     protected int worldX, worldY;
@@ -157,6 +158,64 @@ public class Entity {
         }
     }
 
+    // A* path finding
+    public void searchPath(int goalCol, int goalRow) {
+        int startCol = (worldX + solidArea.x) / gamePanel.getTileSize();
+        int startRow = (worldY + solidArea.y) / gamePanel.getTileSize();
+
+        gamePanel.getPathFinder().setNodes(startCol, startRow, goalCol, goalRow);
+
+        if (gamePanel.getPathFinder().search() == true) {
+            // Next worldX & worldY
+            int nextX = gamePanel.getPathFinder().getPathList().get(0).getCol() * gamePanel.getTileSize();
+            int nextY = gamePanel.getPathFinder().getPathList().get(0).getRow() * gamePanel.getTileSize();
+
+            // Entity's solidArea position
+            int entityLeftX = worldX + solidArea.x;
+            int entityRightX = worldX + solidArea.x + solidArea.width;
+            int entityTopY = worldY + solidArea.y;
+            int entityBottomY = worldY + solidArea.y + solidArea.height;
+
+            if (entityTopY > nextY && entityLeftX >= nextX && entityRightX < nextX + gamePanel.getTileSize())
+                direction = "up";
+            else if (entityTopY < nextY && entityLeftX >= nextX && entityRightX < nextX + gamePanel.getTileSize())
+                direction = "down";
+            else if (entityTopY >= nextY && entityBottomY < nextY + gamePanel.getTileSize()) {
+                if (entityLeftX > nextX)
+                    direction = "left";
+                if (entityLeftX < nextX)
+                    direction = "right";
+            } else if (entityTopY > nextY && entityLeftX > nextX) {
+                direction = "up";
+                checkCollision();
+                if (collisionOn == true)
+                    direction = "left";
+            } else if (entityTopY > nextY && entityLeftX < nextX) {
+                direction = "up";
+                checkCollision();
+                if (collisionOn == true)
+                    direction = "right";
+            } else if (entityTopY < nextY && entityLeftX > nextX) {
+                direction = "down";
+                checkCollision();
+                if (collisionOn == true)
+                    direction = "left";
+            } else if (entityTopY < nextY && entityLeftX < nextX) {
+                direction = "down";
+                checkCollision();
+                if (collisionOn == true)
+                    direction = "right";
+            }
+
+            // If reaches the goal, stop the search
+            int nextCol = gamePanel.getPathFinder().getPathList().get(0).getCol();
+            int nextRow = gamePanel.getPathFinder().getPathList().get(0).getRow();
+            if (nextCol == goalCol && nextRow == goalRow) {
+                onPath = false;
+            }
+        }
+    }
+
     // Utility methods
     public void changeAlpha(Graphics2D g2d, float alphaValue) {
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alphaValue));
@@ -174,6 +233,19 @@ public class Entity {
         }
 
         return image;
+    }
+
+    public void checkCollision() {
+        collisionOn = false;
+        gamePanel.getCollisionChecker().checkTile(this);
+        gamePanel.getCollisionChecker().checkObject(this, false);
+        gamePanel.getCollisionChecker().checkEntity(this, gamePanel.getNPCs());
+        gamePanel.getCollisionChecker().checkEntity(this, gamePanel.getMonsters());
+        boolean contactPlayer = gamePanel.getCollisionChecker().checkPlayer(this);
+
+        if (type == TYPE.Monster && contactPlayer == true) {
+            damagePlayer(attack);
+        }
     }
 
     // Getters

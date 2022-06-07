@@ -26,15 +26,7 @@ public class Monster extends Entity {
     @Override
     public void update() {
         setAction();
-
-        collisionOn = false;
-        gamePanel.getCollisionChecker().checkTile(this);
-        gamePanel.getCollisionChecker().checkObject(this, false);
-        gamePanel.getCollisionChecker().checkEntity(this, gamePanel.getNPCs());
-        boolean contactPlayer = gamePanel.getCollisionChecker().checkPlayer(this);
-
-        if (contactPlayer == true)
-            damagePlayer(attack);
+        checkCollision();
 
         // If collision = false => Monster can move
         if (collisionOn == false)
@@ -93,9 +85,11 @@ public class Monster extends Entity {
                 invincibleCounter = 0;
             }
         }
+
+        // Path finding => ALWAYS GO AFTER PLAYER
+        onPath = true;
     }
 
-    @Override
     public void draw(Graphics2D g2d) {
         int screenX = worldX - gamePanel.getPlayer().getWorldX() + gamePanel.getPlayer().SCREEN_X;
         int screenY = worldY - gamePanel.getPlayer().getWorldY() + gamePanel.getPlayer().SCREEN_Y;
@@ -152,24 +146,14 @@ public class Monster extends Entity {
     }
 
     public void setAction() {
-        if (alive == true && dying == false) {
-            if (gamePanel.getPlayer().getWorldX() < worldX && gamePanel.getPlayer().getWorldY() < worldY)
-                direction = "up-left";
-            else if (gamePanel.getPlayer().getWorldX() < worldX && gamePanel.getPlayer().getWorldY() > worldY)
-                direction = "down-left";
-            else if (gamePanel.getPlayer().getWorldX() > worldX && gamePanel.getPlayer().getWorldY() > worldY)
-                direction = "down-right";
-            else if (gamePanel.getPlayer().getWorldX() > worldX && gamePanel.getPlayer().getWorldY() < worldY)
-                direction = "up-right";
-            else if (gamePanel.getPlayer().getWorldX() == worldX && gamePanel.getPlayer().getWorldY() < worldY)
-                direction = "up";
-            else if (gamePanel.getPlayer().getWorldX() < worldX && gamePanel.getPlayer().getWorldY() == worldY)
-                direction = "left";
-            else if (gamePanel.getPlayer().getWorldX() == worldX && gamePanel.getPlayer().getWorldY() > worldY)
-                direction = "down";
-            else if (gamePanel.getPlayer().getWorldX() > worldX && gamePanel.getPlayer().getWorldY() == worldY)
-                direction = "right";
-        }
+        if (alive == true && dying == false)
+            if (onPath == true) {
+                int goalCol = (gamePanel.getPlayer().getWorldX() + gamePanel.getPlayer().getSolidArea().x)
+                        / gamePanel.getTileSize();
+                int goalRow = (gamePanel.getPlayer().getWorldY() + gamePanel.getPlayer().getSolidArea().y)
+                        / gamePanel.getTileSize();
+                searchPath(goalCol, goalRow);
+            }
     }
 
     public void damageReaction() {

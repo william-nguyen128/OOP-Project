@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 
 import javax.imageio.ImageIO;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 
 import main.GamePanel;
@@ -17,6 +18,7 @@ public class TileManager {
     private GamePanel gamePanel;
     private Tile[] tile;
     private int[][] mapTileNum;
+    private boolean drawPath = true;
 
     // Constructor
     public TileManager(GamePanel gamePanel) {
@@ -177,6 +179,19 @@ public class TileManager {
             if (worldCol == gamePanel.getMaxWorldCol()) {
                 worldCol = 0;
                 worldRow++;
+            }
+        }
+
+        if (drawPath == true) {
+            g2d.setColor(new Color(255, 0, 0, 70));
+
+            for (int i = 0; i < gamePanel.getPathFinder().getPathList().size(); i++) {
+                int worldX = gamePanel.getPathFinder().getPathList().get(i).getCol() * gamePanel.getTileSize();
+                int worldY = gamePanel.getPathFinder().getPathList().get(i).getRow() * gamePanel.getTileSize();
+                int screenX = worldX - gamePanel.getPlayer().getWorldX() + gamePanel.getPlayer().SCREEN_X;
+                int screenY = worldY - gamePanel.getPlayer().getWorldY() + gamePanel.getPlayer().SCREEN_Y;
+
+                g2d.fillRect(screenX, screenY, gamePanel.getTileSize(), gamePanel.getTileSize());
             }
         }
     }
