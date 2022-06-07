@@ -468,4 +468,8 @@ public class Player extends Entity {
     public void setCoin(int coin) {
         this.coin = coin;
     }
+
+    public void setExp(int exp) {
+        this.exp = exp;
+    }
 }
