@@ -163,6 +163,7 @@ public class Entity {
 
     public void knockBack(){
         if (knockBack == true){
+            
             checkCollision();
 
             if(collision == true){
@@ -184,6 +185,10 @@ public class Entity {
                 knockBack = false;
                 speed = defaultSpeed;
             }
+        }
+        else{
+            setAction();
+            checkCollision();
         }
     }
 
