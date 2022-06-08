@@ -73,6 +73,12 @@ You are an adventurer. Through many rumors and stories told by the common folks 
 
 ![alt text](diagrams/ClassDiagram-main.png)
 
+#### 3.2. 'tile' package:
+
+#### 3.3. 'ai' package:
+
+#### 3.4. 'entity' package:
+
 ### 4. FEATURES:
 
 #### Completed:

@@ -18,7 +18,6 @@ public class TileManager {
     private GamePanel gamePanel;
     private Tile[] tile;
     private int[][] mapTileNum;
-    private boolean drawPath = true;
 
     // Constructor
     public TileManager(GamePanel gamePanel) {
@@ -182,7 +181,7 @@ public class TileManager {
             }
         }
 
-        if (drawPath == true) {
+        if (gamePanel.getKeyHandler().isShowDebugTexts() == true) {
             g2d.setColor(new Color(255, 0, 0, 70));
 
             for (int i = 0; i < gamePanel.getPathFinder().getPathList().size(); i++) {
