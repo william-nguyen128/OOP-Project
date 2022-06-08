@@ -239,7 +239,7 @@ public class Player extends Entity {
         // Casting
         if (keyHandler.isCastPressed() == true && projectile.alive == false &&
                 shotAvailableCounter == 30 && projectile.haveResource(this) == true) {
-            projectile.set(worldX, worldY, direction, true);
+            projectile.set(worldX, worldY, direction, true, this);
             projectile.subtractResource(this);
             gamePanel.getProjectileList().add(projectile);
             shotAvailableCounter = 0;

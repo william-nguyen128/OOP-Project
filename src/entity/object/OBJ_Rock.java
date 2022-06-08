@@ -1,5 +1,7 @@
 package entity.object;
 
+import java.awt.Color;
+import entity.Entity;
 import entity.Projectile;
 import main.GamePanel;
 
@@ -12,19 +14,18 @@ public class OBJ_Rock extends Projectile {
         super(gamePanel);
         // TODO Auto-generated constructor stub
 
-        name = "Fireball";
-        speed = 5;
+        name = "Rock";
+        speed = 10;
         maxLife = 80;
         life = maxLife;
         attack = 2;
         castCost = 1;
         alive = false;
-
         getRockImage();
     }
 
     // Get images
-    private void getRoclImage() {
+    private void getRockImage() {
         int width = gamePanel.getTileSize();
         int height = gamePanel.getTileSize();
 

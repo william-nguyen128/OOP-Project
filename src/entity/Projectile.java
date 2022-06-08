@@ -9,22 +9,32 @@ public class Projectile extends Entity {
     }
 
     // Set starting values
-    public void set(int worldX, int worldY, String direction, boolean alive) {
+    public void set(int worldX, int worldY, String direction, boolean alive, Entity user) {
         this.worldX = worldX;
         this.worldY = worldY;
         this.direction = direction;
         this.alive = alive;
+        this.user = user;
         this.life = this.maxLife;
     }
 
     // Overridden method
     @Override
     public void update() {
-        int monsterIndex = gamePanel.getCollisionChecker().checkEntity(this, gamePanel.getMonsters());
-        if (monsterIndex != 999) {
-            gamePanel.getPlayer().damageMonster(monsterIndex, attack);
-            generateParticle(gamePanel.getPlayer().projectile, gamePanel.getMonsters()[monsterIndex]);
-            alive = false;
+        if (user == gamePanel.getPlayer()) {
+            int monsterIndex = gamePanel.getCollisionChecker().checkEntity(this, gamePanel.getMonsters());
+            if (monsterIndex != 999) {
+                gamePanel.getPlayer().damageMonster(monsterIndex, attack);
+                generateParticle(gamePanel.getPlayer().projectile, gamePanel.getMonsters()[monsterIndex]);
+                alive = false;
+            }
+        }
+        if (user != gamePanel.getPlayer()) {
+            boolean contactPlayer = gamePanel.getCollisionChecker().checkPlayer(this);
+            if (gamePanel.getPlayer().invincible == false && contactPlayer == true) {
+                damagePlayer(attack);
+                alive = false;
+            }
         }
 
         switch (direction) {
