@@ -12,8 +12,8 @@ We hope that this project will prove to be useful for you, who is currently read
 
 ### 1.2. About Our Team
 
-|                     |  TEAM_NULL  |                                               |
-| ------------------- | :---------: | --------------------------------------------- |
+#### TEAM_NULL
+
 | Members             |     ID      | Responsibility                                |
 | ------------------- | :---------: | --------------------------------------------- |
 | Nguyen Hong Quan    | ITITIU18297 | Project Manager, Developer, Overall Framework |
