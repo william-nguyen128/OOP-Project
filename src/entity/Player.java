@@ -56,7 +56,8 @@ public class Player extends Entity {
     public void setDefaultValues() {
         worldX = gamePanel.getTileSize() * 23;
         worldY = gamePanel.getTileSize() * 21;
-        speed = gamePanel.getData().getStartingSpeed();
+        defaultSpeed = gamePanel.getData().getStartingSpeed();
+        speed = defaultSpeed;
         direction = "down";
         invincible = false;
 
@@ -376,6 +377,8 @@ public class Player extends Entity {
             if (invincible == false && gamePanel.getMonsters()[index].dying == false) {
                 gamePanel.playSoundEffect(6);
 
+                knockBack(gamePanel.getMonsters()[index]);
+
                 int damage = gamePanel.getMonsters()[index].attack;
 
                 life -= damage;
@@ -398,6 +401,12 @@ public class Player extends Entity {
             gamePanel.gameState = GAME_STATE.Dialogue;
             gamePanel.getUserInterface().setCurrentDialogue("Level up!");
         }
+    }
+
+    public void knockBack(Entity entity){
+        entity.direction = direction;
+        entity.speed +=10;
+        entity.knockBack = true;
     }
 
     private void pickUpObject(int index) {

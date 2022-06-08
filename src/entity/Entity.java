@@ -33,16 +33,19 @@ public class Entity {
     protected boolean attacking = false;
     protected boolean alive = true;
     protected boolean dying = false;
+    protected boolean knockBack = false;
 
     // Counter
     protected int spriteCounter = 0;
     protected int actionLockCounter = 0;
     protected int invincibleCounter = 0;
     protected int shotAvailableCounter = 0;
+    protected int knockBackCounter = 0;
 
     // Entity's attributes
     protected TYPE type;
     protected String name;
+    protected int defaultSpeed;
     protected int speed;
     protected int maxLife;
     protected int life;
@@ -155,6 +158,32 @@ public class Entity {
 
             gamePanel.getPlayer().life -= damage;
             gamePanel.getPlayer().invincible = true;
+        }
+    }
+
+    public void knockBack(){
+        if (knockBack == true){
+            checkCollision();
+
+            if(collision == true){
+                knockBackCounter = 0;
+                knockBack = false;
+                speed = defaultSpeed;
+            }
+            else if (collision == false){
+                switch(gamePanel.getPlayer().getDirection()){
+                    case "up": worldY -= speed; break;
+                    case "down": worldY += speed; break;
+                    case "left": worldX -= speed; break;
+                    case "right": worldX += speed; break;
+                }
+            }
+            knockBackCounter++;
+            if(knockBackCounter == 5){
+                knockBackCounter =0;
+                knockBack = false;
+                speed = defaultSpeed;
+            }
         }
     }
 

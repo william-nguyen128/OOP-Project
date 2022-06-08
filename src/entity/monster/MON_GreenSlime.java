@@ -17,7 +17,8 @@ public class MON_GreenSlime extends Monster {
         this.gamePanel = gamePanel;
 
         name = "Green Slime";
-        speed = 1;
+        defaultSpeed = 1;
+        speed = defaultSpeed;
         maxLife = 50;
         life = maxLife;
         attack = 1;
