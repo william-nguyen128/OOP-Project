@@ -50,4 +50,20 @@ You are an adventurer. Through many rumors and stories told by the common folks 
 
 #### Game's Rules:
 
-..\* Your goal is to fight through hordes of monsters and survive for a certain period of time. After surviving the monsters' attacks, the princess now awaits...
+1. Your goal is to fight through hordes of monsters and survive for a certain period of time. After surviving the monsters' attacks, the princess now awaits...
+2. Starting out with just your trusty whip, you must press on and survive this hellhole. Multiple upgrades for your physique will also be available before starting your journey. You should reserve your wallet for these upgrades if you want an easier life.
+3. You can also develop your body by defeating enemies and earning EXP. You will be rewarded with upgrades to your stats at each level. Do pay attention that each time you level up, the required amount of EXP required to reach the next level will also increase.
+4. As time goes by, more and more enemies will start to spawn. That being said, it is recommended that you try to scavenge the area around you to find as much useful stuff as you can before things get out of hand.
+
+### 2. TECHNOLOGY USED:
+
+1. Programming language: Java (100%)
+2. Library: Internal Java libraries
+   ..\* Graphics: Graphics, Graphics2D, BufferedImage, AlphaComposite, etc.
+   ..\* Sound: AudioInputStream, AudioSystem, Clip, FloatControl, etc.
+3. Framework: Created by following the tutorial video[^link].
+   [^link]: How to Make a 2D Game in Java: https://www.youtube.com/watch?v=om59cwR7psI&list=PL_QPQmz5C6WUF-pOQDsbsKbaBZqXj4qSq
+
+### 3. FEATURES:
+
+#### Completed:
