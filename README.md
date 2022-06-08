@@ -67,6 +67,40 @@ You are an adventurer. Through many rumors and stories told by the common folks 
 3. Framework: Created by following the tutorial video[^link].
    [^link]: How to Make a 2D Game in Java: https://www.youtube.com/watch?v=om59cwR7psI&list=PL_QPQmz5C6WUF-pOQDsbsKbaBZqXj4qSq
 
-### 3. FEATURES:
+### 3. UML CLASS DIAGRAM:
+
+### 4. FEATURES:
 
 #### Completed:
+
+1. Basic character's movements/actions.
+2. In-game item usage.
+3. Monsters can drop pickups.
+4. Monsters can follow the player (A\* algorithm).
+5. Functional gameplay configurations.
+6. Save/Load system's configurations (Fullscreen on/off, volumes' adjustments).
+7. Functional Character Upgrade feature.
+8. Save/Load player's upgrades (Total money, current stats, upgrade costs).
+9. After surviving for a specified time, the monsters are cleared, and the princess is spawned.
+10. The timer works fine.
+
+#### Incompleted:
+
+1. Not yet a multi-threaded game (still single).
+2. The monster's AI is not good enough => Can get stuck.
+3. The stopping of the player's camera and its actual location causes a bug.
+4. The monster spawner is not yet made => No monster waves yet.
+5. The codes in multiple parts are still quite messy and not optimized.
+6. Sometimes there are small jumps in the FPS.
+
+#### To be developed:
+
+1. Improve/Fix the above 6 incompleted features.
+2. Add more variety to the game => Make it more lively, hardcore, fastpaced
+3. Boost the game's performance
+
+### 5. CHALLENGES ENCOUNTERED:
+
+1. Most of the team members are not familiar with Java and OOP yet.
+2. Most of the team members are not able to read and understand codes thoroughly.
+3. Problems with the IDE, file lost, etc.
