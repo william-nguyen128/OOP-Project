@@ -285,7 +285,7 @@ public class KeyHandler implements KeyListener {
             gamePanel.getPlayer().selectItem();
     }
 
-    public void gameOverState(int code) {
+    private void gameOverState(int code) {
         if (code == KeyEvent.VK_E || code == KeyEvent.VK_SPACE || code == KeyEvent.VK_ENTER)
             if (gamePanel.getUserInterface().getCommandNum() == 0) {
                 gamePanel.playSoundEffect(9);
