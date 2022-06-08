@@ -82,7 +82,7 @@ public class GamePanel extends JPanel implements Runnable {
     private ArrayList<Entity> particleList = new ArrayList<>();
 
     // Game States
-    public GAME_STATE gameState;
+    private GAME_STATE gameState;
     /*
      * =============================================================================
      * ATTRIBUTES (End)
@@ -508,6 +508,10 @@ public class GamePanel extends JPanel implements Runnable {
             monster[i] = null;
     }
 
+    public ArrayList<Entity> getEntityList() {
+        return entityList;
+    }
+
     public ArrayList<Entity> getProjectileList() {
         return projectileList;
     }
@@ -516,8 +520,12 @@ public class GamePanel extends JPanel implements Runnable {
         return particleList;
     }
 
-    public ArrayList<Entity> getEntityList() {
-        return entityList;
+    public GAME_STATE getGameState() {
+        return gameState;
+    }
+
+    public void setGameState(GAME_STATE gameState) {
+        this.gameState = gameState;
     }
     /*
      * =============================================================================

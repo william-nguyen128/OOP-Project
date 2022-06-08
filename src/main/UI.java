@@ -56,44 +56,44 @@ public class UI {
         g2d.setColor(Color.WHITE);
 
         // Title State
-        if (gamePanel.gameState == GAME_STATE.Title)
+        if (gamePanel.getGameState() == GAME_STATE.Title)
             drawTitleScreen();
 
-        if (gamePanel.gameState == GAME_STATE.Upgrade) {
+        if (gamePanel.getGameState() == GAME_STATE.Upgrade) {
             drawUpgradeScreen();
         }
 
         // Play State
-        if (gamePanel.gameState == GAME_STATE.Play) {
+        if (gamePanel.getGameState() == GAME_STATE.Play) {
             drawPlayerExp();
             drawTimer();
             drawMessage();
         }
 
         // Pause State
-        if (gamePanel.gameState == GAME_STATE.Pause) {
+        if (gamePanel.getGameState() == GAME_STATE.Pause) {
             drawPlayerExp();
             drawTimer();
             drawPauseScreen();
         }
 
         // Dialogue State
-        if (gamePanel.gameState == GAME_STATE.Dialogue) {
+        if (gamePanel.getGameState() == GAME_STATE.Dialogue) {
             drawDialogueScreen();
         }
 
         // Character State
-        if (gamePanel.gameState == GAME_STATE.Character) {
+        if (gamePanel.getGameState() == GAME_STATE.Character) {
             drawCharacterScreen();
             drawInventoryScreen();
         }
 
         // Options State
-        if (gamePanel.gameState == GAME_STATE.Options)
+        if (gamePanel.getGameState() == GAME_STATE.Options)
             drawOptionsScreen();
 
         // Game Over State
-        if (gamePanel.gameState == GAME_STATE.GameOver) {
+        if (gamePanel.getGameState() == GAME_STATE.GameOver) {
             drawGameOverScreen();
             drawTimer();
         }
@@ -321,7 +321,7 @@ public class UI {
         int y;
         DecimalFormat dFormat = new DecimalFormat("#00.00");
 
-        if (gamePanel.gameState == GAME_STATE.Play) {
+        if (gamePanel.getGameState() == GAME_STATE.Play) {
             if (playTimeMinute >= 1 && gamePanel.getNPCs()[0] == null) {
                 gamePanel.clearMonster();
                 gamePanel.getAssetSetter().setNPC();
@@ -338,12 +338,12 @@ public class UI {
             y = (int) (gamePanel.getTileSize() * 1.5);
 
             g2d.drawString(text, x, y);
-        } else if (gamePanel.gameState == GAME_STATE.Pause) {
+        } else if (gamePanel.getGameState() == GAME_STATE.Pause) {
             text = playTimeMinute + ":" + dFormat.format(playTimeSecond);
             x = getXForCenteredText(text);
             y = (int) (gamePanel.getTileSize() * 1.5);
             g2d.drawString(text, x, y);
-        } else if (gamePanel.gameState == GAME_STATE.GameOver) {
+        } else if (gamePanel.getGameState() == GAME_STATE.GameOver) {
             text = "Play time: " + playTimeMinute + ":" + dFormat.format(playTimeSecond);
             x = getXForCenteredText(text);
             y = gamePanel.getTileSize() * 8;
@@ -649,7 +649,7 @@ public class UI {
         if (commandNum == 5) {
             g2d.drawString(">", textX - 25, textY);
             if (gamePanel.getKeyHandler().isInteractPressed() == true) {
-                gamePanel.gameState = GAME_STATE.Play;
+                gamePanel.setGameState(GAME_STATE.Play);
                 commandNum = 0;
             }
         }
@@ -792,7 +792,7 @@ public class UI {
                 subState = 0;
                 commandNum = 0;
                 gamePanel.stopMusic();
-                gamePanel.gameState = GAME_STATE.GameOver;
+                gamePanel.setGameState(GAME_STATE.GameOver);
             }
         }
     }

@@ -272,7 +272,7 @@ public class Player extends Entity {
 
         // Player got rekt
         if (life <= 0) {
-            gamePanel.gameState = GAME_STATE.GameOver;
+            gamePanel.setGameState(GAME_STATE.GameOver);
             gamePanel.stopMusic();
             gamePanel.playSoundEffect(11);
         }
@@ -368,7 +368,7 @@ public class Player extends Entity {
     // Private (Internal) methods
     private void interactNPC(int index) {
         if (index != 999 && keyHandler.isInteractPressed() == true) {
-            gamePanel.gameState = GAME_STATE.Dialogue;
+            gamePanel.setGameState(GAME_STATE.Dialogue);
             gamePanel.getNPCs()[index].speak();
         }
     }
@@ -406,7 +406,7 @@ public class Player extends Entity {
             attack = getAttack();
             defense = getDefense();
             gamePanel.playSoundEffect(8);
-            gamePanel.gameState = GAME_STATE.Dialogue;
+            gamePanel.setGameState(GAME_STATE.Dialogue);
             gamePanel.getUserInterface().setCurrentDialogue("Level up!");
         }
     }
