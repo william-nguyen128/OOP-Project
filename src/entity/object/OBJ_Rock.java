@@ -12,10 +12,9 @@ public class OBJ_Rock extends Projectile {
 
     public OBJ_Rock(GamePanel gamePanel) {
         super(gamePanel);
-        // TODO Auto-generated constructor stub
 
         name = "Rock";
-        speed = 10;
+        speed = 8;
         maxLife = 80;
         life = maxLife;
         attack = 2;
@@ -30,8 +29,8 @@ public class OBJ_Rock extends Projectile {
         int height = gamePanel.getTileSize();
 
         for (int i = 0; i < 2; i++) {
-            leftSprites[i] = setup("/projectile/rock_down_" + (i + 1), width, height);
-            rightSprites[i] = setup("/projectile/rock_down_" + (i + 1), width, height);
+            leftSprites[i] = setup("/projectile/rock_down_1", width, height);
+            rightSprites[i] = setup("/projectile/rock_down_1", width, height);
         }
     }
 

@@ -1,8 +1,8 @@
 package entity.monster;
 
-import java.util.Random;
+// import java.util.Random;
 
-import entity.object.coin.COIN_Bronze;
+import entity.object.OBJ_Chest;
 import main.GamePanel;
 
 public class MON_Zombie extends Monster {
@@ -15,12 +15,12 @@ public class MON_Zombie extends Monster {
         this.gamePanel = gamePanel;
 
         name = "ANVC";
-        speed = 3;
-        maxLife = 10;
+        speed = 2;
+        maxLife = 200;
         life = maxLife;
-        attack = 1;
+        attack = 20;
         defense = 0;
-        exp = 3;
+        exp = 100;
 
         solidArea.x = 3;
         solidArea.y = 18;
@@ -46,9 +46,8 @@ public class MON_Zombie extends Monster {
     // Overridden method
     @Override
     public void checkDrop() {
-        int i = new Random().nextInt(100) + 1;
-
-        if (i < 50)
-            dropItem(new COIN_Bronze(gamePanel));
+        dropItem(new OBJ_Chest(gamePanel));
+        dropItem(new OBJ_Chest(gamePanel));
+        dropItem(new OBJ_Chest(gamePanel));
     }
 }

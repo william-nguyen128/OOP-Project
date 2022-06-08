@@ -3,6 +3,7 @@ package entity.monster;
 import java.awt.Graphics2D;
 import java.awt.Color;
 import java.awt.image.BufferedImage;
+// import java.util.Random;
 
 import entity.Entity;
 import entity.TYPE;
