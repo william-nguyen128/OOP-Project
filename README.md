@@ -12,9 +12,11 @@ We hope that this project will prove to be useful for you, who is currently read
 
 ### 1.2. About Our Team
 
-#### Team Name: TEAM_NULL
+#### Team Name:
 
-#### Team Members' Info
+TEAM_NULL
+
+#### Team Members' Info:
 
 | Members             |     ID      | Email                            |
 | ------------------- | :---------: | -------------------------------- |
@@ -23,7 +25,7 @@ We hope that this project will prove to be useful for you, who is currently read
 | Nguyen Hoang Luan   | ITITIU20012 | ITITIU20012@student.hcmiu.edu.vn |
 | Hoang Minh Khoi     | ITITIU20232 | ITITIU20232@student.hcmiu.edu.vn |
 
-#### Team Members' Responsibility
+#### Team Members' Responsibility:
 
 | Members             | Responsibility                                |
 | ------------------- | --------------------------------------------- |
