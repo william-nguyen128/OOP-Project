@@ -27,11 +27,11 @@ TEAM_NULL
 
 #### Team Members' Responsibility:
 
-| Members             | Responsibility                                |
-| ------------------- | --------------------------------------------- |
-| Nguyen Hong Quan    | Project Manager, Developer, Overall Framework |
-| Nguyen Le Thanh Tai | Developer, Character Upgrade                  |
-| Nguyen Hoang Luan   | Developer, Monsters                           |
-| Hoang Minh Khoi     | Developer, Coins                              |
+| Members             | Responsibility                                               |
+| ------------------- | ------------------------------------------------------------ |
+| Nguyen Hong Quan    | Project Manager, Developer, Overall Framework, Miscellaneous |
+| Nguyen Le Thanh Tai | Developer, Character Upgrade                                 |
+| Nguyen Hoang Luan   | Developer, Monsters                                          |
+| Hoang Minh Khoi     | Developer, Coins                                             |
 
 ### 1.3. About Our Game
