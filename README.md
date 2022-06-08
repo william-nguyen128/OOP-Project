@@ -79,6 +79,8 @@ You are an adventurer. Through many rumors and stories told by the common folks 
 
 #### 3.3. 'ai' package:
 
+![alt text](diagrams/ClassDiagram-ai.png)
+
 #### 3.4. 'entity' package:
 
 ### 4. FEATURES:
