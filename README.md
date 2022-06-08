@@ -14,7 +14,6 @@ We hope that this project will prove to be useful for you, who is currently read
 | TEAM_NULL           |
 | ------------------- | :---------: | --------------------------------------------- |
 | Members             |     ID      | Responsibility                                |
-| ------------------- | :---------: | --------------------------------------------- |
 | Nguyen Hong Quan    | ITITIU18297 | Project Manager, Developer, Overall Framework |
 | Nguyen Le Thanh Tai | ITITIU20298 | Developer, Character Upgrade                  |
 | Nguyen Hoang Luan   | ITITIU20012 | Developer, Monsters                           |
