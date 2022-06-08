@@ -35,3 +35,19 @@ TEAM_NULL
 | Hoang Minh Khoi     | Developer, Coins                                             |
 
 ### 1.3. About Our Game
+
+#### Game's Name:
+
+PRINCESS RESCUE
+
+#### Game's Genre/Tags:
+
+2D, Indie, Action, Roguelike, Casual, Survival
+
+#### Game's Lore:
+
+You are an adventurer. Through many rumors and stories told by the common folks and traveling merchants, you found out that an unknown princess is being held captive in the land governed by the monsters. You then decide to embark on a journey to the mentioned eerie and isolated land, feeling strangely motivated to rescue the girl from such cruel captivation.
+
+#### Game's Rules:
+
+..\* Your goal is to fight through hordes of monsters and survive for a certain period of time. After surviving the monsters' attacks, the princess now awaits...
