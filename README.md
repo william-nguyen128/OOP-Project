@@ -11,14 +11,13 @@ We hope that this project will prove to be useful for you, who is currently read
 
 ### 1.2. About Our Team
 
-| | Grouping ||
-First Header | Second Header | Third Header |
------------- | :-----------: | -----------: |
-Content | _Long Cell_ ||
-Content | **Cell** | Cell |
-
-New section | More | Data |
-And more | With an escaped '\|' ||  
-[Prototype table]
+| TEAM_NULL           |
+| ------------------- | :---------: | --------------------------------------------- |
+| Members             |     ID      | Responsibility                                |
+| ------------------- | :---------: | --------------------------------------------- |
+| Nguyen Hong Quan    | ITITIU18297 | Project Manager, Developer, Overall Framework |
+| Nguyen Le Thanh Tai | ITITIU20298 | Developer, Character Upgrade                  |
+| Nguyen Hoang Luan   | ITITIU20012 | Developer, Monsters                           |
+| Hoang Minh Khoi     | ITITIU20232 | Developer, Coins                              |
 
 ### 1.3. About Our Game
