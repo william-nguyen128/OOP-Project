@@ -2,6 +2,7 @@ package entity.monster;
 
 import java.util.Random;
 
+import entity.object.OBJ_Rock;
 import entity.object.coin.COIN_Bronze;
 import entity.object.coin.COIN_Gold;
 import entity.object.coin.COIN_Silver;
@@ -24,6 +25,7 @@ public class MON_GreenSlime extends Monster {
         attack = 1;
         defense = 0;
         exp = 2;
+        projectile = new OBJ_Rock(gamePanel);
 
         solidArea.x = 3;
         solidArea.y = 18;
@@ -53,11 +55,21 @@ public class MON_GreenSlime extends Monster {
 
         if (i < 50)
             dropItem(new COIN_Bronze(gamePanel));
-        if (i < 85&&i>=50)
+        if (i < 85 && i >= 50)
             dropItem(new COIN_Silver(gamePanel));
-        if (i < 99&&i>=85)
+        if (i < 99 && i >= 85)
             dropItem(new COIN_Gold(gamePanel));
+    }
 
+    public void setAction() {
+        // Rock
+        super.setAction();
 
+        int i = new Random().nextInt(100) + 1;
+        if (i > 99 && projectile.isAlive() == false && shotAvailableCounter == 30) {
+            projectile.set(worldX, worldY, direction, alive, this);
+            gamePanel.getProjectileList().add(projectile);
+            shotAvailableCounter = 0;
+        }
     }
 }
