@@ -13,7 +13,10 @@ public class Monster extends Entity {
     private GamePanel gamePanel;
     private int dyingCounter = 0;
     private int hpBarCounter = 0;
+    private int knockBackCounter = 0;
     private boolean hpBarOn = false;
+    private boolean knockBack = false;
+    protected int defaultSpeed;
 
     // Constructor
     public Monster(GamePanel gamePanel) {
@@ -25,69 +28,122 @@ public class Monster extends Entity {
 
     @Override
     public void update() {
-        setAction();
-        checkCollision();
+        if (knockBack == true) {
+            checkCollision();
 
-        // If collision = false => Monster can move
-        if (collisionOn == false)
-            switch (direction) {
-                case "up":
-                    worldY -= speed;
-                    break;
-                case "left":
-                    facingRight = false;
-                    worldX -= speed;
-                    break;
-                case "down":
-                    worldY += speed;
-                    break;
-                case "right":
-                    facingRight = true;
-                    worldX += speed;
-                    break;
-                case "up-left":
-                    facingRight = false;
-                    worldX -= speed;
-                    worldY -= speed;
-                    break;
-                case "down-left":
-                    facingRight = false;
-                    worldX -= speed;
-                    worldY += speed;
-                    break;
-                case "down-right":
-                    facingRight = true;
-                    worldX += speed;
-                    worldY += speed;
-                    break;
-                case "up-right":
-                    facingRight = true;
-                    worldX += speed;
-                    worldY -= speed;
-                    break;
+            if (collision == true) {
+                knockBackCounter = 0;
+                knockBack = false;
+                speed = defaultSpeed;
+            } else {
+                switch (gamePanel.getPlayer().getDirection()) {
+                    case "up":
+                        worldY -= speed;
+                        break;
+                    case "left":
+                        facingRight = false;
+                        worldX -= speed;
+                        break;
+                    case "down":
+                        worldY += speed;
+                        break;
+                    case "right":
+                        facingRight = true;
+                        worldX += speed;
+                        break;
+                    case "up-left":
+                        facingRight = false;
+                        worldX -= speed;
+                        worldY -= speed;
+                        break;
+                    case "down-left":
+                        facingRight = false;
+                        worldX -= speed;
+                        worldY += speed;
+                        break;
+                    case "down-right":
+                        facingRight = true;
+                        worldX += speed;
+                        worldY += speed;
+                        break;
+                    case "up-right":
+                        facingRight = true;
+                        worldX += speed;
+                        worldY -= speed;
+                        break;
+                }
+            }
+            knockBackCounter++;
+            if (knockBackCounter == 5) {
+                knockBackCounter = 0;
+                knockBack = false;
+                speed = defaultSpeed;
+            }
+        } else {
+            setAction();
+            checkCollision();
+
+            // If collision = false => Monster can move
+            if (collisionOn == false)
+                switch (direction) {
+                    case "up":
+                        worldY -= speed;
+                        break;
+                    case "left":
+                        facingRight = false;
+                        worldX -= speed;
+                        break;
+                    case "down":
+                        worldY += speed;
+                        break;
+                    case "right":
+                        facingRight = true;
+                        worldX += speed;
+                        break;
+                    case "up-left":
+                        facingRight = false;
+                        worldX -= speed;
+                        worldY -= speed;
+                        break;
+                    case "down-left":
+                        facingRight = false;
+                        worldX -= speed;
+                        worldY += speed;
+                        break;
+                    case "down-right":
+                        facingRight = true;
+                        worldX += speed;
+                        worldY += speed;
+                        break;
+                    case "up-right":
+                        facingRight = true;
+                        worldX += speed;
+                        worldY -= speed;
+                        break;
+                }
+
+            // Monster's sprite change
+            spriteCounter++;
+            if (spriteCounter > 15) {
+                if (spriteNum == 1)
+                    spriteNum = 2;
+                else if (spriteNum == 2)
+                    spriteNum = 1;
+                spriteCounter = 0;
             }
 
-        // Monster's sprite change
-        spriteCounter++;
-        if (spriteCounter > 15) {
-            if (spriteNum == 1)
-                spriteNum = 2;
-            else if (spriteNum == 2)
-                spriteNum = 1;
-            spriteCounter = 0;
-        }
-
-        // Invincibility frame
-        if (invincible == true) {
-            invincibleCounter++;
-            if (invincibleCounter > 30) {
-                invincible = false;
-                invincibleCounter = 0;
+            // Invincibility frame
+            if (invincible == true) {
+                invincibleCounter++;
+                if (invincibleCounter > 30) {
+                    invincible = false;
+                    invincibleCounter = 0;
+                }
             }
-        }
 
-        // Path finding => ALWAYS GO AFTER PLAYER
-        onPath = true;
+            // Path finding => ALWAYS GO AFTER PLAYER
+            onPath = true;
+        }
     }
 
     public void draw(Graphics2D g2d) {
@@ -156,13 +212,6 @@ public class Monster extends Entity {
             }
     }
 
-    public void damageReaction() {
-        // if (gamePanel.getPlayer().isFacingRight() == false)
-        //     worldX -= 10;
-        // else
-        //     worldX += 10;
-    }
-
     public void checkDrop() {
     }
 
@@ -189,5 +238,10 @@ public class Monster extends Entity {
             changeAlpha(g2d, 1f);
         if (dyingCounter > i * 8)
             alive = false;
+    }
+
+    // Setter
+    public void setKnockback(boolean knockBack) {
+        this.knockBack = knockBack;
     }
 }

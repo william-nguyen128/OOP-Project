@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import entity.monster.Monster;
 import entity.object.OBJ_Fireball;
 import entity.object.shield.SHIELD_Wood;
 import entity.object.shield.Shield;
@@ -56,8 +57,7 @@ public class Player extends Entity {
     public void setDefaultValues() {
         worldX = gamePanel.getTileSize() * 23;
         worldY = gamePanel.getTileSize() * 21;
-        defaultSpeed = gamePanel.getData().getStartingSpeed();
-        speed = defaultSpeed;
+        speed = gamePanel.getData().getStartingSpeed();
         direction = "down";
         invincible = false;
 
@@ -342,6 +342,8 @@ public class Player extends Entity {
             if (gamePanel.getMonsters()[index].invincible == false) {
                 gamePanel.playSoundEffect(5);
 
+                knockBack(gamePanel.getMonsters()[index]);
+
                 int damage = attack - gamePanel.getMonsters()[index].defense;
                 if (damage < 0)
                     damage = 1;
@@ -350,7 +352,6 @@ public class Player extends Entity {
                 gamePanel.getUserInterface().addMessage(damage + " damage!");
 
                 gamePanel.getMonsters()[index].invincible = true;
-                gamePanel.getMonsters()[index].damageReaction();
 
                 if (gamePanel.getMonsters()[index].life <= 0) {
                     gamePanel.getMonsters()[index].dying = true;
@@ -372,12 +373,19 @@ public class Player extends Entity {
         }
     }
 
+    private void knockBack(Monster monster) {
+        if (facingRight == true)
+            monster.setDirection("right");
+        else
+            monster.setDirection("left");
+        monster.setSpeed(monster.getSpeed() + 2);
+        monster.setKnockback(true);
+    }
+
     private void contactMonster(int index) {
         if (index != 999)
             if (invincible == false && gamePanel.getMonsters()[index].dying == false) {
                 gamePanel.playSoundEffect(6);
-
-                knockBack(gamePanel.getMonsters()[index]);
 
                 int damage = gamePanel.getMonsters()[index].attack;
 
@@ -401,12 +409,6 @@ public class Player extends Entity {
             gamePanel.gameState = GAME_STATE.Dialogue;
             gamePanel.getUserInterface().setCurrentDialogue("Level up!");
         }
-    }
-
-    public void knockBack(Entity entity){
-        entity.direction = direction;
-        entity.speed +=10;
-        entity.knockBack = true;
     }
 
     private void pickUpObject(int index) {

@@ -33,19 +33,16 @@ public class Entity {
     protected boolean attacking = false;
     protected boolean alive = true;
     protected boolean dying = false;
-    protected boolean knockBack = false;
 
     // Counter
     protected int spriteCounter = 0;
     protected int actionLockCounter = 0;
     protected int invincibleCounter = 0;
     protected int shotAvailableCounter = 0;
-    protected int knockBackCounter = 0;
 
     // Entity's attributes
     protected TYPE type;
     protected String name;
-    protected int defaultSpeed;
     protected int speed;
     protected int maxLife;
     protected int life;
@@ -161,37 +158,6 @@ public class Entity {
         }
     }
 
-    public void knockBack(){
-        if (knockBack == true){
-            
-            checkCollision();
-
-            if(collision == true){
-                knockBackCounter = 0;
-                knockBack = false;
-                speed = defaultSpeed;
-            }
-            else if (collision == false){
-                switch(gamePanel.getPlayer().getDirection()){
-                    case "up": worldY -= speed; break;
-                    case "down": worldY += speed; break;
-                    case "left": worldX -= speed; break;
-                    case "right": worldX += speed; break;
-                }
-            }
-            knockBackCounter++;
-            if(knockBackCounter == 5){
-                knockBackCounter =0;
-                knockBack = false;
-                speed = defaultSpeed;
-            }
-        }
-        else{
-            setAction();
-            checkCollision();
-        }
-    }
-
     // A* path finding
     public void searchPath(int goalCol, int goalRow) {
         int startCol = (worldX + solidArea.x) / gamePanel.getTileSize();
@@ -274,7 +240,8 @@ public class Entity {
         gamePanel.getCollisionChecker().checkTile(this);
         gamePanel.getCollisionChecker().checkObject(this, false);
         gamePanel.getCollisionChecker().checkEntity(this, gamePanel.getNPCs());
-        gamePanel.getCollisionChecker().checkEntity(this, gamePanel.getMonsters());
+        if (type != TYPE.Monster)
+            gamePanel.getCollisionChecker().checkEntity(this, gamePanel.getMonsters());
         boolean contactPlayer = gamePanel.getCollisionChecker().checkPlayer(this);
 
         if (type == TYPE.Monster && contactPlayer == true) {
@@ -305,6 +272,10 @@ public class Entity {
 
     public String getDirection() {
         return direction;
+    }
+
+    public void setDirection(String direction) {
+        this.direction = direction;
     }
 
     public boolean isFacingRight() {
