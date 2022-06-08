@@ -24,7 +24,7 @@ public class OBJ_Potion_Red extends Entity {
     // Overridden method
     @Override
     public void use(Entity entity) {
-        gamePanel.gameState = GAME_STATE.Dialogue;
+        gamePanel.setGameState(GAME_STATE.Dialogue);
         gamePanel.getUserInterface().setCurrentDialogue("You drank the " + name + "!\n"
                 + "Your HP has been recovered by " + value + " HP!");
         entity.setLife(entity.getLife() + value);

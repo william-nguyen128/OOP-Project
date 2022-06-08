@@ -69,6 +69,10 @@ You are an adventurer. Through many rumors and stories told by the common folks 
 
 ### 3. UML CLASS DIAGRAM:
 
+#### 3.1. 'main' package:
+
+![alt text](diagrams/ClassDiagram-main.png)
+
 ### 4. FEATURES:
 
 #### Completed:
