@@ -59,8 +59,11 @@ You are an adventurer. Through many rumors and stories told by the common folks 
 
 1. Programming language: Java (100%)
 2. Library: Internal Java libraries
-   - Graphics: Graphics, Graphics2D, BufferedImage, AlphaComposite, etc.
-   - Sound: AudioInputStream, AudioSystem, Clip, FloatControl, etc.
+   - Graphics: Graphics, Graphics2D, BufferedImage, AlphaComposite, Rectangle, etc.
+   - Sound: URL, AudioInputStream, AudioSystem, Clip, FloatControl, etc.
+   - Key Inputs: KeyEvent, KeyListener.
+   - Save/Load to/from Files: BufferedWriter, BufferedReader, FileWriter, FileReader, etc.
+   - Others: DataFormat, etc.
 3. Framework: Created by following the tutorial video[^link].
    [^link]: How to Make a 2D Game in Java: https://www.youtube.com/watch?v=om59cwR7psI&list=PL_QPQmz5C6WUF-pOQDsbsKbaBZqXj4qSq
 
