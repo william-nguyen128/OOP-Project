@@ -3,7 +3,7 @@ package entity.monster;
 import java.util.Random;
 
 import entity.object.coin.COIN_Bronze;
-import entity.object.coin.COIN_Golden;
+import entity.object.coin.COIN_Gold;
 import entity.object.coin.COIN_Silver;
 import main.GamePanel;
 
@@ -52,11 +52,9 @@ public class MON_GreenSlime extends Monster {
 
         if (i < 50)
             dropItem(new COIN_Bronze(gamePanel));
-        if (i < 85&&i>=50)
+        if (i < 85 && i >= 50)
             dropItem(new COIN_Silver(gamePanel));
-        if (i < 99&&i>=85)
-            dropItem(new COIN_Golden(gamePanel));
-
-
+        if (i < 99 && i >= 85)
+            dropItem(new COIN_Gold(gamePanel));
     }
 }
