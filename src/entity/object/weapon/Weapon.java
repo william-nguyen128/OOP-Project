@@ -38,13 +38,13 @@ public class Weapon extends Entity {
     public void update() {
         // Weapon's sprite change
         spriteCounter++;
-        if (spriteCounter <= 5) {
+        if (spriteCounter <= 1) {
             gamePanel.playSoundEffect(7);
             spriteNum = 1;
         }
-        if (spriteCounter > 5 && spriteCounter <= 10)
+        if (spriteCounter > 1 && spriteCounter <= 2)
             spriteNum = 2;
-        if (spriteCounter > 10 && spriteCounter <= 15) {
+        if (spriteCounter > 2 && spriteCounter <= 3) {
             spriteNum = 3;
 
             // Check Monster collision w/ the updated worldX, worldY, and solidArea
@@ -63,13 +63,13 @@ public class Weapon extends Entity {
             // Restore original values
             worldX = currentWorldX;
         }
-        if (spriteCounter > 15 && spriteCounter <= 20)
+        if (spriteCounter > 3 && spriteCounter <= 4)
             spriteNum = 4;
-        if (spriteCounter > 20 && spriteCounter <= 25)
+        if (spriteCounter > 4 && spriteCounter <= 5)
             spriteNum = 5;
-        if (spriteCounter > 25 && spriteCounter <= 30)
+        if (spriteCounter > 5 && spriteCounter <= 6)
             spriteNum = 6;
-        if (spriteCounter > 30) {
+        if (spriteCounter > 6) {
             spriteCounter = 0;
             gamePanel.getPlayer().setAttacking(false);
         }
