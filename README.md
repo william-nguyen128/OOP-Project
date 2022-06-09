@@ -69,47 +69,49 @@ You are an adventurer. Through many rumors and stories told by the common folks 
 
 ### 3. UML CLASS DIAGRAM:
 
-![alt text](diagrams/ClassDiagram-overall.png)
+**Due to the complexity of the diagram, we decided to omit most of the relationships between packages to increase visibility.**
+
+![alt text](diagrams/ClassDiagram-overall.png "General Class Diagram")
 
 #### 3.1. 'main' package:
 
-![alt text](diagrams/ClassDiagram-main.png)
+![alt text](diagrams/ClassDiagram-main.png "'main' package")
 
 #### 3.2. 'tiles' package:
 
-![alt text](diagrams/ClassDiagram-tiles.png)
+![alt text](diagrams/ClassDiagram-tiles.png "'tiles' package")
 
 #### 3.3. 'ai' package:
 
-![alt text](diagrams/ClassDiagram-ai.png)
+![alt text](diagrams/ClassDiagram-ai.png "'ai' package")
 
 #### 3.4. 'entity' package:
 
-![alt text](diagrams/ClassDiagram-entity.png)
+![alt text](diagrams/ClassDiagram-entity.png "'entity' package")
 
 ##### 3.4.1. 'entity.monster' package:
 
-![alt text](diagrams/ClassDiagram-entity-monster.png)
+![alt text](diagrams/ClassDiagram-entity-monster.png "'entity.monster' package")
 
 ##### 3.4.2. 'entity.npc' package:
 
-![alt text](diagrams/ClassDiagram-entity-npc.png)
+![alt text](diagrams/ClassDiagram-entity-npc.png "'entity.npc' package")
 
 ##### 3.4.3. 'entity.object' package:
 
-![alt text](diagrams/ClassDiagram-entity-object.png)
+![alt text](diagrams/ClassDiagram-entity-object.png "'entity.object' package")
 
 ###### 3.4.3.1. 'entity.object.coin' package:
 
-![alt text](diagrams/ClassDiagram-entity-object-coin.png)
+![alt text](diagrams/ClassDiagram-entity-object-coin.png "'entity.object.coin' package")
 
 ###### 3.4.3.1. 'entity.object.weapon' package:
 
-![alt text](diagrams/ClassDiagram-entity-object-weapon.png)
+![alt text](diagrams/ClassDiagram-entity-object-weapon.png "'entity.object.weapon' package")
 
 ###### 3.4.3.1. 'entity.object.shield' package:
 
-![alt text](diagrams/ClassDiagram-entity-object-shield.png)
+![alt text](diagrams/ClassDiagram-entity-object-shield.png "'entity.object.shield' package")
 
 ### 4. FEATURES:
 
