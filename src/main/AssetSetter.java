@@ -89,8 +89,8 @@ public class AssetSetter {
         gamePanel.getMonsters()[14].setWorldX(gamePanel.getTileSize() * 38);
         gamePanel.getMonsters()[14].setWorldY(gamePanel.getTileSize() * 7);
 
-        gamePanel.getMonsters()[15] = new MON_Zombie(gamePanel);
-        gamePanel.getMonsters()[15].setWorldX(gamePanel.getTileSize() * 20);
-        gamePanel.getMonsters()[15].setWorldY(gamePanel.getTileSize() * 38);
+        // gamePanel.getMonsters()[15] = new MON_Zombie(gamePanel);
+        // gamePanel.getMonsters()[15].setWorldX(gamePanel.getTileSize() * 20);
+        // gamePanel.getMonsters()[15].setWorldY(gamePanel.getTileSize() * 38);
     }
 }
