@@ -3,6 +3,7 @@ package entity.monster;
 import java.util.Random;
 
 import entity.object.OBJ_Chest;
+import entity.object.OBJ_Potion_Red;
 import entity.object.coin.COIN_Bronze;
 import entity.object.coin.COIN_Gold;
 import entity.object.coin.COIN_Silver;
@@ -20,7 +21,7 @@ public class MON_GhostBat extends Monster {
         name = "GhostBat";
         defaultSpeed = 3;
         speed = defaultSpeed;
-        maxLife = 70;
+        maxLife = 50;
         life = maxLife;
         attack = 5;
         defense = 0;
@@ -58,7 +59,9 @@ public class MON_GhostBat extends Monster {
             dropItem(new COIN_Silver(gamePanel));
         if (i < 99 && i >= 65)
             dropItem(new COIN_Gold(gamePanel));
-        if (i < 17)
+        if (i < 8)
             dropItem(new OBJ_Chest(gamePanel));
+        if (i < 40)
+            dropItem(new OBJ_Potion_Red(gamePanel));
     }
 }

@@ -17,11 +17,11 @@ public class MON_Zombie extends Monster {
         name = "Zombie BOSS";
         defaultSpeed = 2;
         speed = defaultSpeed;
-        maxLife = 200;
+        maxLife = 150;
         life = maxLife;
         attack = 20;
         defense = 0;
-        exp = 100;
+        exp = 75;
 
         solidArea.x = 3;
         solidArea.y = 18;
@@ -47,8 +47,6 @@ public class MON_Zombie extends Monster {
     // Overridden method
     @Override
     public void checkDrop() {
-        dropItem(new OBJ_Chest(gamePanel));
-        dropItem(new OBJ_Chest(gamePanel));
         dropItem(new OBJ_Chest(gamePanel));
     }
 }
