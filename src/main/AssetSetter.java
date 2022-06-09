@@ -41,7 +41,7 @@ public class AssetSetter {
         gamePanel.getMonsters()[2].setWorldX(gamePanel.getTileSize() * 32);
         gamePanel.getMonsters()[2].setWorldY(gamePanel.getTileSize() * 36);
 
-        // gamePanel.getMonsters()[3] = new MON_Ghost(gamePanel);
+        // gamePanel.getMonsters()[3] = new MON_GhostBat(gamePanel);
         // gamePanel.getMonsters()[3].setWorldX(gamePanel.getTileSize() * 33);
         // gamePanel.getMonsters()[3].setWorldY(gamePanel.getTileSize() * 28);
 
