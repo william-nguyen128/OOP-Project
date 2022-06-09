@@ -18,7 +18,8 @@ public class MON_GhostBat extends Monster {
         this.gamePanel = gamePanel;
 
         name = "GhostBat";
-        speed = 3;
+        defaultSpeed = 3;
+        speed = defaultSpeed;
         maxLife = 70;
         life = maxLife;
         attack = 5;
@@ -32,11 +33,11 @@ public class MON_GhostBat extends Monster {
         solidAreaDefaultX = solidArea.x;
         solidAreaDefaultY = solidArea.y;
 
-        getCrowImage();
+        getBatImage();
     }
 
     // Get images
-    private void getCrowImage() {
+    private void getBatImage() {
         int width = gamePanel.getTileSize();
         int height = gamePanel.getTileSize();
 

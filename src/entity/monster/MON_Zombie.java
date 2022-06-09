@@ -14,8 +14,9 @@ public class MON_Zombie extends Monster {
         super(gamePanel);
         this.gamePanel = gamePanel;
 
-        name = "ANVC";
-        speed = 2;
+        name = "Zombie BOSS";
+        defaultSpeed = 2;
+        speed = defaultSpeed;
         maxLife = 200;
         life = maxLife;
         attack = 20;
