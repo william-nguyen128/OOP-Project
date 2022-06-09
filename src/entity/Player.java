@@ -6,6 +6,7 @@ import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import entity.monster.Monster;
 import entity.object.OBJ_Fireball;
 import entity.object.shield.SHIELD_Wood;
 import entity.object.shield.Shield;
@@ -238,7 +239,7 @@ public class Player extends Entity {
         // Casting
         if (keyHandler.isCastPressed() == true && projectile.alive == false &&
                 shotAvailableCounter == 30 && projectile.haveResource(this) == true) {
-            projectile.set(worldX, worldY, direction, true);
+            projectile.set(worldX, worldY, direction, true, this);
             projectile.subtractResource(this);
             gamePanel.getProjectileList().add(projectile);
             shotAvailableCounter = 0;
@@ -341,6 +342,8 @@ public class Player extends Entity {
             if (gamePanel.getMonsters()[index].invincible == false) {
                 gamePanel.playSoundEffect(5);
 
+                knockBack(gamePanel.getMonsters()[index]);
+
                 int damage = attack - gamePanel.getMonsters()[index].defense;
                 if (damage < 0)
                     damage = 1;
@@ -349,7 +352,6 @@ public class Player extends Entity {
                 gamePanel.getUserInterface().addMessage(damage + " damage!");
 
                 gamePanel.getMonsters()[index].invincible = true;
-                gamePanel.getMonsters()[index].damageReaction();
 
                 if (gamePanel.getMonsters()[index].life <= 0) {
                     gamePanel.getMonsters()[index].dying = true;
@@ -369,6 +371,15 @@ public class Player extends Entity {
             gamePanel.gameState = GAME_STATE.Dialogue;
             gamePanel.getNPCs()[index].speak();
         }
+    }
+
+    private void knockBack(Monster monster) {
+        if (facingRight == true)
+            monster.setDirection("right");
+        else
+            monster.setDirection("left");
+        monster.setSpeed(monster.getSpeed() + 2);
+        monster.setKnockback(true);
     }
 
     private void contactMonster(int index) {

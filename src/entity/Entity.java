@@ -33,6 +33,7 @@ public class Entity {
     protected boolean attacking = false;
     protected boolean alive = true;
     protected boolean dying = false;
+    protected Entity user;
 
     // Counter
     protected int spriteCounter = 0;
@@ -240,7 +241,8 @@ public class Entity {
         gamePanel.getCollisionChecker().checkTile(this);
         gamePanel.getCollisionChecker().checkObject(this, false);
         gamePanel.getCollisionChecker().checkEntity(this, gamePanel.getNPCs());
-        gamePanel.getCollisionChecker().checkEntity(this, gamePanel.getMonsters());
+        if (type != TYPE.Monster)
+            gamePanel.getCollisionChecker().checkEntity(this, gamePanel.getMonsters());
         boolean contactPlayer = gamePanel.getCollisionChecker().checkPlayer(this);
 
         if (type == TYPE.Monster && contactPlayer == true) {
@@ -271,6 +273,10 @@ public class Entity {
 
     public String getDirection() {
         return direction;
+    }
+
+    public void setDirection(String direction) {
+        this.direction = direction;
     }
 
     public boolean isFacingRight() {
