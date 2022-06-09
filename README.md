@@ -69,6 +69,8 @@ You are an adventurer. Through many rumors and stories told by the common folks 
 
 ### 3. UML CLASS DIAGRAM:
 
+![alt text](diagrams/ClassDiagram-overall.png)
+
 #### 3.1. 'main' package:
 
 ![alt text](diagrams/ClassDiagram-main.png)
@@ -82,6 +84,32 @@ You are an adventurer. Through many rumors and stories told by the common folks 
 ![alt text](diagrams/ClassDiagram-ai.png)
 
 #### 3.4. 'entity' package:
+
+![alt text](diagrams/ClassDiagram-entity.png)
+
+##### 3.4.1. 'entity.monster' package:
+
+![alt text](diagrams/ClassDiagram-entity-monster.png)
+
+##### 3.4.2. 'entity.npc' package:
+
+![alt text](diagrams/ClassDiagram-entity-npc.png)
+
+##### 3.4.3. 'entity.object' package:
+
+![alt text](diagrams/ClassDiagram-entity-object.png)
+
+###### 3.4.3.1. 'entity.object.coin' package:
+
+![alt text](diagrams/ClassDiagram-entity-object-coin.png)
+
+###### 3.4.3.1. 'entity.object.weapon' package:
+
+![alt text](diagrams/ClassDiagram-entity-object-weapon.png)
+
+###### 3.4.3.1. 'entity.object.shield' package:
+
+![alt text](diagrams/ClassDiagram-entity-object-shield.png)
 
 ### 4. FEATURES:
 
