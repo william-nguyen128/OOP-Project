@@ -33,6 +33,7 @@ public class Entity {
     protected boolean attacking = false;
     protected boolean alive = true;
     protected boolean dying = false;
+    protected Entity user;
 
     // Counter
     protected int spriteCounter = 0;

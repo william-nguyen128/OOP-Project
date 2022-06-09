@@ -9,11 +9,12 @@ public class Projectile extends Entity {
     }
 
     // Set starting values
-    public void set(int worldX, int worldY, String direction, boolean alive) {
+    public void set(int worldX, int worldY, String direction, boolean alive, Entity user) {
         this.worldX = worldX;
         this.worldY = worldY;
         this.direction = direction;
         this.alive = alive;
+        this.user = user;
         this.life = this.maxLife;
     }
 

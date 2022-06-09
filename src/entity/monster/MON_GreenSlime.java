@@ -17,7 +17,7 @@ public class MON_GreenSlime extends Monster {
         this.gamePanel = gamePanel;
 
         name = "Green Slime";
-        defaultSpeed = 1;
+        defaultSpeed = 2;
         speed = defaultSpeed;
         maxLife = 50;
         life = maxLife;
@@ -51,13 +51,11 @@ public class MON_GreenSlime extends Monster {
     public void checkDrop() {
         int i = new Random().nextInt(100) + 1;
 
-        if (i < 50)
+        if (i < 80)
             dropItem(new COIN_Bronze(gamePanel));
-        if (i < 85&&i>=50)
+        if (i < 85 && i >= 50)
             dropItem(new COIN_Silver(gamePanel));
-        if (i < 99&&i>=85)
+        if (i < 99 && i >= 85)
             dropItem(new COIN_Gold(gamePanel));
-
-
     }
 }
