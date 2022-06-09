@@ -148,3 +148,49 @@ You are an adventurer. Through many rumors and stories told by the common folks 
 1. Most of the team members are not familiar with Java and OOP yet.
 2. Most of the team members are not able to read and understand codes thoroughly.
 3. Problems with the IDE, file lost, etc.
+4. And some other smaller issues...
+
+### 6. RESULT / CONCLUSION:
+
+#### Title Screen:
+
+![alt text](screenshots/Title.PNG "Title Screen")
+
+#### Upgrade Screen:
+
+![alt text](screenshots/Upgrade.PNG "Upgrade Screen")
+
+#### Play Screen:
+
+![alt text](screenshots/Play.PNG "Play Screen")
+
+#### Pause Screen:
+
+![alt text](screenshots/Pause.PNG "Pause Screen")
+
+#### Options Screen:
+
+![alt text](screenshots/Options.PNG "Options Screen")
+
+#### Character Screen:
+
+![alt text](screenshots/Character.PNG "Character Screen")
+
+#### Endgame Screen:
+
+![alt text](screenshots/Endgame1.PNG "Endgame Screen (Timer reached)")
+![alt text](screenshots/Endgame2.PNG "Endgame Screen (Talking to NPC)")
+
+#### Game Over Screen:
+
+![alt text](screenshots/GameOver.PNG "Game Over Screen")
+
+### 7. WHAT WE HAVE LEARNED SO FAR:
+
+1. Getting used to a new programming language (Java).
+2. Understanding a little bit more about the concepts of Object-Oriented Programming (OOP).
+3. Getting used to some common yet extremely important actions & commands for GitHub.
+4. Getting to know the basics of a Java 2D game, as well as the ways to make one from complete scratch.
+5. Learning how to colaborate with each other in a team of newly associated people.
+6. Enhancing teamwork ability.
+7. Most importantly, we have had a lot of fun coding this project together <3
