@@ -103,12 +103,16 @@ public class EventHandler {
             gamePanel.playSoundEffect(2);
             gamePanel
                     .getUserInterface()
-                    .setCurrentDialogue("You drank the water from the pond.\nYour HP and Mana have been recovered!");
+                    .setCurrentDialogue(
+                            "You drank the water from the pond.\nYour HP and Mana have been recovered!\nBut it seems the monsters has also regained their strength...");
             gamePanel.getPlayer().setLife(gamePanel.getPlayer().getMaxLife());
             gamePanel.getPlayer().setMana(gamePanel.getPlayer().getMaxMana());
 
-            if (gamePanel.getNPCs()[0] == null)
+            if (gamePanel.getNPCs()[0] == null) {
+                gamePanel.getUserInterface().resetPlayTimeMinute();
+                gamePanel.getUserInterface().resetPlayTimeSecond();
                 gamePanel.getAssetSetter().setMonster();
+            }
         }
     }
 }
