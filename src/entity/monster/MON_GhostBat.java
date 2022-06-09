@@ -8,16 +8,16 @@ import entity.object.coin.COIN_Gold;
 import entity.object.coin.COIN_Silver;
 import main.GamePanel;
 
-public class MON_Ghost extends Monster {
+public class MON_GhostBat extends Monster {
     // Attribute
     private GamePanel gamePanel;
 
     // Constructor
-    public MON_Ghost(GamePanel gamePanel) {
+    public MON_GhostBat(GamePanel gamePanel) {
         super(gamePanel);
         this.gamePanel = gamePanel;
 
-        name = "Ghost";
+        name = "GhostBat";
         speed = 3;
         maxLife = 70;
         life = maxLife;

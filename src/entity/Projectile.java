@@ -21,20 +21,11 @@ public class Projectile extends Entity {
     // Overridden method
     @Override
     public void update() {
-        if (user == gamePanel.getPlayer()) {
-            int monsterIndex = gamePanel.getCollisionChecker().checkEntity(this, gamePanel.getMonsters());
-            if (monsterIndex != 999) {
-                gamePanel.getPlayer().damageMonster(monsterIndex, attack);
-                generateParticle(gamePanel.getPlayer().projectile, gamePanel.getMonsters()[monsterIndex]);
-                alive = false;
-            }
-        }
-        if (user != gamePanel.getPlayer()) {
-            boolean contactPlayer = gamePanel.getCollisionChecker().checkPlayer(this);
-            if (gamePanel.getPlayer().invincible == false && contactPlayer == true) {
-                damagePlayer(attack);
-                alive = false;
-            }
+        int monsterIndex = gamePanel.getCollisionChecker().checkEntity(this, gamePanel.getMonsters());
+        if (monsterIndex != 999) {
+            gamePanel.getPlayer().damageMonster(monsterIndex, attack);
+            generateParticle(gamePanel.getPlayer().projectile, gamePanel.getMonsters()[monsterIndex]);
+            alive = false;
         }
 
         switch (direction) {
