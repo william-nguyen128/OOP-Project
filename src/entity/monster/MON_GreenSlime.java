@@ -52,6 +52,8 @@ public class MON_GreenSlime extends Monster {
     public void checkDrop() {
         int i = new Random().nextInt(100) + 1;
 
+        if (i < 20)
+            dropItem(new OBJ_Potion_Red(gamePanel));
         if (i < 80)
             dropItem(new COIN_Bronze(gamePanel));
         if (i < 85 && i >= 50)
