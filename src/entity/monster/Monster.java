@@ -147,6 +147,7 @@ public class Monster extends Entity {
         }
     }
 
+    @Override
     public void draw(Graphics2D g2d) {
         int screenX = worldX - gamePanel.getPlayer().getWorldX() + gamePanel.getPlayer().SCREEN_X;
         int screenY = worldY - gamePanel.getPlayer().getWorldY() + gamePanel.getPlayer().SCREEN_Y;

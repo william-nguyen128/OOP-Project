@@ -82,7 +82,7 @@ public class EventHandler {
 
     // Events
     private void damagePit(int col, int row, GAME_STATE gameState) {
-        gamePanel.gameState = gameState;
+        gamePanel.setGameState(gameState);
         gamePanel.playSoundEffect(6);
         gamePanel.getUserInterface().setCurrentDialogue("You fell into a pit!");
         gamePanel.getPlayer().setLife(gamePanel.getPlayer().getLife() - 1);
@@ -90,7 +90,7 @@ public class EventHandler {
     }
 
     private void teleport(int col, int row, GAME_STATE gameState) {
-        gamePanel.gameState = gameState;
+        gamePanel.setGameState(gameState);
         gamePanel.playSoundEffect(6);
         gamePanel.getUserInterface().setCurrentDialogue("T E L E P O R T E D !!!");
         gamePanel.getPlayer().setWorldX(gamePanel.getTileSize() * 37);
@@ -99,16 +99,20 @@ public class EventHandler {
 
     private void healingPool(int col, int row, GAME_STATE gameState) {
         if (gamePanel.getKeyHandler().isInteractPressed() == true) {
-            gamePanel.gameState = gameState;
+            gamePanel.setGameState(gameState);
             gamePanel.playSoundEffect(2);
             gamePanel
                     .getUserInterface()
-                    .setCurrentDialogue("You drank the water from the pond.\nYour HP and Mana have been recovered!");
+                    .setCurrentDialogue(
+                            "You drank the water from the pond.\nYour HP and Mana have been recovered!\nBut it seems the monsters has also regained their strength...");
             gamePanel.getPlayer().setLife(gamePanel.getPlayer().getMaxLife());
             gamePanel.getPlayer().setMana(gamePanel.getPlayer().getMaxMana());
 
-            if (gamePanel.getNPCs()[0] == null)
+            if (gamePanel.getNPCs()[0] == null) {
+                gamePanel.getUserInterface().resetPlayTimeMinute();
+                gamePanel.getUserInterface().resetPlayTimeSecond();
                 gamePanel.getAssetSetter().setMonster();
+            }
         }
     }
 }

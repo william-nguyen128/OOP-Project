@@ -21,35 +21,35 @@ public class KeyHandler implements KeyListener {
         int code = e.getKeyCode();
 
         // Title State
-        if (gamePanel.gameState == GAME_STATE.Title)
+        if (gamePanel.getGameState() == GAME_STATE.Title)
             titleState(code);
 
         // Upgrade State
-        else if (gamePanel.gameState == GAME_STATE.Upgrade)
+        else if (gamePanel.getGameState() == GAME_STATE.Upgrade)
             upgradeState(code);
 
         // Play State
-        else if (gamePanel.gameState == GAME_STATE.Play)
+        else if (gamePanel.getGameState() == GAME_STATE.Play)
             playState(code);
 
         // Pause State
-        else if (gamePanel.gameState == GAME_STATE.Pause)
+        else if (gamePanel.getGameState() == GAME_STATE.Pause)
             pauseState(code);
 
         // Dialogue State
-        else if (gamePanel.gameState == GAME_STATE.Dialogue)
+        else if (gamePanel.getGameState() == GAME_STATE.Dialogue)
             dialogueState(code);
 
         // Character State
-        else if (gamePanel.gameState == GAME_STATE.Character)
+        else if (gamePanel.getGameState() == GAME_STATE.Character)
             characterState(code);
 
         // Options State
-        else if (gamePanel.gameState == GAME_STATE.Options)
+        else if (gamePanel.getGameState() == GAME_STATE.Options)
             optionsState(code);
 
         // Game Over State
-        else if (gamePanel.gameState == GAME_STATE.GameOver)
+        else if (gamePanel.getGameState() == GAME_STATE.GameOver)
             gameOverState(code);
     }
 
@@ -90,7 +90,7 @@ public class KeyHandler implements KeyListener {
         }
         if (code == KeyEvent.VK_E || code == KeyEvent.VK_SPACE || code == KeyEvent.VK_ENTER) {
             if (gamePanel.getUserInterface().getCommandNum() == 0) {
-                gamePanel.gameState = GAME_STATE.Play;
+                gamePanel.setGameState(GAME_STATE.Play);
                 gamePanel.getPlayer().setMaxLife(gamePanel.getData().getStartingMaxLife());
                 gamePanel.getPlayer().setLife(gamePanel.getData().getStartingMaxLife());
                 gamePanel.getPlayer().setStrength(gamePanel.getData().getStartingStrength());
@@ -100,7 +100,7 @@ public class KeyHandler implements KeyListener {
             if (gamePanel.getUserInterface().getCommandNum() == 1) {
                 gamePanel.playSoundEffect(9);
                 gamePanel.getUserInterface().setCommandNum(0);
-                gamePanel.gameState = GAME_STATE.Upgrade;
+                gamePanel.setGameState(GAME_STATE.Upgrade);
             }
             if (gamePanel.getUserInterface().getCommandNum() == 2)
                 System.exit(0);
@@ -152,7 +152,7 @@ public class KeyHandler implements KeyListener {
                 upPressed = false;
                 downPressed = false;
                 gamePanel.getUserInterface().setCommandNum(0);
-                gamePanel.gameState = GAME_STATE.Title;
+                gamePanel.setGameState(GAME_STATE.Title);
             }
         }
     }
@@ -170,15 +170,16 @@ public class KeyHandler implements KeyListener {
 
         // Other key bindings
         if (code == KeyEvent.VK_I)
-            gamePanel.gameState = GAME_STATE.Character; // Character Screen/Inventory
+            gamePanel.setGameState(GAME_STATE.Character);
+        ; // Character Screen/Inventory
         if (code == KeyEvent.VK_E || code == KeyEvent.VK_SPACE || code == KeyEvent.VK_ENTER)
             interactPressed = true; // Interacting
         if (code == KeyEvent.VK_K)
             castPressed = true; // (Spell) Casting
         if (code == KeyEvent.VK_P)
-            gamePanel.gameState = GAME_STATE.Pause; // Pause the game
+            gamePanel.setGameState(GAME_STATE.Pause); // Pause the game
         if (code == KeyEvent.VK_ESCAPE)
-            gamePanel.gameState = GAME_STATE.Options; // Option Screen
+            gamePanel.setGameState(GAME_STATE.Options); // Option Screen
 
         // ============ DEBUG ONLY ============ //
         if (code == KeyEvent.VK_T)
@@ -193,7 +194,7 @@ public class KeyHandler implements KeyListener {
 
     private void optionsState(int code) {
         if (code == KeyEvent.VK_ESCAPE)
-            gamePanel.gameState = GAME_STATE.Play;
+            gamePanel.setGameState(GAME_STATE.Play);
         if (code == KeyEvent.VK_E || code == KeyEvent.VK_SPACE || code == KeyEvent.VK_ENTER)
             interactPressed = true;
 
@@ -250,17 +251,17 @@ public class KeyHandler implements KeyListener {
 
     private void pauseState(int code) {
         if (code == KeyEvent.VK_P)
-            gamePanel.gameState = GAME_STATE.Play;
+            gamePanel.setGameState(GAME_STATE.Play);
     }
 
     private void dialogueState(int code) {
         if (code == KeyEvent.VK_E || code == KeyEvent.VK_SPACE || code == KeyEvent.VK_ENTER)
-            gamePanel.gameState = GAME_STATE.Play;
+            gamePanel.setGameState(GAME_STATE.Play);
     }
 
     private void characterState(int code) {
         if (code == KeyEvent.VK_I)
-            gamePanel.gameState = GAME_STATE.Play;
+            gamePanel.setGameState(GAME_STATE.Play);
         if (code == KeyEvent.VK_W || code == KeyEvent.VK_UP)
             if (gamePanel.getUserInterface().getSlotRow() != 0) {
                 gamePanel.getUserInterface().setSlotRow(gamePanel.getUserInterface().getSlotRow() - 1);
@@ -285,13 +286,13 @@ public class KeyHandler implements KeyListener {
             gamePanel.getPlayer().selectItem();
     }
 
-    public void gameOverState(int code) {
+    private void gameOverState(int code) {
         if (code == KeyEvent.VK_E || code == KeyEvent.VK_SPACE || code == KeyEvent.VK_ENTER)
             if (gamePanel.getUserInterface().getCommandNum() == 0) {
                 gamePanel.playSoundEffect(9);
                 gamePanel.getCharacterUpgrade()
                         .setTotalCoin(gamePanel.getCharacterUpgrade().getTotalCoin() + gamePanel.getPlayer().getCoin());
-                gamePanel.gameState = GAME_STATE.Title;
+                gamePanel.setGameState(GAME_STATE.Title);
                 gamePanel.restart();
             }
     }
